@@ -30,6 +30,7 @@ if( !class_exists('WPB_Admin_Product') ) {
         public function woocommerce_variation_options($loop, $variation_data, $variation){
             ?>
             <div class="wpb_variation_images">
+                <input type="hidden" class="wpb_variation_image_gallery">
                 <a class="button button-primary wpb_multiple_image_upload"><?=__('Add Additional Images','wpb')?></a>
             </div>
             <?php
