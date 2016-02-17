@@ -4,6 +4,7 @@ if( !class_exists('WPB_Admin_Product') ) {
     class WPB_Admin_Product {
         public function __construct() {
             add_action('woocommerce_product_option_terms', array(&$this, 'product_option_terms'), 10, 2);
+            add_action('woocommerce_variation_options',array(&$this,'woocommerce_variation_options'),10,3);
         }
         public function product_option_terms($tax, $i){
             global $woocommerce, $thepostid;
@@ -25,6 +26,13 @@ if( !class_exists('WPB_Admin_Product') ) {
                 <button class="button fr plus add_new_attribute" data-attribute="<?php echo $attribute_taxonomy_name; ?>"><?php _e( 'Add new', 'wpb' ); ?></button>
             <?php
             }
+        }
+        public function woocommerce_variation_options($loop, $variation_data, $variation){
+            ?>
+            <div class="wpb_variation_images">
+                <a class="button button-primary wpb_multiple_image_upload"><?=__('Add Additional Images','wpb')?></a>
+            </div>
+            <?php
         }
     }
     new WPB_Admin_Product();
