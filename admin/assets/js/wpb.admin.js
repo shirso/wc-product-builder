@@ -16,6 +16,7 @@ jQuery(function($){
         e.preventDefault();
         var $image_gallery_ids = $(this).siblings('.wpb_variation_image_gallery');
         var attachment_ids = $image_gallery_ids.val();
+        var $wooThumbs = $(this).siblings('.wpb_image_thumb');
         product_gallery_frame = wp.media.frames.downloadable_file = wp.media({
             title: 'Manage Variation Images',
             button: {
@@ -30,7 +31,10 @@ jQuery(function($){
                 attachment = attachment.toJSON();
                 if ( attachment.id ) {
                     attachment_ids = attachment_ids ? attachment_ids + "," + attachment.id : attachment.id;
-
+                    $wooThumbs.append('\
+							<li class="image" data-attachment_id="' + attachment.id + '">\
+								<a href="#" class="delete" title="Delete image"><img src="' + attachment.url + '" /></a>\
+							</li>');
                 }
             });
             $image_gallery_ids.val( attachment_ids );
