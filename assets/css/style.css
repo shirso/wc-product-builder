@@ -1,0 +1,709 @@
+/* Copyright 2013-2015 etc Chris Tabor. See https://github.com/christabor/css-progress-wizard/blob/master/LICENSE for details. */
+@import url(https://fonts.googleapis.com/css?family=Lato);
+/* line 15, ../sass/_progress-wizard.scss */
+.flexer, .progress-indicator {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+/* line 22, ../sass/_progress-wizard.scss */
+.no-flexer, .progress-indicator.stacked {
+  display: block;
+}
+
+/* line 25, ../sass/_progress-wizard.scss */
+.no-flexer-element {
+  -ms-flex: 0;
+  -webkit-flex: 0;
+  -moz-flex: 0;
+  flex: 0;
+}
+
+/* line 31, ../sass/_progress-wizard.scss */
+.flexer-element, .progress-indicator > li {
+  -ms-flex: 1;
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  flex: 1;
+}
+
+/* line 37, ../sass/_progress-wizard.scss */
+.progress-indicator {
+  margin: 0;
+  padding: 0;
+  font-size: 140%;
+  text-transform: uppercase;
+  margin-bottom: 1em;
+}
+/* line 44, ../sass/_progress-wizard.scss */
+.progress-indicator > li {
+  list-style: none;
+  text-align: center;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  text-overflow: ellipsis;
+  color: #cececf;
+  display: block;
+  font-family: 'Lato', sans-serif;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+/* line 58, ../sass/_progress-wizard.scss */
+.progress-indicator > li:hover {
+  color: #818183;
+}
+/* line 62, ../sass/_progress-wizard.scss */
+.progress-indicator > li:first-child .bubble:before {
+  display: none;
+}
+/* line 63, ../sass/_progress-wizard.scss */
+.progress-indicator > li .bubble {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  background-color: #cececf;
+  display: block;
+  margin: 12px auto 0.5em auto;
+  border-top: 0px solid #fff;
+  border-bottom: 0px solid #fff;
+  border-left: 10px solid #fff;
+  border-right: 10px solid #ffffff;
+  box-sizing: content-box;
+}
+/* line 81, ../sass/_progress-wizard.scss */
+.progress-indicator > li .bubble:before {
+  display: block;
+  position: absolute;
+  margin-top: 9px;
+  width: 100%;
+  height: 3px;
+  content: '';
+  background-color: #cececf;
+}
+/* line 90, ../sass/_progress-wizard.scss */
+.progress-indicator > li .bubble:before {
+  left: -50%;
+  z-index: -1;
+}
+/* line 97, ../sass/_progress-wizard.scss */
+.progress-indicator > li.completed {
+  color: #65b32e;
+}
+/* line 99, ../sass/_progress-wizard.scss */
+.progress-indicator > li.completed .bubble {
+  background-color: #65b32e;
+  color: #65b32e;
+}
+/* line 9, ../sass/_progress-wizard.scss */
+.progress-indicator > li.completed .bubble:before, .progress-indicator > li.completed .bubble:after {
+  background-color: #65b32e;
+  border-color: #20390f;
+}
+/* line 106, ../sass/_progress-wizard.scss */
+.progress-indicator > li.active {
+  color: #337AB7;
+}
+/* line 108, ../sass/_progress-wizard.scss */
+.progress-indicator > li.active .bubble {
+  background-color: #337AB7;
+  color: #337AB7;
+}
+/* line 9, ../sass/_progress-wizard.scss */
+.progress-indicator > li.active .bubble:before, .progress-indicator > li.active .bubble:after {
+  background-color: #337AB7;
+  border-color: #122a3f;
+}
+/* line 115, ../sass/_progress-wizard.scss */
+.progress-indicator > li a:hover .bubble {
+  background-color: #5671d0;
+  color: #5671d0;
+}
+/* line 9, ../sass/_progress-wizard.scss */
+.progress-indicator > li a:hover .bubble:before, .progress-indicator > li a:hover .bubble:after {
+  background-color: #5671d0;
+  border-color: #1f306e;
+}
+/* line 121, ../sass/_progress-wizard.scss */
+.progress-indicator > li.danger .bubble {
+  background-color: #d3140f;
+  color: #d3140f;
+}
+/* line 9, ../sass/_progress-wizard.scss */
+.progress-indicator > li.danger .bubble:before, .progress-indicator > li.danger .bubble:after {
+  background-color: #d3140f;
+  border-color: #440605;
+}
+/* line 124, ../sass/_progress-wizard.scss */
+.progress-indicator > li.warning .bubble {
+  background-color: #edb10a;
+  color: #edb10a;
+}
+/* line 9, ../sass/_progress-wizard.scss */
+.progress-indicator > li.warning .bubble:before, .progress-indicator > li.warning .bubble:after {
+  background-color: #edb10a;
+  border-color: #5a4304;
+}
+/* line 127, ../sass/_progress-wizard.scss */
+.progress-indicator > li.info .bubble {
+  background-color: #5b32d6;
+  color: #5b32d6;
+}
+/* line 9, ../sass/_progress-wizard.scss */
+.progress-indicator > li.info .bubble:before, .progress-indicator > li.info .bubble:after {
+  background-color: #5b32d6;
+  border-color: #25135d;
+}
+/* line 135, ../sass/_progress-wizard.scss */
+.progress-indicator.stacked > li {
+  text-indent: -10px;
+  text-align: center;
+  display: block;
+}
+/* line 140, ../sass/_progress-wizard.scss */
+.progress-indicator.stacked > li .bubble:before,
+.progress-indicator.stacked > li .bubble:after {
+  left: 50%;
+  margin-left: -1.5px;
+  width: 3px;
+  height: 100%;
+}
+/* line 147, ../sass/_progress-wizard.scss */
+.progress-indicator.stacked .stacked-text {
+  position: relative;
+  z-index: 10;
+  top: 0;
+  margin-left: 60% !important;
+  width: 45% !important;
+  display: inline-block;
+  text-align: left;
+  line-height: 1.2em;
+}
+/* line 157, ../sass/_progress-wizard.scss */
+.progress-indicator.stacked > li a {
+  border: none;
+}
+/* line 162, ../sass/_progress-wizard.scss */
+.progress-indicator.stacked.nocenter > li .bubble {
+  margin-left: 0;
+  margin-right: 0;
+}
+/* line 166, ../sass/_progress-wizard.scss */
+.progress-indicator.stacked.nocenter > li .bubble:before,
+.progress-indicator.stacked.nocenter > li .bubble:after {
+  left: 10px;
+}
+/* line 170, ../sass/_progress-wizard.scss */
+.progress-indicator.stacked.nocenter .stacked-text {
+  width: auto !important;
+  display: block;
+  margin-left: 40px !important;
+}
+
+@media handheld, screen and (min-width: 595px) and (max-width: 750px) {
+  /* line 179, ../sass/_progress-wizard.scss */
+  .progress-indicator {
+    font-size: 120%;
+  }
+
+  /* line 182, ../sass/_progress-wizard.scss */
+  .rngsec {
+    width: 100%;
+  }
+}
+@media handheld, screen and (min-width: 470px) and (max-width: 595px) {
+  /* line 185, ../sass/_progress-wizard.scss */
+  .progress-indicator {
+    font-size: 90%;
+  }
+  /* line 187, ../sass/_progress-wizard.scss */
+  .progress-indicator .rngsec {
+    width: 100%;
+  }
+}
+@media handheld, screen and (max-width: 470px) {
+  /* line 191, ../sass/_progress-wizard.scss */
+  .progress-indicator {
+    font-size: 60%;
+  }
+  /* line 193, ../sass/_progress-wizard.scss */
+  .progress-indicator .rngsec {
+    width: 100%;
+  }
+}
+/* line 1, ../sass/_normalize.scss */
+body {
+  margin: 0;
+}
+
+/* line 5, ../sass/_normalize.scss */
+.f-step {
+  margin-top: 40px;
+}
+
+/* line 8, ../sass/_normalize.scss */
+.slt-sldr-sec {
+  width: 60%;
+  margin: auto;
+  position: relative;
+}
+/* line 12, ../sass/_normalize.scss */
+.slt-sldr-sec .l, .slt-sldr-sec .r {
+  width: 8%;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+/* line 19, ../sass/_normalize.scss */
+.slt-sldr-sec .l {
+  left: 0;
+}
+/* line 19, ../sass/_normalize.scss */
+.slt-sldr-sec .r {
+  right: 0;
+}
+
+/* line 21, ../sass/_normalize.scss */
+#film_roll_2 {
+  overflow: hidden;
+  padding: 10px 0;
+}
+/* line 24, ../sass/_normalize.scss */
+#film_roll_2 .film_roll_child {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
+/* line 28, ../sass/_normalize.scss */
+#film_roll_2 .film_roll_child.active {
+  -webkit-transform: scale(1.2, 1.2);
+  -moz-transform: scale(1.2, 1.2);
+  -o-transform: scale(1.2, 1.2);
+  z-index: 9;
+}
+/* line 33, ../sass/_normalize.scss */
+#film_roll_2 .film_roll_child.active span {
+  background: #3d3c41;
+  color: #ffffff;
+}
+/* line 38, ../sass/_normalize.scss */
+#film_roll_2 .film_roll_child span {
+  background: #e6e6e6;
+  text-align: center;
+  display: block;
+  padding: 3px;
+  margin: 0 5px 0 5px;
+  font-family: 'Lato', sans-serif;
+}
+/* line 46, ../sass/_normalize.scss */
+#film_roll_2 .film_roll_child img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 5px;
+}
+/* line 54, ../sass/_normalize.scss */
+#film_roll_2 .film_roll_wrapper {
+  overflow: visible !important;
+}
+
+/* line 58, ../sass/_normalize.scss */
+.film_roll_pager {
+  margin-top: 10px;
+}
+
+/* line 59, ../sass/_normalize.scss */
+.film_roll_prev, .film_roll_next {
+  background: none !important;
+  border: none !important;
+  opacity: 1 !important;
+  text-decoration: none;
+  color: #000 !important;
+}
+
+/* line 66, ../sass/_normalize.scss */
+.btn-primary1, .btn-primary2 {
+  background-image: url('../img/arro.png?1453194259');
+  text-decoration: none;
+  padding: 10px 5px;
+  font-size: 0;
+  width: 10px;
+  height: 22px;
+  position: absolute;
+  top: 50%;
+  margin-top: -11px;
+}
+
+/* line 77, ../sass/_normalize.scss */
+.btn-primary2 {
+  background-position: 10px 0;
+  right: -25px;
+}
+
+/* line 81, ../sass/_normalize.scss */
+.btn-primary1 {
+  left: -25px;
+}
+
+/* line 83, ../sass/_normalize.scss */
+.s-btn-sec {
+  text-align: center;
+  margin-bottom: 45px;
+}
+/* line 86, ../sass/_normalize.scss */
+.s-btn-sec h2 {
+  font-family: 'Lato', sans-serif;
+  color: #8e8e90;
+  font-weight: 300;
+}
+/* line 92, ../sass/_normalize.scss */
+.s-btn-sec .gbtn button {
+  padding: 7px 20px;
+  background-color: #d8d8d9;
+  color: #504f54;
+  border: none;
+  margin: 0 10px;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+}
+/* line 100, ../sass/_normalize.scss */
+.s-btn-sec .gbtn button.activ {
+  -webkit-transform: scale(1.2, 1.2);
+  -moz-transform: scale(1.2, 1.2);
+  -o-transform: scale(1.2, 1.2);
+  background-color: #504f54;
+  color: #fff;
+}
+
+/* line 108, ../sass/_normalize.scss */
+.srv-lsdr {
+  padding: 15px 0;
+  margin-bottom: 20px;
+}
+
+/* line 112, ../sass/_normalize.scss */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* line 117, ../sass/_normalize.scss */
+.im-sd-sec {
+  position: relative;
+}
+
+/* line 120, ../sass/_normalize.scss */
+.sm-img-cl {
+  position: absolute;
+  right: 15px;
+  bottom: 5px;
+}
+/* line 124, ../sass/_normalize.scss */
+.sm-img-cl .blk-im {
+  width: 80px;
+  border: 2px solid #8a8a8a;
+  display: inline-block;
+  bottom: 0;
+  cursor: pointer;
+}
+
+/* line 132, ../sass/_normalize.scss */
+.mtx-sec {
+  background-color: #e6e6e6;
+  padding: 10px 20px;
+}
+/* line 135, ../sass/_normalize.scss */
+.mtx-sec h2 {
+  color: #504f53;
+  margin-top: 0;
+}
+
+/* line 140, ../sass/_normalize.scss */
+.result-cl-sec {
+  margin-bottom: 25px;
+}
+
+/* line 143, ../sass/_normalize.scss */
+.dtext-m-sec {
+  background-color: #e6e6e6;
+  padding: 15px 30px;
+}
+/* line 146, ../sass/_normalize.scss */
+.dtext-m-sec p {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: #3d3c41;
+}
+/* line 151, ../sass/_normalize.scss */
+.dtext-m-sec h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  color: #3d3c41;
+}
+
+/* line 157, ../sass/_normalize.scss */
+.ltx-msec {
+  margin-bottom: 100px;
+}
+/* line 158, ../sass/_normalize.scss */
+.ltx-msec h2 {
+  margin-top: 0;
+}
+
+/* line 160, ../sass/_normalize.scss */
+.rangeslider__handle:after {
+  display: none !important;
+}
+
+/* line 163, ../sass/_normalize.scss */
+.rangeslider__handle {
+  height: 26px !important;
+}
+
+/* line 164, ../sass/_normalize.scss */
+.rangeslider--horizontal .rangeslider__handle {
+  top: -11px !important;
+  background-color: #65b32e;
+  border: none;
+  width: 4px;
+}
+
+/* line 170, ../sass/_normalize.scss */
+.rngsec span {
+  margin-top: 10px;
+  display: inline-block;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3d3c41;
+}
+/* line 177, ../sass/_normalize.scss */
+.rngsec span.alr {
+  float: right;
+}
+
+/* line 181, ../sass/_normalize.scss */
+.rngsec {
+  margin-bottom: 30px;
+  width: 75%;
+}
+/* line 184, ../sass/_normalize.scss */
+.rngsec h2 {
+  font-weight: 300;
+  font-family: 'Lato', sans-serif;
+  font-size: 26px;
+  color: #3d3c41;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+@media handheld, screen and (max-width: 470px) {
+  /* line 194, ../sass/_normalize.scss */
+  .rngsec {
+    width: 100%;
+  }
+}
+/* line 198, ../sass/_normalize.scss */
+.al-rngm-sec {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* line 202, ../sass/_normalize.scss */
+.r-inp-sec {
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 75px;
+}
+/* line 206, ../sass/_normalize.scss */
+.r-inp-sec input[type="text"] {
+  width: 100px;
+  border: 1px solid #555555;
+  padding: 8px;
+  display: inline-block;
+}
+/* line 212, ../sass/_normalize.scss */
+.r-inp-sec span {
+  display: inline-block;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3d3c41;
+  vertical-align: bottom;
+}
+/* line 220, ../sass/_normalize.scss */
+.r-inp-sec .rthtx {
+  display: inline-block;
+  float: right;
+}
+/* line 223, ../sass/_normalize.scss */
+.r-inp-sec .rthtx h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  display: block;
+  margin: 0;
+  color: #3d3c41;
+}
+/* line 230, ../sass/_normalize.scss */
+.r-inp-sec .rthtx p {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  color: #98989a;
+  margin: 0;
+}
+
+@media handheld, screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 239, ../sass/_normalize.scss */
+  .r-inp-sec .rthtx h2 {
+    font-size: 16px;
+  }
+}
+@media handheld, screen and (max-width: 370px) {
+  /* line 244, ../sass/_normalize.scss */
+  .s-btn-sec .gbtn button {
+    padding: 6px 12px;
+  }
+}
+@media handheld, screen and (max-width: 767px) {
+  /* line 249, ../sass/_normalize.scss */
+  .im-sd-sec {
+    margin-bottom: 20px;
+  }
+}
+/* line 253, ../sass/_normalize.scss */
+.g5cls {
+  margin: 10px 0;
+  width: 100%;
+}
+
+/* line 259, ../sass/_normalize.scss */
+.bx-wrapper .bx-next {
+  background: url('../img/arro.png?1453194259') 12px 0 !important;
+  right: -13px !important;
+}
+
+/* line 263, ../sass/_normalize.scss */
+.bx-wrapper .bx-prev {
+  background: url('../img/arro.png?1453194259') 0px 0 !important;
+  left: -14px !important;
+}
+
+/* line 267, ../sass/_normalize.scss */
+.bx-wrapper .bx-controls-direction a {
+  width: 12px !important;
+  height: 22px !important;
+}
+
+/* line 271, ../sass/_normalize.scss */
+.bx-viewport {
+  height: auto !important;
+  border: none !important;
+  box-shadow: none !important;
+  left: 0 !important;
+}
+/* line 276, ../sass/_normalize.scss */
+.bx-viewport .bxslider {
+  margin: 0;
+}
+/* line 279, ../sass/_normalize.scss */
+.bx-viewport a {
+  width: 19%;
+  padding: 0 15px;
+  float: left;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
+/* line 284, ../sass/_normalize.scss */
+.bx-viewport a.active {
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
+  -o-transform: scale(1.1, 1.1);
+  z-index: 9;
+  width: 24%;
+  padding: 0 23px;
+}
+/* line 289, ../sass/_normalize.scss */
+.bx-viewport a.active img {
+  width: 100%;
+}
+/* line 293, ../sass/_normalize.scss */
+.bx-viewport a.active span {
+  background: #3d3c41;
+  color: #ffffff;
+}
+/* line 297, ../sass/_normalize.scss */
+.bx-viewport a span {
+  background: #e6e6e6;
+  text-align: center;
+  display: block;
+  padding: 3px;
+  font-family: 'Lato', sans-serif;
+  overflow: hidden;
+}
+
+@media handheld, screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 308, ../sass/_normalize.scss */
+  .bx-viewport a {
+    padding: 0 7px;
+  }
+
+  /* line 311, ../sass/_normalize.scss */
+  .bx-viewport a.active {
+    padding: 0 16px;
+  }
+}
+@media handheld, screen and (min-width: 467px) and (max-width: 768px) {
+  /* line 316, ../sass/_normalize.scss */
+  .bx-viewport a {
+    padding: 0 8px;
+  }
+
+  /* line 319, ../sass/_normalize.scss */
+  .bx-viewport a.active {
+    padding: 0 16px;
+  }
+
+  /* line 322, ../sass/_normalize.scss */
+  .bx-viewport a span {
+    font-size: 14px;
+  }
+
+  /* line 325, ../sass/_normalize.scss */
+  .slt-sldr-sec {
+    width: 90%;
+  }
+}
+@media handheld, screen and (min-width: 240px) and (max-width: 466px) {
+  /* line 330, ../sass/_normalize.scss */
+  .bx-viewport a {
+    padding: 0 4px;
+  }
+
+  /* line 333, ../sass/_normalize.scss */
+  .bx-viewport a.active {
+    padding: 0 10px;
+  }
+
+  /* line 336, ../sass/_normalize.scss */
+  .bx-viewport a span {
+    font-size: 12px;
+  }
+
+  /* line 339, ../sass/_normalize.scss */
+  .slt-sldr-sec {
+    width: 100%;
+  }
+}
+/* line 343, ../sass/_normalize.scss */
+.progress-indicator p {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}

@@ -3,13 +3,28 @@ if ( !defined( 'ABSPATH' ) ) exit;
 if( !class_exists('WPB_Admin_Product') ) {
     class WPB_Admin_Product {
         public function __construct() {
+            add_filter('product_type_options', array(&$this, 'product_type_options'));
             add_action('woocommerce_product_option_terms', array(&$this, 'product_option_terms'), 10, 2);
             add_action('woocommerce_variation_options',array(&$this,'woocommerce_variation_options'),10,3);
             add_action( 'woocommerce_save_product_variation',array(&$this,'save_variation_settings_fields'), 10, 2 );
+            add_action('woocommerce_process_product_meta', array(&$this, 'save_custom_fields'), 10, 2);
+        }
+        public function product_type_options($types)
+        {
+            $types['wpb_check'] = array(
+                'id' => '_wpb_check',
+                'wrapper_class' => 'show_if_wpb show_if_variable',
+                'label' => __('Enable Product Builder', 'wpb'),
+                'description' => __('Enable Product Builder for this Product.', 'wpb')
+            );
+            return $types;
+        }
+        public function save_custom_fields($post_id, $post){
+            update_post_meta($post_id, '_wpb_check', isset($_POST['_wpb_check']) ? 'yes' : 'no');
         }
         public function product_option_terms($tax, $i){
             global $woocommerce, $thepostid;
-            if( in_array( $tax->attribute_type, array( 'carousel', 'size', 'carousel_with_option' ) ) ) {
+            if( in_array( $tax->attribute_type, array( 'carousel', 'size', 'extra' ) ) ) {
                 $attribute_taxonomy_name = wc_attribute_taxonomy_name( $tax->attribute_name );
             ?>
             <select multiple="multiple" data-placeholder="<?php _e( 'Select terms', 'yit' ); ?>" class="multiselect attribute_values wc-enhanced-select" name="attribute_values[<?php echo $i; ?>][]">

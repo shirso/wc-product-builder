@@ -6,7 +6,19 @@ jQuery(function($){
         },
         placeholder: 'ui-state-highlight'
     });
-    console.log(wpb_local_variables);
+  $('#wpb_normal_sheepit').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: false,
+        allowAdd: true,
+        allowAddN: false,
+        maxFormsCount: 100,
+        minFormsCount: 0,
+        iniFormsCount: 0,
+        data: inject_data_options
+    });
+
     $(document).on('click','.wpb_upload_button',function(e){
         e.preventDefault();
         var self=$(this);

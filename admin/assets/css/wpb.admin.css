@@ -39,3 +39,7 @@
     background: #fff !important;
     border: none !important
 }
+.wc_dinl{
+    display: inline-block;
+    margin-top: 10px;
+}
