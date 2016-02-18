@@ -6,6 +6,7 @@ jQuery(function($){
         },
         placeholder: 'ui-state-highlight'
     });
+    console.log(wpb_local_variables);
     $(document).on('click','.wpb_upload_button',function(e){
         e.preventDefault();
         var self=$(this);
@@ -24,9 +25,9 @@ jQuery(function($){
         var attachment_ids = $image_gallery_ids.val();
         var $wooThumbs = $(this).siblings('.wpb_image_thumb');
         product_gallery_frame = wp.media.frames.downloadable_file = wp.media({
-            title: 'Manage Variation Images',
+            title: wpb_local_variables.popup_title,
             button: {
-                text: 'Add to variation',
+                text:wpb_local_variables.button_text ,
             },
             multiple: true
 
@@ -39,7 +40,7 @@ jQuery(function($){
                     attachment_ids = attachment_ids ? attachment_ids + "," + attachment.id : attachment.id;
                     $wooThumbs.append('\
 							<li class="image" data-attachment_id="' + attachment.id + '">\
-								<a href="#" class="delete" title="Delete image"><img src="' + attachment.url + '" /></a>\
+								<a href="#" class="delete" title="'+wpb_local_variables.delete_image+'"><img src="' + attachment.url + '" /></a>\
 							</li>');
                 }
             });

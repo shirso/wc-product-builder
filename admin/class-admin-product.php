@@ -5,6 +5,7 @@ if( !class_exists('WPB_Admin_Product') ) {
         public function __construct() {
             add_action('woocommerce_product_option_terms', array(&$this, 'product_option_terms'), 10, 2);
             add_action('woocommerce_variation_options',array(&$this,'woocommerce_variation_options'),10,3);
+            add_action( 'woocommerce_save_product_variation',array(&$this,'save_variation_settings_fields'), 10, 2 );
         }
         public function product_option_terms($tax, $i){
             global $woocommerce, $thepostid;
@@ -28,13 +29,42 @@ if( !class_exists('WPB_Admin_Product') ) {
             }
         }
         public function woocommerce_variation_options($loop, $variation_data, $variation){
+            $variation_images=get_post_meta( $variation->ID, '_wpb_variation_images', true )
             ?>
             <div class="wpb_variation_images">
-                <ul class="wpb_image_thumb"></ul>
-                <input type="hidden" class="wpb_variation_image_gallery">
+                <ul class="wpb_image_thumb">
+                    <?php if(!empty($variation_images)){
+                        $image_array=explode(',',$variation_images);
+                        if(!empty($image_array)){
+                           foreach($image_array as $image){
+                               $url=wp_get_attachment_url($image);
+                               ?>
+                               <li class="image" data-attachment_id="<?=$image?>">
+                                   <a href="#" class="delete" title="<?=__('Delete Image','wpb')?>"><img src="<?=$url?>"></a>
+                               </li>
+                          <?php  }
+                        }
+                        ?>
+                    <?php }?>
+                </ul>
+                <?php
+                woocommerce_wp_hidden_input(
+                    array(
+                        'id'    => 'wpb_variation_images[' . $variation->ID . ']',
+                        'value' => $variation_images,
+                        'class'=>'wpb_variation_image_gallery'
+                    )
+                );
+                ?>
                 <a class="button button-primary wpb_multiple_image_upload"><?=__('Add Additional Images','wpb')?></a>
             </div>
             <?php
+        }
+        public function save_variation_settings_fields($post_id ){
+            $variation_images=$_POST['wpb_variation_images'][$post_id];
+            if( ! empty( $variation_images ) ) {
+                update_post_meta( $post_id, '_wpb_variation_images', esc_attr( $variation_images ) );
+            }
         }
     }
     new WPB_Admin_Product();
