@@ -1,5 +1,11 @@
 jQuery(function($){
     var mediaUploader = null;
+    $( ".wpb_image_thumb" ).sortable({
+        deactivate: function(en, ui) {
+            imageValueChange($(ui.item).parent());
+        },
+        placeholder: 'ui-state-highlight'
+    });
     $(document).on('click','.wpb_upload_button',function(e){
         e.preventDefault();
         var self=$(this);
@@ -40,6 +46,33 @@ jQuery(function($){
             $image_gallery_ids.val( attachment_ids );
         });
         product_gallery_frame.open();
+        $( ".wpb_image_thumb" ).sortable({
+            deactivate: function(en, ui) {
+                imageValueChange($(ui.item).parent());
+            },
+            placeholder: 'ui-state-highlight'
+        });
         return false;
     });
+    $(document).on('mouseenter mouseleave click','.wpb_image_thumb .delete',function(e){
+        if (e.type == 'click') {
+            var $tableCol = $(this).closest('li').parent();
+            $(this).closest('li').remove();
+            imageValueChange($tableCol);
+            return false;
+        }
+        if (e.type == 'mouseenter') {
+            $(this).find('img').animate({"opacity": 0.3}, 150);
+        }
+        if (e.type == 'mouseleave') {
+            $(this).find('img').animate({"opacity": 1}, 150);
+        }
+    });
+    var imageValueChange=function($tableCol){
+        var $selectedImgs = [];
+        $tableCol.find('.image').each(function(){
+            $selectedImgs.push($(this).attr('data-attachment_id'));
+        });
+        $tableCol.parent().find('.wpb_variation_image_gallery').val($selectedImgs.join(','));
+    }
 });

@@ -1,0 +1,41 @@
+.wpb_variation_images{
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+.wpb_image_thumb{
+    overflow: hidden;
+    width: 166px;
+    margin: 0 -2px;
+    max-width: 150px;
+}
+.wpb_image_thumb li {
+    float: left;
+    width: 46px;
+    margin: 0 2px 4px;
+    display: inline;
+    position: relative;
+}
+.wpb_image_thumb li .delete {
+    background: #eee url('../images/delete.png') no-repeat 50% 50%;
+    display: table-cell;
+    height: 44px;
+    width: 44px;
+    border: 1px solid #dfdfdf;
+    cursor: move;
+    vertical-align: middle;
+}
+.wpb_image_thumb li img {
+    width: 100% !important;
+    height: auto;
+    float: left;
+    display: block;
+    border: none !important;
+}
+.ui-state-highlight {
+    display: block;
+    height: 46px;
+    width: 46px;
+    background: #fff !important;
+    border: none !important
+}

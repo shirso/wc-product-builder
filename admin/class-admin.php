@@ -14,6 +14,7 @@ if( !class_exists('WPB_Admin') ) {
             wp_enqueue_media();
             wp_register_script('wpb_admin_script',WPB_PLUGIN_ADMIN_ASSETS_DIR.'/js/wpb.admin.js','',false,true);
             wp_enqueue_script('wpb_admin_script');
+            wp_enqueue_style('wpc_admin_style',WPB_PLUGIN_ADMIN_ASSETS_DIR.'/css/wpb.admin.css');
         }
     }
     new WPB_Admin();
