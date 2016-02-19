@@ -38,7 +38,11 @@ if( !class_exists('WPB_Admin_Attributes') ) {
             </div>
                 <?php }?>
             <?php if($attribute_type=="extra"){?>
-                        <script>var inject_data_options=[]</script>
+                        <script type="text/javascript">
+                            var inject_data_options=[],
+                                normaal_sheepit=true;
+
+                        </script>
                 <div class="form-field">
                     <label for="wpb_normal_sheepit"><?=__('Add Multiple Options','wpb')?></label>
                     <div id="wpb_normal_sheepit">
@@ -49,7 +53,7 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                          <div id="wpb_normal_sheepit_controls" class="row">
                              <div id="wpb_normal_sheepit_add" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Add Option','wpb'); ?></span></a></div>
                              <div id="wpb_normal_sheepit_remove_last" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Remove','wpb'); ?> </span></a></div>
-                             <div id="wpb_normal_sheepit_remove_all"><a><span><?php _e('Remove all','wpc'); ?></span></a></div>
+                             <div id="wpb_normal_sheepit_remove_all"><a><span><?php _e('Remove All','wpc'); ?></span></a></div>
                              <div id="wpb_normal_sheepit_add_n" class="col-sm-6">
                                  <div class="row">
                                      <div class="col-sm-2"><input id="wpb_normal_sheepit_add_n_input" type="text" size="4" /></div>
@@ -59,6 +63,76 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                     </div>
                  </div>
              <?php }?>
+            <?php if($attribute_type=="size"){?>
+                <div class="">
+                    <label for=""><?=__('Add Dimension Details','wpb')?></label>
+                    <div id="wpb_advanced_sheepit">
+                       <div id="wpb_advanced_sheepit_template">
+                          <table>
+                              <tr>
+                                  <th>
+                                      <label><?=__('Regulator Title','wpb')?></label>
+                                  </th>
+                                  <td>
+                                      <input type="text" class="wide-fat" name="" id="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <th>
+                                      <label><?=__('Regulator Min Value','wpb')?></label>
+                                  </th>
+                                  <td>
+                                      <input type="text" name="" size="5" id="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <th>
+                                      <label><?=__('Regulator Max Value','wpb')?></label>
+                                  </th>
+                                  <td>
+                                      <input type="text" name="" id="" size="5">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <th>
+                                      <label><?=__('Regulator Unit','wpb')?></label>
+                                  </th>
+                                  <td>
+                                      <input type="text" id="" name="" size="10">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <th>
+                                      <label><?=__('Drop Down Title','wpb')?></label>
+                                  </th>
+                                  <td>
+                                      <input type="text" class="widefat" name="" id="">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <th>
+                                      <label><?=__('Drop Down Unit','wpb')?></label>
+                                  </th>
+                                  <td>
+                                      <input type="text" name="" size="10" id="">
+                                  </td>
+                              </tr>
+                          </table>
+                         </div>
+                        <div id="wpb_advanced_sheepit_noforms_template"><?php _e('No Dimension','wpb'); ?></div>
+                        <div id="wpb_advanced_sheepit_controls" class="row">
+                            <div id="wpb_advanced_sheepit_add" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Add Dimension','wpb'); ?></span></a></div>
+                            <div id="wpb_advanced_sheepit_remove_last" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Remove','wpb'); ?> </span></a></div>
+                            <div id="wpb_advanced_sheepit_remove_all"><a><span><?php _e('Remove All','wpc'); ?></span></a></div>
+                            <div id="wpb_advanced_sheepit_add_n" class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-2"><input id="wpb_advanced_sheepit_add_n_input" type="text" size="4" /></div>
+                                    <div class="col-sm-10 " id="wpb_advanced_sheepit_add_n_button"><a class="button button-default"><span><?php _e('Add','wpb'); ?> </span></a></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              <?php }?>
             <?php
         }
         public function add_image_uploader_to_edit_form($term){
@@ -87,7 +161,10 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                     }
                 }
                 ?>
-                <script>var inject_data_options=<?=json_encode($inject_data);?></script>
+                <script>
+                    var inject_data_options=<?=json_encode($inject_data);?>,
+                        normaal_sheepit=true;
+                </script>
                 <tr class="form-field">
                     <th>
                         <label for="wpb_normal_sheepit"><?=__('Add Multiple Options','wpb')?></label>
