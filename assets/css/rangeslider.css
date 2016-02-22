@@ -90,8 +90,3 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
   -webkit-box-shadow: 0 0 8px rgba(255, 0, 255, 0.9);
   box-shadow: 0 0 8px rgba(255, 0, 255, 0.9);
 }
-/*** Custom CSS*/
-.wpb_aldnn{ display: none;opacity: 0; }
-.wpb_tabs{-webkit-transition: all 0.5s;  -moz-transition: all 0.5s;  -o-transition: all 0.5s;}
-.wpb_onedblk{display: block; opacity: 1;}
-.progress-indicator > li p{cursor: pointer;}

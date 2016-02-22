@@ -20,16 +20,17 @@ if (!class_exists('WPB_Frontend_Product')) {
             global $post, $wpdb, $product, $woocommerce;
             $attributes = $product->get_variation_attributes();
             $attribute_types=self::get_variation_attributes_types($attributes);
-            print_r($attribute_types);
             ?>
            <div id="wc-product-builder">
+
                <div id="wpb_steps" class="f-step">
                    <ul class="progress-indicator">
                        <?php if(!empty($attributes)){
                            $c=0;
                            foreach($attributes as $name => $options){
+                               $attribute_type=self::get_variation_attribute_type($name);
                            ?>
-                            <li data-tab="#wpb-steps-<?=$name?>" <?php if($c==0){?>class="completed"<?php }?>>
+                            <li data-tab="#wpb-steps-<?=$name?>" data-type="<?=$attribute_type?>" <?php if($c==0){?>class="completed acctive"<?php }?>>
                                 <p><?=wc_attribute_label($name);?></p>
                                     <span class="bubble"></span>
                             </li>
@@ -37,18 +38,115 @@ if (!class_exists('WPB_Frontend_Product')) {
                    </ul>
                </div>
                 <div id="wpb_step_tab">
+
             <?php if(!empty($attributes)){
                 $c=0;
                 foreach($attributes as $name => $options){
                     $classes=$c==0? 'wpb_onedblk' : 'wpb_aldnn'
                   ?>
-                    <div id="wpb-steps-<?=$name?>" class="wpb_tabs <?=$classes?>"><?=wc_attribute_label($name);?>
-
+                    <div id="wpb-steps-<?=$name?>" class="wpb_tabs <?=$classes?>">
+                        <?php
+                        $all_terms=get_terms($name);
+                        $attribute_type=self::get_variation_attribute_type($name);
+                        ?>
+                          <?php if($attribute_type=="carousel"){?>
+                              <?php if(!empty($all_terms)){?>
+                        <figure class="slt-sldr-sec">
+                            <ul id="bxlider_<?=$name;?>" class="bxslider">
+                            <?php foreach($all_terms as $term){?>
+                                <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {
+                                    $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
+                                    ?>
+                                    <?php if(!empty($term_image)){?>
+                                    <li class="g5cls">
+                                          <div class="wpb_terms" data-taxonmoy="<?=$name?>" data-term="<?=$term->term_id?>"><img src="<?=$term_image?>"><span><?=$term->name;?></span></div>
+                                    </li>
+                                    <?php }?>
+                               <?php }?>
+                             <?php }?>
+                             </ul>
+                         </figure>
+                            <?php }?>
+                        <?php }?>
+                        <?php if($attribute_type=="extra"){ ?>
+                            <?php if(!empty($all_terms)){?>
+                                <figure class="slt-sldr-sec">
+                                    <ul id="bxlider_<?=$name;?>" class="bxslider">
+                                        <?php foreach($all_terms as $term){?>
+                                            <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {
+                                                $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
+                                                ?>
+                                                <?php if(!empty($term_image)){?>
+                                                    <li class="g5cls">
+                                                        <div class="wpb_terms" data-type="<?=$attribute_type;?>" data-taxonmoy="<?=$name?>" data-term="<?=$term->term_id?>"><img src="<?=$term_image?>"><span><?=$term->name;?></span></div>
+                                                        <div class="wpb_button_div wpb_hidden">
+                                                            <?php $term_options=get_option('_wpb_attribute_options_'.$term->term_id)?>
+                                                            <?php if(!empty($term_options)){ ?>
+                                                                <?php foreach($term_options as $option){ ?>
+                                                                <button class="wpb_extra"><?=$option;?></button>
+                                                                <?php }?>
+                                                            <?php }?>
+                                                        </div>
+                                                    </li>
+                                                <?php }?>
+                                            <?php }?>
+                                        <?php }?>
+                                    </ul>
+                                </figure>
+                            <?php }?>
+                        <?php }?>
+                        <?php if($attribute_type=="size"){ ?>
+                        <?php if(!empty($all_terms)){?>
+                            <?php foreach($all_terms as $term){?>
+                                <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {?>
+                                   <?php $term_size_option=get_option('_wpb_size_options_'.$term->term_id); ?>
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="rng-sl-sec">
+                                    <div class="rngsec">
+                                        <h2><?=@$term_size_option["regulator_title"]?></h2>
+                                <div class="wbp_slider" id="wpb_slider_<?=$term->term_id;?>" data-text="wpb_slider_value_<?=$term->term_id;?>" data-min="<?=@$term_size_option["regulator_min"]?>" data-step="10" data-max="<?=@$term_size_option["regulator_max"]?>"></div>
+                                        <span><?=@$term_size_option["regulator_min"]?> <?=@$term_size_option["regulator_unit"]?></span>
+                                        <span class="alr"><?=@$term_size_option["regulator_max"]?> <?=@$term_size_option["regulator_unit"]?></span>
+                                     </div>
+                                 </div>
+                             </div>
+                            <div class="col-sm-5">
+                                <div class="r-inp-sec clearfix">
+                                    <input type="text" id="wpb_slider_value_<?=$term->term_id;?>">
+                                    <span><?=@$term_size_option["regulator_unit"]?></span>
+                                    <div class="rthtx">
+                                        <h2><?=@$term_size_option["dropdown_title"]?>:
+                                            <select class="wpb-rngslct">
+                                                <option value="">---</option>
+                                                <?php if(!empty($term_size_option["dropdown_options"])){ ?>
+                                                    <?php foreach($term_size_option["dropdown_options"] as $option){ ?>
+                                                        <option value="<?=$option?>"><?=$option?></option>
+                                                     <?php }?>
+                                                <?php }?>
+                                            </select><?=@$term_size_option["dropdown_unit"]?></h2>
+                                        <p><?=__('Set','wpb')?></p>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                                    <?php }?>
+                                <?php }?>
+                         <?php }?>
+                        <?php }?>
                     </div>
                  <?php
                     $c++;
                 }
             }?>
+                    <section class="s-btn-sec wpb_hidden" id="wpb_extra_options">
+                        <div class="container">
+                            <h2><?=__('Additional Options','wpb')?></h2>
+                            <div class="gbtn" id="wpb_button_div">
+
+                            </div>
+                        </div>
+                    </section>
                 </div>
            </div>
         <?php
@@ -94,6 +192,13 @@ if (!class_exists('WPB_Frontend_Product')) {
             }
             return $types;
         }
+        public function get_variation_attribute_type( $name ) {
+            global $wpdb;
+            $attribute_name = substr($name, 3);
+            $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute_name'");
+            return  $attribute->attribute_type;
+        }
+
     }
     new WPB_Frontend_Product();
 }

@@ -304,6 +304,7 @@ if( !class_exists('WPB_Admin_Attributes') ) {
         public function delete_taxonomy_custom_meta($term_id){
             delete_option( '_wpb_variation_attr_image_'.$term_id );
             delete_option( '_wpb_attribute_options_'.$term_id );
+            delete_option( '_wpb_size_options_'.$term_id );
         }
         public function woocommerce_product_attribute_columns($columns){
             $columns['wpb_attr_image']=__('Thumbnail', 'wpb');
