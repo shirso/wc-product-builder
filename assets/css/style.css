@@ -637,7 +637,7 @@ body {
 
   /* line 325, ../sass/_normalize.scss */
   .slt-sldr-sec {
-    width: 78%;
+    width: 70%;
   }
 }
 @media handheld, screen and (min-width: 240px) and (max-width: 466px) {
@@ -728,7 +728,7 @@ body {
 .wpb_hidden{display: none;}
 .gbtn{margin-top: 15px;}
 
-#main:after,#main:before{
+.wpb-body-product #main.clearfix:after,.wpb-body-product #main.clearfix::before{
   display: block!important;
 }
 

@@ -1,11 +1,5 @@
 jQuery(function($){
-    //var bx=  $('.bxslider').bxSlider({
-    //    minSlides: 5,
-    //    maxSlides: 5,
-    //    slideWidth: 360,
-    //    slideMargin: 5,
-    //    pager:false
-    //});
+ $("#main").removeClass("clearfix");
   $(".wpb_carousel").each(function(){
         var id=$(this).attr("id"),
             right=id+"_right",
