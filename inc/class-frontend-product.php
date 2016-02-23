@@ -60,8 +60,8 @@ if (!class_exists('WPB_Frontend_Product')) {
                                     $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
                                     ?>
                                     <?php if(!empty($term_image)){?>
-                                        <div id='<?=$name?>_<?=$counting?>' data-taxonomy="<?=$name;?>" data-term="<?=$term->term_id;?>" data-type="<?=$attribute_type;?>">
-                                            <a class="wpb_terms" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
+                                        <div id='<?=$name?>_<?=$counting?>'>
+                                            <a class="wpb_terms" data-taxonomy="<?=$name;?>" data-term="<?=$term->slug;?>" data-type="<?=$attribute_type;?>" data-counting="<?=$counting?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
                                         </div>
                                     <?php }?>
                                 <?php if($default_value==$term->slug){$default=$counting;} $counting++;}?>
@@ -82,8 +82,8 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                 $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
                                                 ?>
                                                 <?php if(!empty($term_image)){?>
-                                                    <div id='<?=$name?>_<?=$counting?>' data-taxonomy="<?=$name;?>" data-term="<?=$term->term_id;?>" data-type="<?=$attribute_type;?>">
-                                                        <a class="wpb_terms" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
+                                                    <div id='<?=$name?>_<?=$counting?>'>
+                                                        <a class="wpb_terms" data-taxonomy="<?=$name;?>" data-term="<?=$term->slug;?>" data-type="<?=$attribute_type;?>" data-counting="<?=$counting?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
                                                         <div class="wpb_button_div wpb_hidden">
                                                             <?php $term_options=get_option('_wpb_attribute_options_'.$term->term_id)?>
                                                                 <?php if(!empty($term_options)){ ?>

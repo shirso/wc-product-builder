@@ -1,11 +1,12 @@
 jQuery(function($){
  $("#main").removeClass("clearfix");
+    var fr=[];
   $(".wpb_carousel").each(function(){
         var id=$(this).attr("id"),
             right=id+"_right",
             left=id+"_left",
             default_value=typeof $("#"+id+"_default")!="undefined"? parseInt($("#"+id+"_default").val()):0;
-        var fr = new FilmRoll({
+         var film_roll = new FilmRoll({
           container: '#'+id,
           prev: '#'+left,
           next: '#'+right,
@@ -15,13 +16,7 @@ jQuery(function($){
           animation:500,
           start_index:default_value
       });
-      $('#'+id).on('film_roll:moved', function(event) {
-         console.log(fr.index);
-      });
-      $('#'+id +'div.film_roll_child').on('click',function() {
-          alert("test");
-        //  fr.moveToChild(this);
-      });
+      fr.push({id:id,roll:film_roll});
   });
  $(document).on('click','.progress-indicator li p',function(e){
      e.preventDefault();
@@ -62,13 +57,13 @@ jQuery(function($){
     });
     $(document).on("click",".wpb_terms",function(e){
         e.preventDefault();
-        var parent=$(this).parent().parent();
-        parent.find('li div').removeClass('active');
-       $(this).addClass('active');
         if($(this).data("type")=="extra"){
             $("#wpb_button_div").html($(this).parent().find(".wpb_button_div").html());
         }
-
+        var carousel_id="wpb_carousel_"+$(this).data("taxonomy"),
+            filterd_fr= _.findWhere(fr,{id:carousel_id}),
+            move_index=$(this).data("counting");
+            filterd_fr.roll.moveToIndex(move_index);
     });
     $(document).on("click",".wpb_extra",function(e){
         e.preventDefault();
