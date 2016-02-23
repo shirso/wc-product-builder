@@ -4,8 +4,8 @@ jQuery(function($){
         var id=$(this).attr("id"),
             right=id+"_right",
             left=id+"_left",
-            default_value= parseInt($("#"+id+"_default").val());
-      fr = new FilmRoll({
+            default_value=typeof $("#"+id+"_default")!="undefined"? parseInt($("#"+id+"_default").val()):0;
+        var fr = new FilmRoll({
           container: '#'+id,
           prev: '#'+left,
           next: '#'+right,
@@ -15,7 +15,13 @@ jQuery(function($){
           animation:500,
           start_index:default_value
       });
-
+      $('#'+id).on('film_roll:moved', function(event) {
+         console.log(fr.index);
+      });
+      $('#'+id +'div.film_roll_child').on('click',function() {
+          alert("test");
+        //  fr.moveToChild(this);
+      });
   });
  $(document).on('click','.progress-indicator li p',function(e){
      e.preventDefault();
