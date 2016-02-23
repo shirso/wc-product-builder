@@ -16,7 +16,9 @@ if (!class_exists('WPB_Scripts_Styles')) {
                 wp_enqueue_style('wpb_style_bx_slider', WPB_PLUGIN_ASSETS_DIR . '/css/jquery.bxslider.css', false);
                // wp_enqueue_style('wpb_style_flex_slider', WPB_PLUGIN_ASSETS_DIR . '/css/flexslider.css', false);
                 wp_enqueue_style('wpb_style_styles', WPB_PLUGIN_ASSETS_DIR . '/css/style.css', false);
-                wp_enqueue_script('wpb_script_bxslider',WPB_PLUGIN_ASSETS_DIR.'/js/jquery.bxslider.js',array('jquery'),null,true);
+                //wp_enqueue_script('wpb_script_bxslider',WPB_PLUGIN_ASSETS_DIR.'/js/jquery.bxslider.js',array('jquery'),null,true);
+                wp_enqueue_script('wpb_script_toucheswipe',WPB_PLUGIN_ASSETS_DIR.'/js/jquery.touchSwipe.min.js',array('jquery'),null,true);
+                wp_enqueue_script('wpb_script_flim_roll',WPB_PLUGIN_ASSETS_DIR.'/js/jquery.film_roll.min.js',array('jquery'),null,true);
                 //wp_enqueue_script('wpb_script_flexslider',WPB_PLUGIN_ASSETS_DIR.'/js/jquery.flexslider-min.js',array('jquery'),null,true);
                // wp_enqueue_script('wpb_script_rangeslider',WPB_PLUGIN_ASSETS_DIR.'/js/rangeslider.js',array('jquery'),null,true);
               //  wp_enqueue_script('wpb_script_rangeslider',WPB_PLUGIN_ASSETS_DIR.'/js/simple-slider.min.js',array('jquery'),null,true);

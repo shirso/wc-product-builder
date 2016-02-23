@@ -48,50 +48,58 @@ if (!class_exists('WPB_Frontend_Product')) {
                         <?php
                         $all_terms=get_terms($name);
                         $attribute_type=self::get_variation_attribute_type($name);
+                        $default_value=$product->get_variation_default_attribute($name);
+                        $default=0;
                         ?>
                           <?php if($attribute_type=="carousel"){?>
                               <?php if(!empty($all_terms)){?>
                         <figure class="slt-sldr-sec">
-                            <ul id="bxlider_<?=$name;?>" class="bxslider">
-                            <?php foreach($all_terms as $term){?>
+                            <div id='wpb_carousel_<?=$name;?>' class='wpb_carousel'>
+                            <?php $counting=0; foreach($all_terms as $term){?>
                                 <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {
                                     $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
                                     ?>
                                     <?php if(!empty($term_image)){?>
-                                    <li class="g5cls">
-                                          <div class="wpb_terms" data-taxonmoy="<?=$name?>" data-term="<?=$term->term_id?>"><img src="<?=$term_image?>"><span><?=$term->name;?></span></div>
-                                    </li>
+                                        <div id='<?=$name?>_<?=$counting?>'>
+                                            <a class="wpb_terms" data-taxonomy="<?=$name;?>" data-term="<?=$term->term_id;?>" data-type="<?=$attribute_type;?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
+                                        </div>
                                     <?php }?>
-                               <?php }?>
-                             <?php }?>
-                             </ul>
+                                <?php if($default_value==$term->slug){$default=$counting;} $counting++;}?>
+                            <?php }?>
+                             </div>
+                            <input type="hidden" id="wpb_carousel_<?=$name;?>_default" value="<?=$default;?>">
+                            <a href='#' class='btn-primary1' id='wpb_carousel_<?=$name;?>_left'>&lsaquo;</a>
+                            <a href='#' class='btn-primary2' id='wpb_carousel_<?=$name;?>_right'>&rsaquo;</a>
                          </figure>
                             <?php }?>
                         <?php }?>
                         <?php if($attribute_type=="extra"){ ?>
                             <?php if(!empty($all_terms)){?>
                                 <figure class="slt-sldr-sec">
-                                    <ul id="bxlider_<?=$name;?>" class="bxslider">
-                                        <?php foreach($all_terms as $term){?>
+                                    <div id='wpb_carousel_<?=$name;?>' class='wpb_carousel'>
+                                        <?php $counting=0; foreach($all_terms as $term){?>
                                             <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {
                                                 $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
                                                 ?>
                                                 <?php if(!empty($term_image)){?>
-                                                    <li class="g5cls">
-                                                        <div class="wpb_terms" data-type="<?=$attribute_type;?>" data-taxonmoy="<?=$name?>" data-term="<?=$term->term_id?>"><img src="<?=$term_image?>"><span><?=$term->name;?></span></div>
+                                                    <div id='<?=$name?>_<?=$counting?>'>
+                                                        <a class="wpb_terms" data-taxonomy="<?=$name;?>" data-term="<?=$term->term_id;?>" data-type="<?=$attribute_type;?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
                                                         <div class="wpb_button_div wpb_hidden">
                                                             <?php $term_options=get_option('_wpb_attribute_options_'.$term->term_id)?>
-                                                            <?php if(!empty($term_options)){ ?>
-                                                                <?php foreach($term_options as $option){ ?>
-                                                                <button class="wpb_extra"><?=$option;?></button>
-                                                                <?php }?>
-                                                            <?php }?>
+                                                                <?php if(!empty($term_options)){ ?>
+                                                                    <?php foreach($term_options as $option){ ?>
+                                                                        <button class="wpb_extra"><?=$option;?></button>
+                                                                        <?php }?>
+                                                                 <?php }?>
                                                         </div>
-                                                    </li>
+                                                    </div>
                                                 <?php }?>
-                                            <?php }?>
+                                                <?php if($default_value==$term->slug){$default=$counting;} $counting++;}?>
                                         <?php }?>
-                                    </ul>
+                                    </div>
+                                    <input type="hidden" id="wpb_carousel_<?=$name;?>_default" value="<?=$default;?>">
+                                    <a href='#' class='btn-primary1' id='wpb_carousel_<?=$name;?>_left'>&lsaquo;</a>
+                                    <a href='#' class='btn-primary2' id='wpb_carousel_<?=$name;?>_right'>&rsaquo;</a>
                                 </figure>
                             <?php }?>
                         <?php }?>

@@ -1,11 +1,28 @@
 jQuery(function($){
-    var bx=  $('.bxslider').bxSlider({
-        minSlides: 5,
-        maxSlides: 5,
-        slideWidth: 360,
-        slideMargin: 5,
-        pager:false
-    });
+    //var bx=  $('.bxslider').bxSlider({
+    //    minSlides: 5,
+    //    maxSlides: 5,
+    //    slideWidth: 360,
+    //    slideMargin: 5,
+    //    pager:false
+    //});
+  $(".wpb_carousel").each(function(){
+        var id=$(this).attr("id"),
+            right=id+"_right",
+            left=id+"_left",
+            default_value= parseInt($("#"+id+"_default").val());
+      fr = new FilmRoll({
+          container: '#'+id,
+          prev: '#'+left,
+          next: '#'+right,
+          pager:false,
+          scroll:false,
+          force_buttons:true,
+          animation:500,
+          start_index:default_value
+      });
+
+  });
  $(document).on('click','.progress-indicator li p',function(e){
      e.preventDefault();
      var $li=$(this).parent();
@@ -39,7 +56,6 @@ jQuery(function($){
             max: max,
             step:step,
             slide: function( event, ui ) {
-               // $( "#amount" ).val( "$" + ui.value );
                 $("#"+textValue).val( ui.value );
             }
         });

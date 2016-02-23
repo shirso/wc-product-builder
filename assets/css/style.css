@@ -97,10 +97,9 @@
   height: 20px;
   background: #cececf;
   left: 50%;
-  top: 0;
   border-radius: 100%;
   margin-left: -25px;
-  margin-top: 32px;
+  box-sizing: border-box;
   z-index: 99;
   border-right: 15px solid #fff;
   border-left: 15px solid #fff;
@@ -127,6 +126,7 @@
 .progress-indicator > li.completed .bubble:before, .progress-indicator > li.completed .bubble:after {
   background-color: #65b32e;
   border-color: #fff;
+  box-sizing: border-box;
 }
 /* line 106, ../sass/_progress-wizard.scss */
 .progress-indicator > li.active {
@@ -271,7 +271,7 @@ body {
 
 /* line 8, ../sass/_normalize.scss */
 .slt-sldr-sec {
-  width: 60%;
+  width:46%;
   margin: auto;
   margin-bottom: 50px;
   position: relative;
@@ -293,54 +293,6 @@ body {
   right: 0;
 }
 
-/* line 21, ../sass/_normalize.scss */
-#film_roll_2 {
-  overflow: hidden;
-  padding: 10px 0;
-}
-/* line 24, ../sass/_normalize.scss */
-#film_roll_2 .film_roll_child {
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-}
-/* line 28, ../sass/_normalize.scss */
-#film_roll_2 .film_roll_child.active {
-  -webkit-transform: scale(1.2, 1.2);
-  -moz-transform: scale(1.2, 1.2);
-  -o-transform: scale(1.2, 1.2);
-  z-index: 9;
-}
-/* line 33, ../sass/_normalize.scss */
-#film_roll_2 .film_roll_child.active span {
-  background: #3d3c41;
-  color: #ffffff;
-}
-/* line 38, ../sass/_normalize.scss */
-#film_roll_2 .film_roll_child span {
-  background: #e6e6e6;
-  text-align: center;
-  display: block;
-  padding: 3px;
-  margin: 0 5px 0 5px;
-  font-family: 'Lato', sans-serif;
-}
-/* line 46, ../sass/_normalize.scss */
-#film_roll_2 .film_roll_child img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 5px;
-}
-/* line 54, ../sass/_normalize.scss */
-#film_roll_2 .film_roll_wrapper {
-  overflow: visible !important;
-}
-
-/* line 58, ../sass/_normalize.scss */
-.film_roll_pager {
-  margin-top: 10px;
-}
 
 /* line 59, ../sass/_normalize.scss */
 .film_roll_prev, .film_roll_next {
@@ -685,7 +637,7 @@ body {
 
   /* line 325, ../sass/_normalize.scss */
   .slt-sldr-sec {
-    width: 90%;
+    width: 78%;
   }
 }
 @media handheld, screen and (min-width: 240px) and (max-width: 466px) {
@@ -706,7 +658,7 @@ body {
 
   /* line 339, ../sass/_normalize.scss */
   .slt-sldr-sec {
-    width: 100%;
+    width:75%;
   }
 }
 /* line 343, ../sass/_normalize.scss */
@@ -775,3 +727,65 @@ body {
 }
 .wpb_hidden{display: none;}
 .gbtn{margin-top: 15px;}
+
+#main:after,#main:before{
+  display: block!important;
+}
+
+.wpb_carousel{
+  overflow: hidden;
+  padding: 10px 0;
+}
+/* line 24, ../sass/_normalize.scss */
+.wpb_carousel .film_roll_child {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
+/* line 28, ../sass/_normalize.scss */
+.wpb_carousel .film_roll_child.active {
+  -webkit-transform: scale(1.2, 1.2);
+  -moz-transform: scale(1.2, 1.2);
+  -o-transform: scale(1.2, 1.2);
+  z-index: 9;
+}
+/* line 33, ../sass/_normalize.scss */
+.wpb_carousel .film_roll_child.active span {
+  background: #3d3c41;
+  color: #ffffff;
+}
+/* line 38, ../sass/_normalize.scss */
+.wpb_carousel .film_roll_child span {
+  background: #e6e6e6;
+  text-align: center;
+  display: block;
+  padding: 3px;
+  margin: 0 5px 0 5px;
+  font-family: 'Lato', sans-serif;
+}
+/* line 46, ../sass/_normalize.scss */
+.wpb_carousel .film_roll_child img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 5px;
+  height: 70px;
+}
+/* line 54, ../sass/_normalize.scss */
+.wpb_carousel .film_roll_wrapper {
+  overflow: visible !important;
+}
+
+/* line 58, ../sass/_normalize.scss */
+.film_roll_pager {
+  margin-top: 10px;
+}
+
+/* line 59, ../sass/_normalize.scss */
+.film_roll_prev, .film_roll_next {
+  background: none !important;
+  border: none !important;
+  opacity: 1 !important;
+  text-decoration: none;
+  color: #000 !important;
+}
