@@ -17,6 +17,16 @@ jQuery(function($){
           start_index:default_value
       });
       fr.push({id:id,roll:film_roll});
+      $('#'+id).on('film_roll:moved', function(event) {
+          var taxonomyName=id.substr(13,id.length),
+              containerDiv=$("#"+taxonomyName+'_'+film_roll.index),
+              term=containerDiv.find('.wpb_terms').data('term'),
+              type=containerDiv.find('.wpb_terms').data('type');
+          if(type=="extra"){
+              $("#wpb_button_div").html(containerDiv.find(".wpb_button_div").html());
+          }
+          $("#"+taxonomyName).val(term).change();
+      });
   });
  $(document).on('click','.progress-indicator li p',function(e){
      e.preventDefault();
@@ -63,7 +73,10 @@ jQuery(function($){
         var carousel_id="wpb_carousel_"+$(this).data("taxonomy"),
             filterd_fr= _.findWhere(fr,{id:carousel_id}),
             move_index=$(this).data("counting");
-            filterd_fr.roll.moveToIndex(move_index);
+            filterd_fr.roll.moveToIndex(move_index),
+            taxonomyName=$(this).data("taxonomy"),
+            term=$(this).data("term");
+        $("#"+taxonomyName).val(term).change();
     });
     $(document).on("click",".wpb_extra",function(e){
         e.preventDefault();
