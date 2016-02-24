@@ -13,8 +13,97 @@ if (!class_exists('WPB_Frontend_Product')) {
                 add_action('woocommerce_before_single_product_summary', 'woocommerce_template_single_title', 10);
                 remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
                 add_action('woocommerce_before_single_product_summary', array(&$this, 'add_product_designer'), 20);
-                add_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 30);
+                add_action('woocommerce_before_single_product_summary',array(&$this,'summary_wrapper_start'),23);
+                add_action('woocommerce_before_single_product_summary',array(&$this,'image_wrapper_start'),26);
+                add_action('woocommerce_before_single_product_summary',array(&$this,'show_product_images'), 30);
+                add_action('woocommerce_before_single_product_summary', array(&$this,'image_wrapper_end'), 31);
+                add_action('woocommerce_before_single_product_summary', array(&$this,'wpb_summary_div'), 35);
+                add_action( 'woocommerce_after_single_product_summary', array(&$this,'summary_wrapper_end'), 5 );
+                add_filter( 'woocommerce_available_variation',array( $this, 'alter_variation_json' ), 10, 3 );
             }
+        }
+        public function alter_variation_json($variation_data, $wc_product_variable, $variation_obj){
+            $img_ids = $this->get_all_image_ids( $variation_data['variation_id'] );
+            $images = $this->get_all_image_sizes( $img_ids );
+
+            $variation_data['additional_images'] = $images;
+
+            return $variation_data;
+        }
+        public function summary_wrapper_start(){
+            ?>
+            <section class="result-cl-sec">
+            <div class="row">
+       <?php }
+        public function summary_wrapper_end(){
+            ?>
+            </div>
+            </section>
+       <?php }
+        public  function image_wrapper_start(){
+           ?>
+             <div class="col-sm-8">
+
+            <?php
+        }
+        public function image_wrapper_end(){
+          ?>
+            </div>
+<?php
+        }
+        public function wpb_summary_div(){
+            ?>
+             <div class="col-sm-4">
+                 <div class="mtx-sec clearfix">
+                     <h2>Aktuelle Auswahl:</h2>
+                     <div class="table-responsive mtbl">
+                         <table class="table">
+                             <tbody>
+                             <tr class="grn"><td>Modell:</td><td>Toni</td></tr>
+                             <tr class="grn"><td>Holzart:</td><td>Eiche geolt</td></tr>
+                             <tr><td>Lange</td><td>180cm</td></tr>
+                             <tr><td>Breite:	</td><td>60cm</td></tr>
+                             <tr><td>Kantenprofil:</td><td>abgerundet</td></tr>
+                             <tr><td>Gestell:</td><td>8 x 4cm Eiche</td></tr>
+                             <tr><td>Extras:</td><td>ausziehbar</td></tr>
+                             </tbody>
+                         </table>
+                     </div>
+                     <h6>Aktueller Preis : <span> 1299,00 &euro;</span></h6>
+                     <p>inkl. 19% MwSt, versandkostenfrei Lieferzeit 4 Wochen</p>
+                     <div class="m-cntinu"><a href="#">Weiter</a></div>
+                 </div>
+             </div>
+          <?php
+        }
+        public function show_product_images(){
+            global $post, $woocommerce, $product;
+            $default_variation_id=self::get_default_variation_id();
+            $initial_product_id = ($default_variation_id) ? $default_variation_id : $product->id;
+            $initial_product_id = self::get_selected_varaiton( $initial_product_id );
+            $image_ids = self::get_all_image_ids( $initial_product_id );
+          //  $default_image_ids = $this->get_all_image_ids( $product->id );
+            $default_image=$image_ids[0];
+            $other_images=$image_ids;
+            unset($other_images[0]);
+
+          ?>
+             <div class="im-sd-sec">
+                 <?php $default_url=wp_get_attachment_url($default_image);?>
+                 <img src="<?=$default_url?>" class="img-responsive">
+                 <?php if(!empty($other_images)){?>
+                     <div class="sm-img-cl">
+                     <?php foreach($other_images as $img){
+                         $other_url=wp_get_attachment_url($img);
+                     ?>
+                         <div class="blk-im">
+                             <img src="<?=$other_url;?>" class="img-responsive">
+                         </div>
+                <?php }?>
+                </div>
+                <?php }?>
+             </div>
+        <?php
         }
         public function add_product_designer(){
             global $post, $wpdb, $product, $woocommerce;
@@ -205,6 +294,130 @@ if (!class_exists('WPB_Frontend_Product')) {
             $attribute_name = substr($name, 3);
             $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute_name'");
             return  $attribute->attribute_type;
+        }
+        public function get_default_variation_id(){
+            global $post, $woocommerce, $product;
+            global $post, $woocommerce, $product;
+
+            $defaultVarId = $product->id;
+
+            if($product->product_type == 'variable'){
+
+                $defaults = $product->get_variation_default_attributes();
+                $variations = array_reverse($product->get_available_variations());
+
+                if(!empty($defaults)){
+                    foreach($variations as $variation){
+
+                        $varCount = count($variation["attributes"]);
+
+                        $attMatch = 0; $partMatch = 0; foreach($defaults as $dAttName => $dAttVal){
+                            // $defaultVarId = false;
+                            if(isset($variation["attributes"]['attribute_'.$dAttName])) {
+                                $theAtt = $variation["attributes"]['attribute_'.$dAttName];
+                                if($theAtt == $dAttVal) {
+                                    $attMatch++;
+                                    $partMatch++;
+                                }
+                                if($theAtt == ""){
+                                    $partMatch++;
+                                }
+                            }
+                        }
+
+                        if($varCount == $partMatch) {
+                            $defaultVarId = $variation['variation_id'];
+                        }
+
+                        if($varCount == $attMatch) {
+                            $defaultVarId = $variation['variation_id'];
+                        }
+                    }
+                }
+
+            }
+
+            return $defaultVarId;
+        }
+        public function get_selected_varaiton($currId){
+            global $post, $woocommerce, $product;
+
+            if($product->product_type == 'variable'){
+
+                $variations = $product->get_available_variations();
+
+                foreach($variations as $variation)
+                {
+                    $attCount = count($variation['attributes']);
+                    $attMatches = 0;
+
+                    foreach($variation['attributes'] as $attKey => $attVal)
+                    {
+                        if(isset($_GET[$attKey]) && $_GET[$attKey] == $attVal) $attMatches++;
+                    }
+
+                    if($attCount == $attMatches) $currId = $variation['variation_id'];
+                }
+
+            }
+
+            return $currId;
+        }
+        public function get_all_image_ids($id){
+
+            $allImages = array();
+            $show_gallery = false;
+
+            // Main Image
+            if(has_post_thumbnail($id)){
+
+                $allImages[] = get_post_thumbnail_id($id);
+
+            } else {
+
+                $prod = get_post($id);
+                $prodParentId = $prod->post_parent;
+                if($prodParentId && has_post_thumbnail($prodParentId)){
+                    $allImages[] = get_post_thumbnail_id($prodParentId);
+                } else {
+                    $allImages[] = 'placeholder';
+                }
+
+                $show_gallery = true;
+            }
+
+            // WooThumb Attachments
+            if(get_post_type($id) == 'product_variation'){
+                $wtAttachments = array_filter(explode(',', get_post_meta($id, '_wpb_variation_images', true)));
+                $allImages = array_merge($allImages, $wtAttachments);
+            }
+
+            // Gallery Attachments
+
+            if(get_post_type($id) == 'product' || $show_gallery){
+                $product = get_product($id);
+                $attachIds = $product->get_gallery_attachment_ids();
+
+                if(!empty($attachIds)){
+                    $allImages = array_merge($allImages, $attachIds);
+                }
+            }
+
+            return $allImages;
+        }
+        public function get_all_image_sizes($imgIds){
+            $images = array();
+            if(!empty($imgIds)) {
+                foreach ($imgIds as $imgId){
+
+                        if (!array_key_exists($imgId, $images)) {
+                          //  $attachment = $this->wp_get_attachment_url($imgId);
+                            $images[] = wp_get_attachment_url($imgId);
+                        }
+
+                }
+            }
+            return $images;
         }
 
     }

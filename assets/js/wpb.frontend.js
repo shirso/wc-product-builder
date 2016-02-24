@@ -1,4 +1,7 @@
 jQuery(function($){
+   var  $variations_form = $('form.variations_form'),
+        variations_json = $variations_form.attr('data-product_variations'),
+        variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false;
  $("#main").removeClass("clearfix");
     var fr=[];
   $(".wpb_carousel").each(function(){
@@ -83,4 +86,14 @@ jQuery(function($){
         $(this).parent().find(".wpb_extra").removeClass("activ");
         $(this).addClass("activ");
     });
+    $variations_form.on( 'show_variation', function( event, variation ) {
+            console.log(variations);
+    });
+    var wpb_get_variation_data=function(var_id){
+        var variation_data = false;
+        $.each( variations, function( index, variation ){
+
+        })
+
+    };
 });

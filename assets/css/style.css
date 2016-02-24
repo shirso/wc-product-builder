@@ -789,3 +789,88 @@ body {
   text-decoration: none;
   color: #000 !important;
 }
+.wpb-body-product .entry-summary{display: none;}
+
+
+.table-responsive{min-height: .01%;
+  overflow-x: auto;}
+
+table{
+  width: 100%;
+}
+td{padding: 4px 0!important;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  line-height:inherit;
+  vertical-align: top;
+  border: none !important;
+}
+
+tr.grn{color: #85c25c;}
+
+.mtx-sec h6,.mtx-sec h2{
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  margin: 0;
+  color: #444448;
+}.mtx-sec h2{font-weight: 600; margin-bottom: 15px;}
+.mtx-sec h6>span{margin-left: 15px;}
+.mtx-sec p{
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  margin: 5px 0;
+  color: #969697;
+}
+.mtx-sec{width: 100%;}
+.mtbl{
+  margin-bottom: 15px;
+}
+.m-cntinu{
+  display: inline-block;
+  float: right;
+  margin: 13px;}
+.m-cntinu a{
+  display: inline-block;
+  padding:13px 78px;
+  color: #ffffff!important;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  background: #65b32e;
+  position: relative;
+  text-decoration: none;
+}
+.m-cntinu a:after{
+  position: absolute;
+  left: 0;
+  content: "";
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+}
+.m-cntinu a:hover:after{ width: 92%;border: 1px solid #ffffff; height: 80%; left:4%; top: 10%;}
+.mtx-sec {
+  background-color: #e6e6e6;
+  padding: 10px 23px;
+}
+@media handheld, screen and (min-width: 992px) and (max-width: 1199px) {
+  .mtbl td{padding: 0!important;}
+  .m-cntinu{margin: 9px;} .m-cntinu a{padding: 11px 78px!important;}
+  .mtx-sec h6, .mtx-sec h2{font-size: 17px;}
+}
+@media handheld, screen and (min-width: 768px) and (max-width: 991px) {
+  .result-cl-sec .col-sm-4,.result-cl-sec .col-sm-8{width: 100%;}
+  .result-cl-sec .col-sm-8{margin-bottom: 25px;}
+}
+@media handheld, screen and (max-width:360px) {
+  .mtx-sec h6, .mtx-sec h2{font-size: 17px;}
+}
+@media screen and (max-width: 767px){
+.result-cl-sec .col-sm-8{ width: 100%; float: none;}
+}
