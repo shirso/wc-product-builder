@@ -87,13 +87,37 @@ jQuery(function($){
         $(this).addClass("activ");
     });
     $variations_form.on( 'show_variation', function( event, variation ) {
-            console.log(variations);
+        var variation_data=wpb_get_variation_data(variation.variation_id),
+            main_image=variation_data.image_link,
+            additional_images=variation_data.additional_images;
+        $("#wpb_main_images").attr("src",main_image);
+        if(typeof additional_images !="undefined" && additional_images.length>0){
+            $("#wpb_additional_images").html("");
+            $.each(additional_images,function(k,i){
+              var html="";
+               html+='<div class="blk-im">';
+             html+='<img src="'+i+'" class="img-responsive wpb_additional_image">'
+              html+='</div>';
+               $("#wpb_additional_images").append($(html));
+            });
+        }else{
+           $("#wpb_additional_images").html("");
+        }
     });
     var wpb_get_variation_data=function(var_id){
         var variation_data = false;
         $.each( variations, function( index, variation ){
-
-        })
-
+            if( parseInt(variation.variation_id) === parseInt(var_id) ) {
+                variation_data = variation;
+            }
+        });
+        return variation_data;
     };
+    $(document).on('click','.wpb_additional_image',function(e){
+        e.preventDefault();
+        var old_url=$(this).attr("src"),
+            new_url=$("#wpb_main_images").attr("src");
+        $(this).attr("src",new_url);
+        $("#wpb_main_images").attr("src",old_url);
+    });
 });

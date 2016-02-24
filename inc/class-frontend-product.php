@@ -24,6 +24,7 @@ if (!class_exists('WPB_Frontend_Product')) {
         }
         public function alter_variation_json($variation_data, $wc_product_variable, $variation_obj){
             $img_ids = $this->get_all_image_ids( $variation_data['variation_id'] );
+            unset($img_ids[0]);
             $images = $this->get_all_image_sizes( $img_ids );
 
             $variation_data['additional_images'] = $images;
@@ -90,14 +91,14 @@ if (!class_exists('WPB_Frontend_Product')) {
           ?>
              <div class="im-sd-sec">
                  <?php $default_url=wp_get_attachment_url($default_image);?>
-                 <img src="<?=$default_url?>" class="img-responsive">
+                 <img src="<?=$default_url?>" class="img-responsive" id="wpb_main_images">
                  <?php if(!empty($other_images)){?>
-                     <div class="sm-img-cl">
+                     <div class="sm-img-cl" id="wpb_additional_images">
                      <?php foreach($other_images as $img){
                          $other_url=wp_get_attachment_url($img);
                      ?>
                          <div class="blk-im">
-                             <img src="<?=$other_url;?>" class="img-responsive">
+                             <img src="<?=$other_url;?>" class="wpb_additional_image img-responsive">
                          </div>
                 <?php }?>
                 </div>
