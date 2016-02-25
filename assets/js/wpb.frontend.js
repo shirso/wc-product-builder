@@ -131,7 +131,6 @@ jQuery(function($){
             visited_tabs.push(nextLiTab);
         }
        $nextLiP.trigger('click');
-        console.log(visited_tabs);
 
     });
 });
