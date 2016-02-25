@@ -68,8 +68,8 @@ if (!class_exists('WPB_Frontend_Product')) {
                              </tbody>
                          </table>
                      </div>
-                     <h6>Aktueller Preis : <span> 1299,00 &euro;</span></h6>
-                     <p>inkl. 19% MwSt, versandkostenfrei Lieferzeit 4 Wochen</p>
+                     <h6><?=__("Total Price","wpb")?> : <span id="wpb_price_html"> </span></h6>
+                     <div id="wpb_german_market"></div>
                      <div class="m-cntinu"><a href="#" id="wpb_continue_button"><?=__("Continue","wpb")?></a></div>
                  </div>
              </div>
@@ -219,14 +219,8 @@ if (!class_exists('WPB_Frontend_Product')) {
                                     <span><?=@$term_size_option["regulator_unit"]?></span>
                                     <div class="rthtx">
                                         <h2><?=@$term_size_option["dropdown_title"]?>:
-                                            <select class="wpb-rngslct">
-                                                <option value="">---</option>
-                                                <?php if(!empty($term_size_option["dropdown_options"])){ ?>
-                                                    <?php foreach($term_size_option["dropdown_options"] as $option){ ?>
-                                                        <option value="<?=$option?>"><?=$option?></option>
-                                                     <?php }?>
-                                                <?php }?>
-                                            </select><?=@$term_size_option["dropdown_unit"]?></h2>
+                                           <input type="text" class="wpb-rngtxt">
+                                            <?=@$term_size_option["dropdown_unit"]?></h2>
                                         <p><?=__('Set','wpb')?></p>
                                     </div>
                                 </div>

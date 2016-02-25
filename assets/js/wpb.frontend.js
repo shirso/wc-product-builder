@@ -3,6 +3,9 @@ jQuery(function($){
         variations_json = $variations_form.attr('data-product_variations'),
         variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false;
     $("#main").removeClass("clearfix");
+    if($('.wpb-body-product').find('.shipping_de_string').length>0){
+        $("#wpb_german_market").append($(".shipping_de_string"));
+    }
     var fr=[];
     var visited_tabs=[];
     visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
@@ -60,9 +63,9 @@ jQuery(function($){
              $("#wpb_extra_options").addClass("wpb_hidden");
          }
      if($li.hasClass("last_one")){
-         $("#wpb_continue_button").text("Add to Cart");
+         $("#wpb_continue_button").text(wpb_local_params.add_to_cart_text);
      }else{
-         $("#wpb_continue_button").text("Continue");
+         $("#wpb_continue_button").text(wpb_local_params.continue_text);
      }
  });
     $(".wbp_slider").each(function(){
@@ -104,6 +107,7 @@ jQuery(function($){
         var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
             main_image=variation_data.image_link;
             additional_images=variation_data.additional_images;
+        console.log(variation_data);
         $("#wpb_main_images").attr("src",main_image);
         if(typeof additional_images !="undefined" && additional_images.length>0){
             $("#wpb_additional_images").html("");
@@ -117,6 +121,9 @@ jQuery(function($){
         }else{
            $("#wpb_additional_images").html("");
         }
+        $("#wpb_price_html").html(variation_data.price_html);
+        $("#wpb_price_html").find(".price").removeAttr("style");
+
     });
     $(document).on('click','.wpb_additional_image',function(e){
         e.preventDefault();
