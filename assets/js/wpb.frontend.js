@@ -45,10 +45,9 @@ jQuery(function($){
      e.preventDefault();
      var $li=$(this).parent(),
          tabId=$li.data('tab');
-     if(!$li.hasClass('acctive')){
+     if($li.hasClass('acctive') || !_.contains(visited_tabs,tabId)){
          return false;
      }
-     alert('test');
          $('.wpb_tabs').removeClass('wpb_onedblk');
          $('.wpb_tabs').addClass('wpb_aldnn');
          $(tabId).removeClass('wpb_aldnn');
@@ -98,8 +97,6 @@ jQuery(function($){
         $(this).addClass("activ");
     });
     $variations_form.on( 'show_variation', function( event, variation ) {
-
-        //console.log(variation.additional_images);
         var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
             main_image=variation_data.image_link;
             additional_images=variation_data.additional_images;
@@ -128,7 +125,7 @@ jQuery(function($){
         e.preventDefault();
         var $activeLi=$('#progress-indicator').find('.acctive'),
             $nextLi=$activeLi.next(),
-            $nextLiP=$nextLi.find("p"),
+            $nextLiP=$nextLi.find("a"),
             nextLiTab=$nextLi.data("tab");
         if(!_.contains(visited_tabs,nextLiTab)){
             visited_tabs.push(nextLiTab);
