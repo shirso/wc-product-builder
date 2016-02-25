@@ -2,8 +2,11 @@ jQuery(function($){
    var  $variations_form = $('form.variations_form'),
         variations_json = $variations_form.attr('data-product_variations'),
         variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false;
- $("#main").removeClass("clearfix");
+    $("#main").removeClass("clearfix");
     var fr=[];
+    var visited_tabs=[];
+   visited_tabs.push($(".progress-indicator").find("li:first").data("tab"));
+    console.log(visited_tabs);
   $(".wpb_carousel").each(function(){
         var id=$(this).attr("id"),
             right=id+"_right",
@@ -38,11 +41,14 @@ jQuery(function($){
             }
         });
     });
- $(document).on('click','.progress-indicator li p',function(e){
+ $(document).on('click','#progress-indicator li a',function(e){
      e.preventDefault();
-     var $li=$(this).parent();
+     var $li=$(this).parent(),
+         tabId=$li.data('tab');
      if(!$li.hasClass('acctive')){
-         var tabId=$li.data('tab');
+         return false;
+     }
+     alert('test');
          $('.wpb_tabs').removeClass('wpb_onedblk');
          $('.wpb_tabs').addClass('wpb_aldnn');
          $(tabId).removeClass('wpb_aldnn');
@@ -55,8 +61,6 @@ jQuery(function($){
          }else{
              $("#wpb_extra_options").addClass("wpb_hidden");
          }
-     }
-
  });
     $(".wbp_slider").each(function(){
         var min=$(this).data('min'),
@@ -119,5 +123,18 @@ jQuery(function($){
             new_url=$("#wpb_main_images").attr("src");
         $(this).attr("src",new_url);
         $("#wpb_main_images").attr("src",old_url);
+    });
+    $(document).on("click","#wpb_continue_button",function(e){
+        e.preventDefault();
+        var $activeLi=$('#progress-indicator').find('.acctive'),
+            $nextLi=$activeLi.next(),
+            $nextLiP=$nextLi.find("p"),
+            nextLiTab=$nextLi.data("tab");
+        if(!_.contains(visited_tabs,nextLiTab)){
+            visited_tabs.push(nextLiTab);
+        }
+       $nextLiP.trigger('click');
+        console.log(visited_tabs);
+
     });
 });

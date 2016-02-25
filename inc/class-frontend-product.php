@@ -27,7 +27,6 @@ if (!class_exists('WPB_Frontend_Product')) {
             unset($img_ids[0]);
             $images = $this->get_all_image_sizes( $img_ids );
            $variation_data['additional_images'] = $images;
-
             return $variation_data;
         }
         public function summary_wrapper_start(){
@@ -71,7 +70,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                      </div>
                      <h6>Aktueller Preis : <span> 1299,00 &euro;</span></h6>
                      <p>inkl. 19% MwSt, versandkostenfrei Lieferzeit 4 Wochen</p>
-                     <div class="m-cntinu"><a href="#">Weiter</a></div>
+                     <div class="m-cntinu"><a href="#" id="wpb_continue_button"><?=__("Continue","wpb")?></a></div>
                  </div>
              </div>
           <?php
@@ -113,15 +112,17 @@ if (!class_exists('WPB_Frontend_Product')) {
            <div id="wc-product-builder">
 
                <div id="wpb_steps" class="f-step">
-                   <ul class="progress-indicator">
+                   <ul class="progress-indicator" id="progress-indicator">
                        <?php if(!empty($attributes)){
                            $c=0;
                            foreach($attributes as $name => $options){
                                $attribute_type=self::get_variation_attribute_type($name);
                            ?>
                             <li data-tab="#wpb-steps-<?=$name?>" data-type="<?=$attribute_type?>" <?php if($c==0){?>class="completed acctive"<?php }?>>
+                                <a href="#">
                                 <p><?=wc_attribute_label($name);?></p>
                                     <span class="bubble"></span>
+                                 </a>
                             </li>
                         <?php $c++;}}?>
                    </ul>
