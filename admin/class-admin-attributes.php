@@ -28,7 +28,7 @@ if( !class_exists('WPB_Admin_Attributes') ) {
         }
         public function add_attr_type_to_add_form(){
             $taxonomy_name=esc_html($_GET["taxonomy"]);
-            $attribute_type=self::get_variation_attribute_type($taxonomy_name);
+            $attribute_type=WPB_Common_Functions::get_variation_attribute_type($taxonomy_name);
             ?>
             <?php if($attribute_type== "carousel" || $attribute_type== "extra"){?>
             <div class="form-field">
@@ -153,7 +153,7 @@ if( !class_exists('WPB_Admin_Attributes') ) {
             $attr_options= get_option( '_wpb_attribute_options_'.$term_id );
             $attr_size_options=get_option('_wpb_size_options_'.$term_id);
             $taxonomy_name=esc_html($_GET["taxonomy"]);
-            $attribute_type=self::get_variation_attribute_type($taxonomy_name);
+            $attribute_type=WPB_Common_Functions::get_variation_attribute_type($taxonomy_name);
             ?>
             <?php if($attribute_type== "carousel" || $attribute_type== "extra"){?>
         <tr class="form-field">
@@ -317,26 +317,6 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                 echo '<img src="' . $attr_image . '" style="height:40px"/>';}
             }
         }
-        public function get_variation_attributes_types( $attributes ) {
-            global $wpdb;
-            $types = array();
-            if( !empty($attributes) ) {
-                foreach( $attributes as $name => $options ) {
-                    $attribute_name = substr($name, 3);
-                    $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute_name'");
-                    $types[$name] = $attribute->attribute_type;
-                }
-            }
-            return $types;
-        }
-        public function get_variation_attribute_type( $name ) {
-            global $wpdb;
-            $attribute_name = substr($name, 3);
-            $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute_name'");
-            return  $attribute->attribute_type;
-        }
-
-
     }
     new WPB_Admin_Attributes();
 }

@@ -15,6 +15,7 @@ if (!defined('WPB_PLUGIN_ASSETS_DIR')) define('WPB_PLUGIN_ASSETS_DIR', plugin_di
 if (!class_exists('WC_Product_Builder')) {
     class WC_Product_Builder{
         public function __construct(){
+            require_once(WPB_PLUGIN_DIR.'/inc/class-common-functions.php');
             require_once(WPB_PLUGIN_ADMIN_DIR . '/class-admin.php');
             require_once(WPB_PLUGIN_DIR . '/inc/class-scripts-styles.php');
             add_action( 'init', array( &$this, 'init') );

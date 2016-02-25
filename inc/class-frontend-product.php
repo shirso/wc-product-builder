@@ -9,7 +9,7 @@ if (!class_exists('WPB_Frontend_Product')) {
         }
         public function remove_main_image(){
             global $post;
-            if ($this->wpb_enabled($post->ID)) {
+            if (WPB_Common_Functions::wpb_enabled($post->ID)) {
                 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
                 add_action('woocommerce_before_single_product_summary', 'woocommerce_template_single_title', 10);
                 remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
@@ -23,9 +23,9 @@ if (!class_exists('WPB_Frontend_Product')) {
             }
         }
         public function alter_variation_json($variation_data, $wc_product_variable, $variation_obj){
-            $img_ids = $this->get_all_image_ids( $variation_data['variation_id'] );
+            $img_ids = WPB_Common_Functions::get_all_image_ids( $variation_data['variation_id'] );
             unset($img_ids[0]);
-            $images = $this->get_all_image_sizes( $img_ids );
+            $images = WPB_Common_Functions::get_all_image_sizes( $img_ids );
            $variation_data['additional_images'] = $images;
             return $variation_data;
         }
@@ -51,22 +51,27 @@ if (!class_exists('WPB_Frontend_Product')) {
 <?php
         }
         public function wpb_summary_div(){
+            global $post, $wpdb, $product, $woocommerce;
+            $attributes = $product->get_variation_attributes();
             ?>
              <div class="col-sm-4">
                  <div class="mtx-sec clearfix">
-                     <h2>Aktuelle Auswahl:</h2>
+                     <h2><?=__("Current selection","wpb")?>:</h2>
                      <div class="table-responsive mtbl">
+                         <?php if(!empty($attributes)){?>
                          <table class="table">
                              <tbody>
-                             <tr class="grn"><td>Modell:</td><td>Toni</td></tr>
-                             <tr class="grn"><td>Holzart:</td><td>Eiche geolt</td></tr>
-                             <tr><td>Lange</td><td>180cm</td></tr>
-                             <tr><td>Breite:	</td><td>60cm</td></tr>
-                             <tr><td>Kantenprofil:</td><td>abgerundet</td></tr>
-                             <tr><td>Gestell:</td><td>8 x 4cm Eiche</td></tr>
-                             <tr><td>Extras:</td><td>ausziehbar</td></tr>
+                              <?php foreach($attributes as $name=>$options){?>
+                                  <tr id="wpb_selections_<?=$name;?>" class="wpb_hidden">
+                                    <td>
+                                        <?=wc_attribute_label($name);?>
+                                    </td>
+                                      <td class="values"></td>
+                                  </tr>
+                                <?php }?>
                              </tbody>
                          </table>
+                        <?php }?>
                      </div>
                      <h6><?=__("Total Price","wpb")?> : <span id="wpb_price_html"> </span></h6>
                      <div id="wpb_german_market"></div>
@@ -77,11 +82,10 @@ if (!class_exists('WPB_Frontend_Product')) {
         }
         public function show_product_images(){
             global $post, $woocommerce, $product;
-            $default_variation_id=self::get_default_variation_id();
+            $default_variation_id=WPB_Common_Functions::get_default_variation_id();
             $initial_product_id = ($default_variation_id) ? $default_variation_id : $product->id;
-            $initial_product_id = self::get_selected_varaiton( $initial_product_id );
-            $image_ids = self::get_all_image_ids( $initial_product_id );
-          //  $default_image_ids = $this->get_all_image_ids( $product->id );
+            $initial_product_id = WPB_Common_Functions::get_selected_varaiton( $initial_product_id );
+            $image_ids = WPB_Common_Functions::get_all_image_ids( $initial_product_id );
             $default_image=$image_ids[0];
             $other_images=$image_ids;
             unset($other_images[0]);
@@ -107,7 +111,7 @@ if (!class_exists('WPB_Frontend_Product')) {
         public function add_product_designer(){
             global $post, $wpdb, $product, $woocommerce;
             $attributes = $product->get_variation_attributes();
-            $attribute_types=self::get_variation_attributes_types($attributes);
+            $attribute_types=WPB_Common_Functions::get_variation_attributes_types($attributes);
             ?>
            <div id="wc-product-builder">
 
@@ -118,7 +122,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                            $attribute_count=count($attributes);
 
                            foreach($attributes as $name => $options){
-                               $attribute_type=self::get_variation_attribute_type($name);
+                               $attribute_type=WPB_Common_Functions::get_variation_attribute_type($name);
                                $classes=$c==0 ? "completed acctive" : "";
                                if($c==$attribute_count-1){$classes.=" last_one";}
                            ?>
@@ -141,7 +145,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                     <div id="wpb-steps-<?=$name?>" class="wpb_tabs <?=$classes?>">
                         <?php
                         $all_terms=get_terms($name);
-                        $attribute_type=self::get_variation_attribute_type($name);
+                        $attribute_type=WPB_Common_Functions::get_variation_attribute_type($name);
                         $default_value=$product->get_variation_default_attribute($name);
                         $default=0;
                         ?>
@@ -251,174 +255,11 @@ if (!class_exists('WPB_Frontend_Product')) {
         public function add_class($classes)
         {
             global $post;
-            if ($this->wpb_enabled($post->ID)) {
+            if (WPB_Common_Functions::wpb_enabled($post->ID)) {
                 $classes[] = 'wpb-body-product';
             }
             return $classes;
         }
-        public function wpb_enabled($product_id)
-        {
-            global $sitepress;
-            if ($sitepress && method_exists($sitepress, 'get_original_element_id')) {
-                $product_id = $sitepress->get_original_element_id($product_id, 'post_product');
-            }
-            return get_post_meta($product_id, '_wpb_check', true) == 'yes' && get_post_type($product_id) == 'product';
-        }
-        public function wbm_convert_string_value_to_int($value)
-        {
-
-            if ($value == 'yes') {
-                return 1;
-            } else if ($value == 'no') {
-                return 0;
-            } else {
-                return $value;
-            }
-
-        }
-        public function get_variation_attributes_types( $attributes ) {
-            global $wpdb;
-            $types = array();
-            if( !empty($attributes) ) {
-                foreach( $attributes as $name => $options ) {
-                    $attribute_name = substr($name, 3);
-                    $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute_name'");
-                    $types[$name] = $attribute->attribute_type;
-                }
-            }
-            return $types;
-        }
-        public function get_variation_attribute_type( $name ) {
-            global $wpdb;
-            $attribute_name = substr($name, 3);
-            $attribute = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name = '$attribute_name'");
-            return  $attribute->attribute_type;
-        }
-        public function get_default_variation_id(){
-            global $post, $woocommerce, $product;
-            global $post, $woocommerce, $product;
-
-            $defaultVarId = $product->id;
-
-            if($product->product_type == 'variable'){
-
-                $defaults = $product->get_variation_default_attributes();
-                $variations = array_reverse($product->get_available_variations());
-
-                if(!empty($defaults)){
-                    foreach($variations as $variation){
-
-                        $varCount = count($variation["attributes"]);
-
-                        $attMatch = 0; $partMatch = 0; foreach($defaults as $dAttName => $dAttVal){
-                            // $defaultVarId = false;
-                            if(isset($variation["attributes"]['attribute_'.$dAttName])) {
-                                $theAtt = $variation["attributes"]['attribute_'.$dAttName];
-                                if($theAtt == $dAttVal) {
-                                    $attMatch++;
-                                    $partMatch++;
-                                }
-                                if($theAtt == ""){
-                                    $partMatch++;
-                                }
-                            }
-                        }
-
-                        if($varCount == $partMatch) {
-                            $defaultVarId = $variation['variation_id'];
-                        }
-
-                        if($varCount == $attMatch) {
-                            $defaultVarId = $variation['variation_id'];
-                        }
-                    }
-                }
-
-            }
-
-            return $defaultVarId;
-        }
-        public function get_selected_varaiton($currId){
-            global $post, $woocommerce, $product;
-
-            if($product->product_type == 'variable'){
-
-                $variations = $product->get_available_variations();
-
-                foreach($variations as $variation)
-                {
-                    $attCount = count($variation['attributes']);
-                    $attMatches = 0;
-
-                    foreach($variation['attributes'] as $attKey => $attVal)
-                    {
-                        if(isset($_GET[$attKey]) && $_GET[$attKey] == $attVal) $attMatches++;
-                    }
-
-                    if($attCount == $attMatches) $currId = $variation['variation_id'];
-                }
-
-            }
-
-            return $currId;
-        }
-        public function get_all_image_ids($id){
-
-            $allImages = array();
-            $show_gallery = false;
-
-            // Main Image
-            if(has_post_thumbnail($id)){
-
-                $allImages[] = get_post_thumbnail_id($id);
-
-            } else {
-
-                $prod = get_post($id);
-                $prodParentId = $prod->post_parent;
-                if($prodParentId && has_post_thumbnail($prodParentId)){
-                    $allImages[] = get_post_thumbnail_id($prodParentId);
-                } else {
-                    $allImages[] = 'placeholder';
-                }
-
-                $show_gallery = true;
-            }
-
-            // WooThumb Attachments
-            if(get_post_type($id) == 'product_variation'){
-                $wtAttachments = array_filter(explode(',', get_post_meta($id, '_wpb_variation_images', true)));
-                $allImages = array_merge($allImages, $wtAttachments);
-            }
-
-            // Gallery Attachments
-
-            if(get_post_type($id) == 'product' || $show_gallery){
-                $product = get_product($id);
-                $attachIds = $product->get_gallery_attachment_ids();
-
-                if(!empty($attachIds)){
-                    $allImages = array_merge($allImages, $attachIds);
-                }
-            }
-
-            return $allImages;
-        }
-        public function get_all_image_sizes($imgIds){
-            $images = array();
-            if(!empty($imgIds)) {
-                foreach ($imgIds as $imgId){
-
-                        if (!array_key_exists($imgId, $images)) {
-                          //  $attachment = $this->wp_get_attachment_url($imgId);
-                            $images[] = wp_get_attachment_url($imgId);
-                        }
-
-                }
-            }
-            return $images;
-        }
-
     }
     new WPB_Frontend_Product();
 }
