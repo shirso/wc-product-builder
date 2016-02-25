@@ -91,7 +91,7 @@ if (!class_exists('WPB_Frontend_Product')) {
             unset($other_images[0]);
 
           ?>
-             <div class="im-sd-sec">
+             <div class="im-sd-sec" id="im-sd-sec">
                  <?php $default_url=wp_get_attachment_url($default_image);?>
                  <img src="<?=$default_url?>" class="img-responsive" id="wpb_main_images">
                  <?php if(!empty($other_images)){?>

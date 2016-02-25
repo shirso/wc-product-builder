@@ -40,6 +40,12 @@ jQuery(function($){
             }
             if( $("#"+taxonomyName).val()!=term) {
                 $("#" + taxonomyName).focusin().val(term).change();
+                $('#im-sd-sec').block({message: null,
+                    overlayCSS: {
+                        backgroundColor: '#fff',
+                        opacity: 0.6
+                    }
+                });
             }
         });
     });
@@ -97,6 +103,12 @@ jQuery(function($){
             taxonomyName=$(this).data("taxonomy"),
             term=$(this).data("term");
         $("#"+taxonomyName).val(term).change();
+        $('#im-sd-sec').block({message: null,
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.6
+            }
+        });
     });
     $(document).on("click",".wpb_extra",function(e){
         e.preventDefault();
@@ -107,7 +119,6 @@ jQuery(function($){
         var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
             main_image=variation_data.image_link;
             additional_images=variation_data.additional_images;
-        console.log(variation_data);
         $("#wpb_main_images").attr("src",main_image);
         if(typeof additional_images !="undefined" && additional_images.length>0){
             $("#wpb_additional_images").html("");
@@ -123,7 +134,7 @@ jQuery(function($){
         }
         $("#wpb_price_html").html(variation_data.price_html);
         $("#wpb_price_html").find(".price").removeAttr("style");
-
+        $("#im-sd-sec").unblock();
     });
     $(document).on('click','.wpb_additional_image',function(e){
         e.preventDefault();
