@@ -115,10 +115,14 @@ if (!class_exists('WPB_Frontend_Product')) {
                    <ul class="progress-indicator" id="progress-indicator">
                        <?php if(!empty($attributes)){
                            $c=0;
+                           $attribute_count=count($attributes);
+
                            foreach($attributes as $name => $options){
                                $attribute_type=self::get_variation_attribute_type($name);
+                               $classes=$c==0 ? "completed acctive" : "";
+                               if($c==$attribute_count-1){$classes.=" last_one";}
                            ?>
-                            <li data-tab="#wpb-steps-<?=$name?>" data-type="<?=$attribute_type?>" <?php if($c==0){?>class="completed acctive"<?php }?>>
+                            <li data-tab="#wpb-steps-<?=$name?>" data-type="<?=$attribute_type?>" class="<?=$classes?>">
                                 <a href="#">
                                 <p><?=wc_attribute_label($name);?></p>
                                     <span class="bubble"></span>

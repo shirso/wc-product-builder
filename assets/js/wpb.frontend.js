@@ -5,8 +5,7 @@ jQuery(function($){
     $("#main").removeClass("clearfix");
     var fr=[];
     var visited_tabs=[];
-   visited_tabs.push($(".progress-indicator").find("li:first").data("tab"));
-    console.log(visited_tabs);
+    visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
   $(".wpb_carousel").each(function(){
         var id=$(this).attr("id"),
             right=id+"_right",
@@ -127,10 +126,9 @@ jQuery(function($){
             $nextLi=$activeLi.next(),
             $nextLiP=$nextLi.find("a"),
             nextLiTab=$nextLi.data("tab");
-        if(!_.contains(visited_tabs,nextLiTab)){
+        if(!_.contains(visited_tabs,nextLiTab) && typeof nextLiTab!="undefined"){
             visited_tabs.push(nextLiTab);
         }
        $nextLiP.trigger('click');
-
     });
 });
