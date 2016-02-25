@@ -5,6 +5,7 @@ if (!class_exists('WPB_Frontend_Product')) {
         public function __construct(){
             add_filter('body_class', array(&$this, 'add_class'));
             add_action('template_redirect', array(&$this, 'remove_main_image'));
+            add_filter( 'woocommerce_available_variation',array( $this, 'alter_variation_json' ), 1, 3 );
         }
         public function remove_main_image(){
             global $post;
@@ -19,15 +20,13 @@ if (!class_exists('WPB_Frontend_Product')) {
                 add_action('woocommerce_before_single_product_summary', array(&$this,'image_wrapper_end'), 31);
                 add_action('woocommerce_before_single_product_summary', array(&$this,'wpb_summary_div'), 35);
                 add_action( 'woocommerce_after_single_product_summary', array(&$this,'summary_wrapper_end'), 5 );
-                add_filter( 'woocommerce_available_variation',array( $this, 'alter_variation_json' ), 10, 3 );
             }
         }
         public function alter_variation_json($variation_data, $wc_product_variable, $variation_obj){
             $img_ids = $this->get_all_image_ids( $variation_data['variation_id'] );
             unset($img_ids[0]);
             $images = $this->get_all_image_sizes( $img_ids );
-
-            $variation_data['additional_images'] = $images;
+           $variation_data['additional_images'] = $images;
 
             return $variation_data;
         }
