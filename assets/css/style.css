@@ -66,14 +66,14 @@
   border-radius: 100%;
   width: 20px;
   height: 20px;
-  background-color: #cececf;
   display: block;
-  margin: 12px auto 0.5em auto;
   border-top: 0px solid #fff;
   border-bottom: 0px solid #fff;
   border-left: 10px solid #fff;
   border-right: 10px solid #ffffff;
-  box-sizing: content-box;
+  box-sizing: border-box;
+  padding: 12px;
+  top: 12px;
 }
 /* line 81, ../sass/_progress-wizard.scss */
 .progress-indicator > li .bubble:before {
@@ -119,7 +119,7 @@
 }
 /* line 99, ../sass/_progress-wizard.scss */
 .progress-indicator > li.completed .bubble {
-  background-color: #65b32e;
+
   color: #65b32e;
 }
 /* line 9, ../sass/_progress-wizard.scss */
@@ -128,40 +128,22 @@
   border-color: #fff;
   box-sizing: border-box;
 }
-/* line 106, ../sass/_progress-wizard.scss */
-.progress-indicator > li.active {
-  color: #337AB7;
-}
-/* line 108, ../sass/_progress-wizard.scss */
-.progress-indicator > li.active .bubble {
-  background-color: #337AB7;
-  color: #337AB7;
-}
-/* line 9, ../sass/_progress-wizard.scss */
-.progress-indicator > li.active .bubble:before, .progress-indicator > li.active .bubble:after {
-  background-color: #337AB7;
-  border-color: #122a3f;
-}
+
 /* line 115, ../sass/_progress-wizard.scss */
 .progress-indicator > li a:hover .bubble {
-  background-color: #5671d0;
-  color: #5671d0;
+
 }
+.progress-indicator > li a{display: inline-block;}
+.progress-indicator > li a:hover p{
+  color: #65b32e!important;}
 /* line 9, ../sass/_progress-wizard.scss */
 .progress-indicator > li a:hover .bubble:before, .progress-indicator > li a:hover .bubble:after {
-  background-color: #5671d0;
-  border-color: #1f306e;
+  background-color: #65b32e;
+  box-sizing: border-box;
 }
+
 /* line 121, ../sass/_progress-wizard.scss */
-.progress-indicator > li.danger .bubble {
-  background-color: #d3140f;
-  color: #d3140f;
-}
-/* line 9, ../sass/_progress-wizard.scss */
-.progress-indicator > li.danger .bubble:before, .progress-indicator > li.danger .bubble:after {
-  background-color: #d3140f;
-  border-color: #440605;
-}
+
 /* line 124, ../sass/_progress-wizard.scss */
 .progress-indicator > li.warning .bubble {
   background-color: #edb10a;
@@ -174,13 +156,13 @@
 }
 /* line 127, ../sass/_progress-wizard.scss */
 .progress-indicator > li.info .bubble {
-  background-color: #5b32d6;
-  color: #5b32d6;
+  background-color: #65b32e;
+  color: #65b32e;
 }
 /* line 9, ../sass/_progress-wizard.scss */
 .progress-indicator > li.info .bubble:before, .progress-indicator > li.info .bubble:after {
-  background-color: #5b32d6;
-  border-color: #25135d;
+  background-color: #65b32e;
+  border-color: #65b32e;
 }
 /* line 135, ../sass/_progress-wizard.scss */
 .progress-indicator.stacked > li {
@@ -671,7 +653,7 @@ body {
 .wpb_aldnn{ height:0; opacity: 0; overflow: hidden;}
 .wpb_tabs{-webkit-transition: all 0.5s;  -moz-transition: all 0.5s;  -o-transition: all 0.5s;}
 .wpb_onedblk{height: auto; opacity: 1;}
-.progress-indicator > li p{cursor: pointer;}
+.progress-indicator > li p{cursor: pointer; color: #cccccc;}
 
 
 .rng-sl-sec .ui-slider-horizontal .ui-slider-handle {

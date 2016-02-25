@@ -59,6 +59,11 @@ jQuery(function($){
          }else{
              $("#wpb_extra_options").addClass("wpb_hidden");
          }
+     if($li.hasClass("last_one")){
+         $("#wpb_continue_button").text("Add to Cart");
+     }else{
+         $("#wpb_continue_button").text("Continue");
+     }
  });
     $(".wbp_slider").each(function(){
         var min=$(this).data('min'),
