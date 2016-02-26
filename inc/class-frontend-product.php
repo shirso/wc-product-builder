@@ -56,17 +56,29 @@ if (!class_exists('WPB_Frontend_Product')) {
             ?>
              <div class="col-sm-4">
                  <div class="mtx-sec clearfix">
-                     <h2><?=__("Current selection","wpb")?>:</h2>
+                     <h2><?=__("Current Selection","wpb")?>:</h2>
                      <div class="table-responsive mtbl">
                          <?php if(!empty($attributes)){?>
                          <table class="table">
                              <tbody>
-                              <?php foreach($attributes as $name=>$options){?>
+                              <?php foreach($attributes as $name=>$options){
+                                  $attribute_type=WPB_Common_Functions::get_variation_attribute_type($name);
+                                  ?>
                                   <tr id="wpb_selections_<?=$name;?>" class="wpb_hidden">
                                     <td class="name">
                                         <?=wc_attribute_label($name);?>
                                     </td>
-                                      <td class="values"></td>
+                                      <?php if($attribute_type =="carousel"){?>
+                                          <td><span class="values"></span></td>
+                                        <?php }?>
+                                      <?php if($attribute_type=="extra"){?>
+                                      <td>
+                                      <span class="values"></span> &nbsp; <span class="options"></span>
+                                      </td>
+                                        <?php }?>
+                                      <?php if($attribute_type=="size"){?>
+                                          <td></td>
+                                      <?php }?>
                                   </tr>
                                 <?php }?>
                              </tbody>
@@ -186,7 +198,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                             <?php $term_options=get_option('_wpb_attribute_options_'.$term->term_id)?>
                                                                 <?php if(!empty($term_options)){ ?>
                                                                     <?php foreach($term_options as $option){ ?>
-                                                                        <button class="wpb_extra"><?=$option;?></button>
+                                                                        <button data-taxonomy="<?=$name?>" data-term="<?=$term->slug;?>" value="<?=$option;?>" class="wpb_extra"><?=$option;?></button>
                                                                         <?php }?>
                                                                  <?php }?>
                                                         </div>

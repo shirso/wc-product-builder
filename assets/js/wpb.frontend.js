@@ -49,6 +49,7 @@ jQuery(function($){
                 type=containerDiv.find('.wpb_terms').data('type');
             if(type=="extra"){
                 $("#wpb_button_div").html(containerDiv.find(".wpb_button_div").html());
+                $("#wpb_selections_"+taxonomyName).find(".options").text("");
             }
             if( $("#"+taxonomyName).val()!=term) {
                 $("#" + taxonomyName).focusin().val(term).change();
@@ -108,15 +109,16 @@ jQuery(function($){
     });
     $(document).on("click",".wpb_terms",function(e){
         e.preventDefault();
-        if($(this).data("type")=="extra"){
-            $("#wpb_button_div").html($(this).parent().find(".wpb_button_div").html());
-        }
         var carousel_id="wpb_carousel_"+$(this).data("taxonomy"),
             filterd_fr= _.findWhere(fr,{id:carousel_id}),
             move_index=$(this).data("counting");
             filterd_fr.roll.moveToIndex(move_index),
             taxonomyName=$(this).data("taxonomy"),
             term=$(this).data("term");
+        if($(this).data("type")=="extra"){
+            $("#wpb_button_div").html($(this).parent().find(".wpb_button_div").html());
+
+        }
         $("#"+taxonomyName).val(term).change();
         $('#im-sd-sec').block({message: null,
             overlayCSS: {
@@ -127,8 +129,13 @@ jQuery(function($){
     });
     $(document).on("click",".wpb_extra",function(e){
         e.preventDefault();
+        var taxonomy=$(this).data("taxonomy"),
+            termSlug=$(this).data("slug"),
+            buttonValue=$(this).val(),
+            valuesText= $("#wpb_selections_"+taxonomy).find(".values").text();
         $(this).parent().find(".wpb_extra").removeClass("activ");
         $(this).addClass("activ");
+        $("#wpb_selections_"+taxonomy).find(".options").text("("+buttonValue+")");
     });
     $variations_form.on( 'show_variation', function( event, variation ) {
         var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
