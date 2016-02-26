@@ -66,7 +66,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                   ?>
                                   <tr id="wpb_selections_<?=$name;?>" class="wpb_hidden">
                                     <td class="name">
-                                        <?=wc_attribute_label($name);?>
+                                       <strong> <?=wc_attribute_label($name);?> </strong>
                                     </td>
                                       <?php if($attribute_type =="carousel"){?>
                                           <td><span class="values"></span></td>
@@ -77,7 +77,9 @@ if (!class_exists('WPB_Frontend_Product')) {
                                       </td>
                                         <?php }?>
                                       <?php if($attribute_type=="size"){?>
-                                          <td></td>
+                                          <td class="sizeOptions">
+
+                                          </td>
                                       <?php }?>
                                   </tr>
                                 <?php }?>
@@ -223,7 +225,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                 <div class="rng-sl-sec">
                                     <div class="rngsec">
                                         <h2><?=@$term_size_option["regulator_title"]?></h2>
-                                <div class="wbp_slider" id="wpb_slider_<?=$term->term_id;?>" data-text="wpb_slider_value_<?=$term->term_id;?>" data-min="<?=@$term_size_option["regulator_min"]?>" data-step="10" data-max="<?=@$term_size_option["regulator_max"]?>"></div>
+                                <div class="wbp_slider" id="wpb_slider_<?=$term->term_id;?>" data-text="wpb_slider_value_<?=$term->term_id;?>" data-min="<?=@$term_size_option["regulator_min"]?>" data-step="<?=@$term_size_option["regulator_step"]?>" data-max="<?=@$term_size_option["regulator_max"]?>"></div>
                                         <span><?=@$term_size_option["regulator_min"]?> <?=@$term_size_option["regulator_unit"]?></span>
                                         <span class="alr"><?=@$term_size_option["regulator_max"]?> <?=@$term_size_option["regulator_unit"]?></span>
                                      </div>
@@ -231,11 +233,11 @@ if (!class_exists('WPB_Frontend_Product')) {
                              </div>
                             <div class="col-sm-5">
                                 <div class="r-inp-sec clearfix">
-                                    <input type="text" id="wpb_slider_value_<?=$term->term_id;?>">
+                                    <input type="text" readonly data-title="<?=@$term_size_option["regulator_title"]?>" class="wpb_calculation" data-unit="<?=@$term_size_option["regulator_unit"]?>" value="<?=@$term_size_option["regulator_min"]?>" id="wpb_slider_value_<?=$term->term_id;?>">
                                     <span><?=@$term_size_option["regulator_unit"]?></span>
                                     <div class="rthtx">
                                         <h2><?=@$term_size_option["dropdown_title"]?>:
-                                           <input type="text" class="wpb-rngtxt">
+                                           <input data-title="<?=@$term_size_option["dropdown_title"]?>" id="wpb_normal_text_<?=$term->term_id?>" data-unit="<?=@$term_size_option["dropdown_unit"]?>" type="text" class="wpb_calculation wpb-rngtxt">
                                             <?=@$term_size_option["dropdown_unit"]?></h2>
                                         <p><?=__('Set','wpb')?></p>
                                     </div>

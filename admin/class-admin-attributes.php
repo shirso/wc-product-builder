@@ -97,6 +97,14 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                               </tr>
                               <tr>
                                   <th>
+                                      <label for="wpb_regulator_step"><?=__('Regulator Step Increment','wpb')?></label>
+                                  </th>
+                                  <td>
+                                      <input type="text" name="wpb_size_options[regulator_step]"   id="wpb_regulator_step" size="5">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <th>
                                       <label for="wpb_regulator_unit"><?=__('Regulator Unit','wpb')?></label>
                                   </th>
                                   <td>
@@ -105,7 +113,7 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                               </tr>
                               <tr>
                                   <th>
-                                      <label for="wpb_dropdown_title"><?=__('Drop Down Title','wpb')?></label>
+                                      <label for="wpb_dropdown_title"><?=__('Text Box Title','wpb')?></label>
                                   </th>
                                   <td>
                                       <input type="text" class="widefat" name="wpb_size_options[dropdown_title]" id="wpb_dropdown_title">
@@ -113,35 +121,35 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                               </tr>
                               <tr>
                                   <th>
-                                      <label for="wpb_dropdown_unit"><?=__('Drop Down Unit','wpb')?></label>
+                                      <label for="wpb_dropdown_unit"><?=__('Text Box Unit','wpb')?></label>
                                   </th>
                                   <td>
                                       <input type="text" name="wpb_size_options[dropdown_unit]" size="10" id="wpb_dropdown_unit">
                                   </td>
                               </tr>
-                              <tr>
-                                 <th>
-                                     <label for="wpb_normal_sheepit"><?=__('Dropdown Options','wpb')?></label>
-                                 </th>
-                                  <td>
-                                      <div id="wpb_normal_sheepit">
-                                          <div id="wpb_normal_sheepit_template">
-                                              <input type="text"  id="wpb_attribute_options_#index#" class="wide-fat" name="wpb_size_options[dropdown_options][#index#]">
-                                          </div>
-                                          <div id="wpb_normal_sheepit_noforms_template"><?php _e('No Option','wpb'); ?></div>
-                                          <div id="wpb_normal_sheepit_controls" class="row">
-                                              <div id="wpb_normal_sheepit_add" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Add Option','wpb'); ?></span></a></div>
-                                              <div id="wpb_normal_sheepit_remove_last" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Remove','wpb'); ?> </span></a></div>
-                                              <div id="wpb_normal_sheepit_remove_all"><a><span><?php _e('Remove All','wpc'); ?></span></a></div>
-                                              <div id="wpb_normal_sheepit_add_n" class="col-sm-6">
-                                                  <div class="row">
-                                                      <div class="col-sm-2"><input id="wpb_normal_sheepit_add_n_input" type="text" size="4" /></div>
-                                                      <div class="col-sm-10 " id="wpb_normal_sheepit_add_n_button"><a class="button button-default"><span><?php _e('Add','wpb'); ?> </span></a></div></div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
+<!--                              <tr>-->
+<!--                                 <th>-->
+<!--                                     <label for="wpb_normal_sheepit">--><?//=__('Dropdown Options','wpb')?><!--</label>-->
+<!--                                 </th>-->
+<!--                                  <td>-->
+<!--                                      <div id="wpb_normal_sheepit">-->
+<!--                                          <div id="wpb_normal_sheepit_template">-->
+<!--                                              <input type="text"  id="wpb_attribute_options_#index#" class="wide-fat" name="wpb_size_options[dropdown_options][#index#]">-->
+<!--                                          </div>-->
+<!--                                          <div id="wpb_normal_sheepit_noforms_template">--><?php //_e('No Option','wpb'); ?><!--</div>-->
+<!--                                          <div id="wpb_normal_sheepit_controls" class="row">-->
+<!--                                              <div id="wpb_normal_sheepit_add" class="col-sm-3 wc_dinl"><a class="button button-default"><span>--><?php //_e('Add Option','wpb'); ?><!--</span></a></div>-->
+<!--                                              <div id="wpb_normal_sheepit_remove_last" class="col-sm-3 wc_dinl"><a class="button button-default"><span>--><?php //_e('Remove','wpb'); ?><!-- </span></a></div>-->
+<!--                                              <div id="wpb_normal_sheepit_remove_all"><a><span>--><?php //_e('Remove All','wpc'); ?><!--</span></a></div>-->
+<!--                                              <div id="wpb_normal_sheepit_add_n" class="col-sm-6">-->
+<!--                                                  <div class="row">-->
+<!--                                                      <div class="col-sm-2"><input id="wpb_normal_sheepit_add_n_input" type="text" size="4" /></div>-->
+<!--                                                      <div class="col-sm-10 " id="wpb_normal_sheepit_add_n_button"><a class="button button-default"><span>--><?php //_e('Add','wpb'); ?><!-- </span></a></div></div>-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                      </div>-->
+<!--                                  </td>-->
+<!--                              </tr>-->
                           </table>
                 </div>
               <?php }?>
@@ -212,8 +220,8 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                 }
                 ?>
                     <script type="text/javascript">
-                        var inject_data_options=<?=json_encode($inject_data);?>,
-                            normaal_sheepit=true;
+                      //  var inject_data_options=<?=json_encode($inject_data);?>,
+                       //     normaal_sheepit=true;
                     </script>
                     <tr>
                         <th>
@@ -239,6 +247,14 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                             <input type="text" name="wpb_size_options[regulator_max]"  value="<?=@$attr_size_options["regulator_max"]?>" id="wpb_regulator_max" size="5">
                         </td>
                     </tr>
+                <tr>
+                    <th>
+                        <label for="wpb_regulator_step"><?=__('Regulator Step Increment','wpb')?></label>
+                    </th>
+                    <td>
+                        <input type="text" name="wpb_size_options[regulator_step]"  value="<?=@$attr_size_options["regulator_step"]?>" id="wpb_regulator_step" size="5">
+                    </td>
+                </tr>
                     <tr>
                         <th>
                             <label for="wpb_regulator_unit"><?=__('Regulator Unit','wpb')?></label>
@@ -249,7 +265,7 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                     </tr>
                     <tr>
                         <th>
-                            <label for="wpb_dropdown_title"><?=__('Drop Down Title','wpb')?></label>
+                            <label for="wpb_dropdown_title"><?=__('Text Box Title','wpb')?></label>
                         </th>
                         <td>
                             <input type="text"  name="wpb_size_options[dropdown_title]"  value="<?=@$attr_size_options["dropdown_title"]?>" id="wpb_dropdown_title">
@@ -257,35 +273,35 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                     </tr>
                     <tr>
                         <th>
-                            <label for="wpb_dropdown_unit"><?=__('Drop Down Unit','wpb')?></label>
+                            <label for="wpb_dropdown_unit"><?=__('Text Box Unit','wpb')?></label>
                         </th>
                         <td>
                             <input type="text" name="wpb_size_options[dropdown_unit]"  value="<?=@$attr_size_options["dropdown_unit"]?>" size="10" id="wpb_dropdown_unit">
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            <label for="wpb_normal_sheepit"><?=__('Dropdown Options','wpb')?></label>
-                        </th>
-                        <td>
-                            <div id="wpb_normal_sheepit">
-                                <div id="wpb_normal_sheepit_template">
-                                    <input type="text"  id="wpb_attribute_options_#index#" class="wide-fat" name="wpb_size_options[dropdown_options][#index#]">
-                                </div>
-                                <div id="wpb_normal_sheepit_noforms_template"><?php _e('No Option','wpb'); ?></div>
-                                <div id="wpb_normal_sheepit_controls" class="row">
-                                    <div id="wpb_normal_sheepit_add" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Add Option','wpb'); ?></span></a></div>
-                                    <div id="wpb_normal_sheepit_remove_last" class="col-sm-3 wc_dinl"><a class="button button-default"><span><?php _e('Remove','wpb'); ?> </span></a></div>
-                                    <div id="wpb_normal_sheepit_remove_all"><a><span><?php _e('Remove All','wpc'); ?></span></a></div>
-                                    <div id="wpb_normal_sheepit_add_n" class="col-sm-6">
-                                        <div class="row">
-                                            <div class="col-sm-2"><input id="wpb_normal_sheepit_add_n_input" type="text" size="4" /></div>
-                                            <div class="col-sm-10 " id="wpb_normal_sheepit_add_n_button"><a class="button button-default"><span><?php _e('Add','wpb'); ?> </span></a></div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <th>-->
+<!--                            <label for="wpb_normal_sheepit">--><?//=__('Dropdown Options','wpb')?><!--</label>-->
+<!--                        </th>-->
+<!--                        <td>-->
+<!--                            <div id="wpb_normal_sheepit">-->
+<!--                                <div id="wpb_normal_sheepit_template">-->
+<!--                                    <input type="text"  id="wpb_attribute_options_#index#" class="wide-fat" name="wpb_size_options[dropdown_options][#index#]">-->
+<!--                                </div>-->
+<!--                                <div id="wpb_normal_sheepit_noforms_template">--><?php //_e('No Option','wpb'); ?><!--</div>-->
+<!--                                <div id="wpb_normal_sheepit_controls" class="row">-->
+<!--                                    <div id="wpb_normal_sheepit_add" class="col-sm-3 wc_dinl"><a class="button button-default"><span>--><?php //_e('Add Option','wpb'); ?><!--</span></a></div>-->
+<!--                                    <div id="wpb_normal_sheepit_remove_last" class="col-sm-3 wc_dinl"><a class="button button-default"><span>--><?php //_e('Remove','wpb'); ?><!-- </span></a></div>-->
+<!--                                    <div id="wpb_normal_sheepit_remove_all"><a><span>--><?php //_e('Remove All','wpc'); ?><!--</span></a></div>-->
+<!--                                    <div id="wpb_normal_sheepit_add_n" class="col-sm-6">-->
+<!--                                        <div class="row">-->
+<!--                                            <div class="col-sm-2"><input id="wpb_normal_sheepit_add_n_input" type="text" size="4" /></div>-->
+<!--                                            <div class="col-sm-10 " id="wpb_normal_sheepit_add_n_button"><a class="button button-default"><span>--><?php //_e('Add','wpb'); ?><!-- </span></a></div></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
 
                 <?php }?>
             <?php

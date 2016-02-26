@@ -10,6 +10,18 @@ jQuery(function($){
             $("#wpb_selections_"+currentTaxonomy).find(".values").text($("#"+currentTaxonomy+" option:selected").text());
         }
     };
+    var sizeOptions=function(taxonomyName){
+      var finalHtml="";
+      $(".wpb_calculation").each(function(m,n){
+        var inputValue=$(this).val(),
+            title=$(this).data("title"),
+            unit=$(this).data("unit");
+          if(inputValue!=null && inputValue!=""){
+              finalHtml+=title+":"+inputValue+unit+"<br/>";
+          }
+      });
+      $("#wpb_selections_"+currentTaxonomy).find(".sizeOptions").html(finalHtml);
+    };
     var selectIndexChanged=function(){
         $("#wpb_selections_"+currentTaxonomy).find(".values").html($("#"+currentTaxonomy+" option:selected").text());
     };
@@ -77,7 +89,7 @@ jQuery(function($){
          $li.addClass('completed');
          $li.parent().find('li').removeClass('acctive');
          $li.addClass('acctive');
-         if($li.data("type")=="extra"){
+         if(tabType=="extra"){
             $("#wpb_extra_options").removeClass("wpb_hidden");
          }else{
              $("#wpb_extra_options").addClass("wpb_hidden");
@@ -88,6 +100,9 @@ jQuery(function($){
          $("#wpb_continue_button").text(wpb_local_params.continue_text);
      }
      currentTaxonomy=$li.data("taxonomy");
+     if(tabType=="size"){
+         sizeOptions(currentTaxonomy);
+     }
      valueChange($li);
  });
     $(".wbp_slider").each(function(){
@@ -104,6 +119,7 @@ jQuery(function($){
             step:step,
             slide: function( event, ui ) {
                 $("#"+textValue).val( ui.value );
+                sizeOptions(currentTaxonomy);
             }
         });
     });
@@ -176,5 +192,8 @@ jQuery(function($){
             visited_tabs.push(nextLiTab);
         }
        $nextLiP.trigger('click');
+    });
+    $(document).on("keyup",".wpb-rngtxt",function(){
+       sizeOptions(currentTaxonomy);
     });
 });
