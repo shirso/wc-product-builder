@@ -63,7 +63,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                              <tbody>
                               <?php foreach($attributes as $name=>$options){?>
                                   <tr id="wpb_selections_<?=$name;?>" class="wpb_hidden">
-                                    <td>
+                                    <td class="name">
                                         <?=wc_attribute_label($name);?>
                                     </td>
                                       <td class="values"></td>
@@ -126,7 +126,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                $classes=$c==0 ? "completed acctive" : "";
                                if($c==$attribute_count-1){$classes.=" last_one";}
                            ?>
-                            <li data-tab="#wpb-steps-<?=$name?>" data-type="<?=$attribute_type?>" class="<?=$classes?>">
+                            <li data-tab="#wpb-steps-<?=$name?>" data-taxonomy="<?=$name;?>" data-type="<?=$attribute_type?>" class="<?=$classes?>">
                                 <a href="#">
                                 <p><?=wc_attribute_label($name);?></p>
                                     <span class="bubble"></span>

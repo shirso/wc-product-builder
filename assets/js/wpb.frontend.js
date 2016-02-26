@@ -1,7 +1,18 @@
 jQuery(function($){
    var  $variations_form = $('form.variations_form'),
         variations_json = $variations_form.attr('data-product_variations'),
-        variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false;
+        variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false,
+        currentTaxonomy=$("#progress-indicator").find("li:first").data("taxonomy");
+    var valueChange=function($li){
+        var tabType=$li.data("type");
+        $("#wpb_selections_"+currentTaxonomy).removeClass("wpb_hidden");
+        if(tabType!="size"){
+            $("#wpb_selections_"+currentTaxonomy).find(".values").text($("#"+currentTaxonomy+" option:selected").text());
+        }
+    };
+    var selectIndexChanged=function(){
+        $("#wpb_selections_"+currentTaxonomy).find(".values").html($("#"+currentTaxonomy+" option:selected").text());
+    };
     $("#main").removeClass("clearfix");
     if($('.wpb-body-product').find('.shipping_de_string').length>0){
         $("#wpb_german_market").append($(".shipping_de_string"));
@@ -9,6 +20,7 @@ jQuery(function($){
     var fr=[];
     var visited_tabs=[];
     visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
+    valueChange($("#progress-indicator").find("li:first"));
   $(".wpb_carousel").each(function(){
         var id=$(this).attr("id"),
             right=id+"_right",
@@ -52,8 +64,9 @@ jQuery(function($){
  $(document).on('click','#progress-indicator li a',function(e){
      e.preventDefault();
      var $li=$(this).parent(),
-         tabId=$li.data('tab');
-     if($li.hasClass('acctive') || !_.contains(visited_tabs,tabId)){
+         tabId=$li.data('tab'),
+         tabType=$li.data("type");
+     if($li.hasClass('acctive')){ //|| !_.contains(visited_tabs,tabId)){
          return false;
      }
          $('.wpb_tabs').removeClass('wpb_onedblk');
@@ -73,6 +86,8 @@ jQuery(function($){
      }else{
          $("#wpb_continue_button").text(wpb_local_params.continue_text);
      }
+     currentTaxonomy=$li.data("taxonomy");
+     valueChange($li);
  });
     $(".wbp_slider").each(function(){
         var min=$(this).data('min'),
@@ -134,6 +149,7 @@ jQuery(function($){
         }
         $("#wpb_price_html").html(variation_data.price_html);
         $("#wpb_price_html").find(".price").removeAttr("style");
+        selectIndexChanged();
         $("#im-sd-sec").unblock();
     });
     $(document).on('click','.wpb_additional_image',function(e){
