@@ -214,9 +214,16 @@ jQuery(function($){
             'productId': productId,
             'taxonomy':taxonomy
         };
+        $('#wpb_info_box_content').block({message: null,
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.6
+            }
+        });
         $.post(wpb_local_params.ajaxUrl, data, function(response) {
             $("#wpb_info_box_content").html("");
             $("#wpb_info_box_content").html(response);
+            $('#wpb_info_box_content').unblock();
         });
     }
 });
