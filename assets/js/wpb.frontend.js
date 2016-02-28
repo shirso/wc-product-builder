@@ -110,6 +110,7 @@ jQuery(function($){
          sizeOptions(currentTaxonomy);
      }
      valueChange($li);
+     loadInfoData(wpb_local_params.productId,currentTaxonomy);
  });
     $(".wbp_slider").each(function(){
         var min=$(this).data('min'),
@@ -207,4 +208,15 @@ jQuery(function($){
     $(document).on("keyup",".wpb-rngtxt",function(){
        sizeOptions(currentTaxonomy);
     });
+    var loadInfoData=function(productId,taxonomy){
+        var data = {
+            'action': 'wpb_info_box_load',
+            'productId': productId,
+            'taxonomy':taxonomy
+        };
+        $.post(wpb_local_params.ajaxUrl, data, function(response) {
+            $("#wpb_info_box_content").html("");
+            $("#wpb_info_box_content").html(response);
+        });
+    }
 });

@@ -6,6 +6,8 @@ if (!class_exists('WPB_Frontend_Product')) {
             add_filter('body_class', array(&$this, 'add_class'));
             add_action('template_redirect', array(&$this, 'remove_main_image'));
             add_filter( 'woocommerce_available_variation',array( $this, 'alter_variation_json' ), 1, 3 );
+            add_action( 'wp_ajax_wpb_info_box_load',array(&$this,'wpb_info_box_load'));
+            add_action( 'wp_ajax_nopriv_wpb_info_box_load',array(&$this,'wpb_info_box_load'));
         }
         public function remove_main_image(){
             global $post;
@@ -20,7 +22,21 @@ if (!class_exists('WPB_Frontend_Product')) {
                 add_action('woocommerce_before_single_product_summary', array(&$this,'image_wrapper_end'), 31);
                 add_action('woocommerce_before_single_product_summary', array(&$this,'wpb_summary_div'), 35);
                 add_action( 'woocommerce_after_single_product_summary', array(&$this,'summary_wrapper_end'), 5 );
+                add_action( 'woocommerce_after_single_product_summary', array(&$this,'wpb_info_box'), 6 );
             }
+        }
+        public function wpb_info_box_load(){
+            $postId=absint($_POST["productId"]);
+            $taxonomy=esc_attr($_POST["taxonomy"]);
+            $info_boxes=get_post_meta($postId,"_wpb_info_boxes",true);
+            $first_content_id=($info_boxes[$taxonomy])?$info_boxes[$taxonomy]:null;
+            $content_post = get_post($first_content_id);
+            $content = $content_post->post_content;
+            $content = apply_filters('the_content', $content);
+            $content = str_replace(']]>', ']]&gt;', $content);
+            $final_content=($content)? '<div class="dtext-m-sec"><i class="fa fa-info-circle wpb_info_box_icon"></i>'.$content.'</div>' :'';
+            echo $final_content;
+            exit;
         }
         public function alter_variation_json($variation_data, $wc_product_variable, $variation_obj){
             $img_ids = WPB_Common_Functions::get_all_image_ids( $variation_data['variation_id'] );
@@ -28,6 +44,28 @@ if (!class_exists('WPB_Frontend_Product')) {
             $images = WPB_Common_Functions::get_all_image_sizes( $img_ids );
            $variation_data['additional_images'] = $images;
             return $variation_data;
+        }
+        public function wpb_info_box(){
+            global $post, $wpdb, $product, $woocommerce;
+            $postId=$product->id;
+            $info_boxes=get_post_meta($postId,"_wpb_info_boxes",true);
+            $attributes = $product->get_variation_attributes();
+            $first_key = key($attributes);
+            $first_content_id=($info_boxes[$first_key])?$info_boxes[$first_key]:null;
+            $content_post = get_post($first_content_id);
+            $content = $content_post->post_content;
+            $content = apply_filters('the_content', $content);
+            $content = str_replace(']]>', ']]&gt;', $content);
+            ?>
+            <section class="ltx-msec" id="wpb_info_box_content">
+                <?php if($content!=null){?>
+                <div class="dtext-m-sec">
+                    <i class="fa fa-info-circle wpb_info_box_icon"></i>
+                    <?=$content;?>
+                <?php }?>
+                    </div>
+            </section>
+            <?php
         }
         public function summary_wrapper_start(){
             ?>

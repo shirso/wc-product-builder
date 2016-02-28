@@ -8,6 +8,9 @@ if( !class_exists('WPB_Admin_Product') ) {
             add_action('woocommerce_variation_options',array(&$this,'woocommerce_variation_options'),10,3);
             add_action( 'woocommerce_save_product_variation',array(&$this,'save_variation_settings_fields'), 10, 2 );
             add_action('woocommerce_process_product_meta', array(&$this, 'save_custom_fields'), 10, 2);
+            add_filter('woocommerce_product_data_tabs', array(&$this, 'add_product_data_tab'),1);
+            add_action('woocommerce_product_data_panels', array(&$this, 'add_product_data_panel'));
+            add_action('woocommerce_process_product_meta', array(&$this, 'save_custom_fields'), 10, 2);
         }
         public function product_type_options($types)
         {
@@ -19,8 +22,69 @@ if( !class_exists('WPB_Admin_Product') ) {
             );
             return $types;
         }
+        public function add_product_data_tab($tabs){
+            $tabs['wpb_instructions'] =array(
+                'label'=>__('Info Boxes','wpb'),
+                'target'=>'wpb_instructions_tab',
+                'class' => array('show_if_wpb_panel')
+            );
+            return $tabs;
+        }
+        public function add_product_data_panel(){
+            global $wpdb, $post;
+            $attributes = maybe_unserialize(get_post_meta($post->ID, '_product_attributes', true));
+            $args = array(
+                'posts_per_page'   => -1,
+                'orderby'          => 'title',
+                'order'            => 'ASC',
+                'include'          => '',
+                'exclude'          => '',
+                'meta_key'         => '',
+                'meta_value'       => '',
+                'post_type'        => 'wpb_info_box',
+                'post_mime_type'   => '',
+                'post_parent'      => '',
+                'author'	   => '',
+                'post_status'      => 'publish',
+                'suppress_filters' => true
+            );
+            $all_posts=get_posts($args);
+            $info_boxes=get_post_meta($post->ID,"_wpb_info_boxes",true);
+            ?>
+            <script type="application/javascript">
+                var wpb_product_page=true;
+            </script>
+            <div id="wpb_instructions_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
+                <div id="wpb_attribute_tab">
+                     <div class="toolbar toolbar-top">
+                      <table cellpadding="10" cellspacing="10">
+                          <?php if(!empty($attributes)){ foreach($attributes as $attr=>$option){?>
+                              <tr>
+                                  <td><?=wc_attribute_label($attr);?></td>
+                                  <td>
+                                      <select name="wpb_info_boxes[<?=$attr;?>]" id="wpb_info_boxes_<?=$attr;?>">
+                                        <option value="">---</option>
+                                        <?php if(!empty($all_posts)){ foreach($all_posts  as $p){
+                                            $selected= $info_boxes[$attr]== $p->ID? "selected" :"";
+                                            ?>
+                                            <option <?=$selected;?> value="<?=$p->ID;?>"><?=$p->post_title;?></option>
+                                        <?php }}?>
+                                      </select>
+                                  </td>
+                              </tr>
+                            <?php }}?>
+                      </table>
+                  </div>
+                </div>
+            </div>
+          <?php
+        }
+
         public function save_custom_fields($post_id, $post){
             update_post_meta($post_id, '_wpb_check', isset($_POST['_wpb_check']) ? 'yes' : 'no');
+            if (isset($_POST['wpb_info_boxes'])) {
+                update_post_meta($post_id, '_wpb_info_boxes', $_POST['wpb_info_boxes']);
+            }
         }
         public function product_option_terms($tax, $i){
             global $woocommerce, $thepostid;

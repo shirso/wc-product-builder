@@ -90,7 +90,21 @@ jQuery(function($){
             data: inject_data_options
         });
     }
-    if(typeof advanced_sheepit!="undefined"){
-
+    if(typeof wpb_product_page!="undefined"){
+        if($("#_wpb_check").is(':checked')){
+            $('.show_if_wpb_panel').removeClass('wpb_attribute_options');
+        }else{
+            $('.show_if_wpb_panel').addClass('wpb_attribute_options');
+        }
+        $(document).on('change','#_wpb_check',function(){
+            if($(this).is(":checked")){
+                $('.show_if_wpb_panel').removeClass('wpb_attribute_options');
+            }else{
+                $('.show_if_wpb_panel').addClass('wpb_attribute_options');
+                if($("#wpb_instructions_tab").is(':visible')){
+                    $("#wpb_instructions_tab").hide();
+                }
+            }
+        });
     }
 });

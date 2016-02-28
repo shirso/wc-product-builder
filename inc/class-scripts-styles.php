@@ -19,7 +19,9 @@ if (!class_exists('WPB_Scripts_Styles')) {
                 wp_enqueue_script('jquery-ui-slider');
                 wp_localize_script("wpb_script_frontend","wpb_local_params",array(
                    "continue_text"=>__("Continue","wpb"),
-                    "add_to_cart_text"=>__("Add to Cart","wpb")
+                    "add_to_cart_text"=>__("Add to Cart","wpb"),
+                    "productId"=>$post->ID,
+                    "ajaxUrl"=>admin_url('admin-ajax.php')
                 ));
                 wp_enqueue_script('wpb_script_frontend');
             }
