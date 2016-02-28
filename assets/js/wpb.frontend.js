@@ -30,9 +30,13 @@ jQuery(function($){
         $("#wpb_selections_"+currentTaxonomy).find(".values").html($("#"+currentTaxonomy+" option:selected").text());
     };
     $("#main").removeClass("clearfix");
+    if($('.wpb-body-product').find('.woocommerce-de_price_taxrate').length>0){
+        $("#wpb_german_market").append($(".woocommerce-de_price_taxrate"));
+    }
     if($('.wpb-body-product').find('.shipping_de_string').length>0){
         $("#wpb_german_market").append($(".shipping_de_string"));
     }
+
     var fr=[];
     var visited_tabs=[];
     visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
@@ -102,8 +106,8 @@ jQuery(function($){
          $("#wpb_continue_button").addClass("wpb_add_cart");
          $("#wpb_continue_button").text(wpb_local_params.add_to_cart_text);
      }else{
-         $("#wpb_continue_button").removeClass("wpb_add_cart");
-         $("#wpb_continue_button").text(wpb_local_params.continue_text);
+         //$("#wpb_continue_button").removeClass("wpb_add_cart");
+         //$("#wpb_continue_button").text(wpb_local_params.continue_text);
      }
      currentTaxonomy=$li.data("taxonomy");
      if(tabType=="size"){
