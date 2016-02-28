@@ -255,7 +255,7 @@ body {
 .slt-sldr-sec {
   width:46%;
   margin: auto;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   position: relative;
 }
 /* line 12, ../sass/_normalize.scss */
@@ -326,7 +326,7 @@ body {
   background-color: #d8d8d9;
   color: #504f54;
   border: none;
-  margin: 0 10px;
+  margin: 0 5px;
   font-family: 'Lato', sans-serif;
   cursor: pointer;
 }
@@ -859,11 +859,24 @@ tr.grn{color: #85c25c;}
 .result-cl-sec .col-sm-8{ width: 100%; float: none;}
 }
 .r-inp-sec .rthtx {text-align: right;}
-
+.f-step{margin-bottom: 30px;}
 .progress-indicator > li.completed p{color: #65b32e;}
 
 #wpb_price_html .price{display:inline-block !important;}
 
+@media handheld, screen and (min-width:455px) and (max-width:767px) {
+  .r-inp-sec .rthtx {
+    width:260px!important;
+  }
+}
+@media handheld, screen and (max-width:454px){
+  .r-inp-sec .rthtx {
+    width:260px!important;
+    margin-top: 20px;
+  } .r-inp-sec{margin-bottom: 60px!important; text-align:center;}
+  .s-btn-sec .gbtn button{margin: 0 3px 8px 3px;}
+  .r-inp-sec .rthtx{ width: 100%!important; text-align: center;}
+}
 @media screen and (max-width: 767px) {
   .col-sm-8,.col-sm-4,.col-sm-12,.col-sm-7,.col-sm-5{
     width: 100%!important;
@@ -877,11 +890,13 @@ tr.grn{color: #85c25c;}
 @media handheld, screen and (min-width:768px) and (max-width: 899px) {
   .r-inp-sec .rthtx {
     width: 146px;
+    margin-top: -21px;
+    text-align: right!important;
   }
 }
 @media handheld, screen and (min-width:992px) and (max-width:1199px) {
   .r-inp-sec .rthtx {
-    width: 258px;
+    width: 238px;
   }
 }
 @media handheld, screen and (min-width:1200px) {
@@ -889,6 +904,7 @@ tr.grn{color: #85c25c;}
     width: 300px;
   }
 }
+.sizeOptions{font-size: 12px}
 @-webkit-keyframes spin{100%{-webkit-transform:rotate(360deg)}}
 @-moz-keyframes spin{100%{-moz-transform:rotate(360deg)}}
 @keyframes spin{100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}#im-sd-sec .blockUI.blockOverlay::before {    height:1em;width:1em;position:absolute;top:50%;left:50%;margin-left:-.5em;margin-top:-.5em;display:block;content:"";-webkit-animation:spin 1s ease-in-out infinite;-moz-animation:spin 1s ease-in-out infinite;animation:spin 1s ease-in-out infinite;background:url(../img/loader.svg) center center;background-size:cover;line-height:1;text-align:center;font-size:2em;color:rgba(0,0,0,.75)}

@@ -187,6 +187,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                         <?php }?>
                         <?php if($attribute_type=="extra"){ ?>
                             <?php if(!empty($all_terms)){?>
+                                <input type="hidden" name="wpb_cart_items[extra][<?=$name?>]" id="wpb_hidden_extra_<?=$name;?>" class="wpb_cart_items">
                                 <figure class="slt-sldr-sec">
                                     <div id='wpb_carousel_<?=$name;?>' class='wpb_carousel'>
                                         <?php $counting=0; foreach($all_terms as $term){?>
@@ -217,6 +218,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                         <?php }?>
                         <?php if($attribute_type=="size"){ ?>
                         <?php if(!empty($all_terms)){?>
+                                <input type="hidden" class="wpb_cart_items" name="wpb_cart_items[size][<?=$name?>]" id="wpb_hidden_size_<?=$name;?>">
                             <?php foreach($all_terms as $term){?>
                                 <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {?>
                                    <?php $term_size_option=get_option('_wpb_size_options_'.$term->term_id); ?>
@@ -254,12 +256,11 @@ if (!class_exists('WPB_Frontend_Product')) {
                 }
             }?>
                     <section class="s-btn-sec wpb_hidden" id="wpb_extra_options">
-                        <div class="container">
                             <h2><?=__('Additional Options','wpb')?></h2>
                             <div class="gbtn" id="wpb_button_div">
 
                             </div>
-                        </div>
+
                     </section>
                 </div>
            </div>

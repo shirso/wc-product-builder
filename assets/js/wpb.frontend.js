@@ -10,6 +10,7 @@ jQuery(function($){
             $("#wpb_selections_"+currentTaxonomy).find(".values").text($("#"+currentTaxonomy+" option:selected").text());
         }
     };
+    $variations_form.append($(".wpb_cart_items"));
     var sizeOptions=function(taxonomyName){
       var finalHtml="";
       $(".wpb_calculation").each(function(m,n){
@@ -17,10 +18,13 @@ jQuery(function($){
             title=$(this).data("title"),
             unit=$(this).data("unit");
           if(inputValue!=null && inputValue!=""){
-              finalHtml+=title+":"+inputValue+unit+"<br/>";
+              finalHtml+=title+":"+inputValue+unit+" / ";
           }
       });
-      $("#wpb_selections_"+currentTaxonomy).find(".sizeOptions").html(finalHtml);
+        finalHtml=finalHtml.substring(0,finalHtml.length-2)
+      $("#wpb_selections_"+taxonomyName).find(".sizeOptions").html(finalHtml);
+
+      $("#wpb_hidden_size_"+taxonomyName).val(finalHtml);
     };
     var selectIndexChanged=function(){
         $("#wpb_selections_"+currentTaxonomy).find(".values").html($("#"+currentTaxonomy+" option:selected").text());
@@ -95,8 +99,10 @@ jQuery(function($){
              $("#wpb_extra_options").addClass("wpb_hidden");
          }
      if($li.hasClass("last_one")){
+         $("#wpb_continue_button").addClass("wpb_add_cart");
          $("#wpb_continue_button").text(wpb_local_params.add_to_cart_text);
      }else{
+         $("#wpb_continue_button").removeClass("wpb_add_cart");
          $("#wpb_continue_button").text(wpb_local_params.continue_text);
      }
      currentTaxonomy=$li.data("taxonomy");
@@ -152,6 +158,7 @@ jQuery(function($){
         $(this).parent().find(".wpb_extra").removeClass("activ");
         $(this).addClass("activ");
         $("#wpb_selections_"+taxonomy).find(".options").text("("+buttonValue+")");
+        $("#wpb_hidden_extra_"+taxonomy).val(buttonValue);
     });
     $variations_form.on( 'show_variation', function( event, variation ) {
         var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
@@ -184,6 +191,10 @@ jQuery(function($){
     });
     $(document).on("click","#wpb_continue_button",function(e){
         e.preventDefault();
+        if($(this).hasClass("wpb_add_cart")){
+            $variations_form.find(".single_add_to_cart_button").trigger("click");
+            return false;
+        }
         var $activeLi=$('#progress-indicator').find('.acctive'),
             $nextLi=$activeLi.next(),
             $nextLiP=$nextLi.find("a"),
