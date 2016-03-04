@@ -18,7 +18,7 @@ jQuery(function($){
             title=$(this).data("title"),
             unit=$(this).data("unit");
           if(inputValue!=null && inputValue!=""){
-              finalHtml+=title+":"+inputValue+unit+" / ";
+              finalHtml+=title+": "+inputValue+unit+" / ";
           }
       });
         finalHtml=finalHtml.substring(0,finalHtml.length-2)
@@ -49,7 +49,7 @@ jQuery(function($){
             slideId="#"+$(this).data("slider"),
             selectId="#"+$(this).attr("id"),
             selectBox=$("#"+$(this).attr("id"));
-        var slider=$("<div id='"+slideId+"'></div>").insertAfter(selectBox).slider({
+        var slider=$(slideId).slider({
             min: 1,
             max:max,
             range: "min",
@@ -57,7 +57,11 @@ jQuery(function($){
             slide: function (event, ui) {
                 selectBox[0].selectedIndex = ui.value - 1;
                 $("#"+textValue).val($(selectId+' option:selected').val() );
+                sizeOptions(currentTaxonomy);
             }
+        });
+        $(this).change(function(){
+            slider.slider( "value", this.selectedIndex + 1 );
         });
     });
   $(".wpb_carousel").each(function(){

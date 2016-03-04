@@ -267,14 +267,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                 <div class="rng-sl-sec">
                                     <div class="rngsec">
                                         <h2><?=@$term_size_option["regulator_title"]?></h2>
-                                        <select class="wpb_hidden wbp_slider" data-text="wpb_slider_value_<?=$term->term_id;?>" data-min="<?=@$regulator_min;?>" data-slider="wpb_slider_<?=$term->term_id;?>"  data-max="<?=count($regulator_values);?>"  id="wpb_slider_select_<?=$term->term_id?>">
-                                            <?php  if(!empty($regulator_values)){
-                                                $c=1;
-                                                foreach($regulator_values as $v){
-                                                ?>
-                                                <option><?=$v?></option>
-                                             <?php $c++;}}?>
-                                        </select>
+                                            <div id="wpb_slider_<?=$term->term_id;?>"></div>
                                         <span><?=@$regulator_min?> <?=@$term_size_option["regulator_unit"]?></span>
                                         <span class="alr"><?=@$regulator_max?> <?=@$term_size_option["regulator_unit"]?></span>
                                      </div>
@@ -282,7 +275,15 @@ if (!class_exists('WPB_Frontend_Product')) {
                              </div>
                             <div class="col-sm-5">
                                 <div class="r-inp-sec clearfix">
-                                    <input type="text" readonly data-title="<?=@$term_size_option["regulator_title"]?>" class="wpb_calculation" data-unit="<?=@$term_size_option["regulator_unit"]?>" value="<?=@$regulator_min;?>" id="wpb_slider_value_<?=$term->term_id;?>">
+
+                                    <select class="wbp_slider wpb_calculation" data-min="<?=@$regulator_min;?>" data-slider="wpb_slider_<?=$term->term_id;?>"  data-max="<?=count($regulator_values);?>" id="wpb_slider_select_<?=$term->term_id?>" >
+                                        <?php  if(!empty($regulator_values)){
+                                            $c=1;
+                                            foreach($regulator_values as $v){
+                                                ?>
+                                                <option><?=$v?></option>
+                                                <?php $c++;}}?>
+                                    </select>
                                     <span><?=@$term_size_option["regulator_unit"]?></span>
                                     <div class="rthtx">
                                         <h2><?=@$term_size_option["dropdown_title"]?>:
