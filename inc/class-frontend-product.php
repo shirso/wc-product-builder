@@ -276,7 +276,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                             <div class="col-sm-5">
                                 <div class="r-inp-sec clearfix">
 
-                                    <select class="wbp_slider wpb_calculation" data-min="<?=@$regulator_min;?>" data-slider="wpb_slider_<?=$term->term_id;?>"  data-max="<?=count($regulator_values);?>" id="wpb_slider_select_<?=$term->term_id?>" >
+                                    <select class="wbp_slider wpb_calculation" data-title="<?=@$term_size_option["regulator_title"]?>" data-unit="<?=@$term_size_option["regulator_unit"]?>" data-min="<?=@$regulator_min;?>" data-slider="wpb_slider_<?=$term->term_id;?>"  data-max="<?=count($regulator_values);?>" id="wpb_slider_select_<?=$term->term_id?>" >
                                         <?php  if(!empty($regulator_values)){
                                             $c=1;
                                             foreach($regulator_values as $v){

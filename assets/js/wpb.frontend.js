@@ -62,6 +62,7 @@ jQuery(function($){
         });
         $(this).change(function(){
             slider.slider( "value", this.selectedIndex + 1 );
+            sizeOptions(currentTaxonomy);
         });
     });
   $(".wpb_carousel").each(function(){
