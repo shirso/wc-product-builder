@@ -17,6 +17,7 @@ if (!class_exists('WPB_Scripts_Styles')) {
                 wp_enqueue_script('wpb_script_underscore',WPB_PLUGIN_ASSETS_DIR.'/js/underscore-min.js',array('jquery'),null,true);
                 wp_register_script('wpb_script_frontend',WPB_PLUGIN_ASSETS_DIR.'/js/wpb.frontend.js',array('jquery'),null,true);
                 wp_enqueue_script('jquery-ui-slider');
+                wp_enqueue_script('wpb_script_touch',WPB_PLUGIN_ASSETS_DIR.'/js/jquery.ui.touch-punch.min.js',array('jquery'),null,true);
                 wp_localize_script("wpb_script_frontend","wpb_local_params",array(
                    "continue_text"=>__("Continue","wpb"),
                     "add_to_cart_text"=>__("Add to Cart","wpb"),
