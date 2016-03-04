@@ -10,6 +10,7 @@ if (!class_exists('WPB_Product_Cart')) {
            add_action('woocommerce_add_order_item_meta', array(&$this, 'order_item_meta'), 1, 3);
             add_filter('woocommerce_order_items_meta_get_formatted',array(&$this,'woocommerce_order_items_meta_get_formatted'),10,2);
             add_action("woocommerce_order_item_meta_start",array(&$this,"woocommerce_order_item_meta_start"),100,3);
+            add_action('woocommerce_before_order_itemmeta',array(&$this,'woocommerce_before_order_itemmeta'),10,3);
         }
         function add_cart_item_data($cart_item_meta, $product_id){
             if (isset($cart_item_meta['wpb_cart_items'])) {
@@ -91,6 +92,9 @@ if (!class_exists('WPB_Product_Cart')) {
                 $this->wpb_cart_item=maybe_unserialize($item["item_meta"]["wpb_cart_items"][0]);
 
             }
+        }
+        public function woocommerce_before_order_itemmeta($item_id, $item, $_product){
+            print_r($item);
         }
     }
     new WPB_Product_Cart();

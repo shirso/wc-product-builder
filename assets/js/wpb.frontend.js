@@ -41,6 +41,25 @@ jQuery(function($){
     var visited_tabs=[];
     visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
     valueChange($("#progress-indicator").find("li:first"));
+    $(".wbp_slider").each(function(){
+        var min=$(this).data('min'),
+            max=$(this).data('max'),
+            id=$(this).attr("id"),
+            textValue=$(this).data("text"),
+            slideId="#"+$(this).data("slider"),
+            selectId="#"+$(this).attr("id"),
+            selectBox=$("#"+$(this).attr("id"));
+        var slider=$("<div id='"+slideId+"'></div>").insertAfter(selectBox).slider({
+            min: 1,
+            max:max,
+            range: "min",
+            value: selectBox[0].selectedIndex + 1,
+            slide: function (event, ui) {
+                selectBox[0].selectedIndex = ui.value - 1;
+                $("#"+textValue).val($(selectId+' option:selected').val() );
+            }
+        });
+    });
   $(".wpb_carousel").each(function(){
         var id=$(this).attr("id"),
             right=id+"_right",
@@ -116,24 +135,7 @@ jQuery(function($){
      valueChange($li);
      loadInfoData(wpb_local_params.productId,currentTaxonomy);
  });
-    $(".wbp_slider").each(function(){
-        var min=$(this).data('min'),
-            max=$(this).data('max'),
-            step=$(this).data('step'),
-            id=$(this).attr("id"),
-            textValue=$(this).data("text");
-        $("#"+id).slider({
-            range: "min",
-            value:min,
-            min: min,
-            max: max,
-            step:step,
-            slide: function( event, ui ) {
-                $("#"+textValue).val( ui.value );
-                sizeOptions(currentTaxonomy);
-            }
-        });
-    });
+
     $(document).on("click",".wpb_terms",function(e){
         e.preventDefault();
         var carousel_id="wpb_carousel_"+$(this).data("taxonomy"),

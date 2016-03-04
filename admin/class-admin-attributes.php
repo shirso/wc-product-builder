@@ -65,8 +65,8 @@ if( !class_exists('WPB_Admin_Attributes') ) {
              <?php }?>
             <?php if($attribute_type=="size"){?>
                 <script type="text/javascript">
-                    var inject_data_options=[],
-                        normaal_sheepit=true;
+//                    var inject_data_options=[],
+//                        normaal_sheepit=true;
                 </script>
                 <div class="">
                     <label for=""><?=__('Add Dimension Details','wpb')?></label>
@@ -79,28 +79,31 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                                       <input type="text" class="wide-fat"  name="wpb_size_options[regulator_title]" id="wpb_regulator_title">
                                   </td>
                               </tr>
+<!--                              <tr>-->
+<!--                                  <th>-->
+<!--                                      <label for="wpb_regulator_min">--><?//=__('Regulator Min Value','wpb')?><!--</label>-->
+<!--                                  </th>-->
+<!--                                  <td>-->
+<!--                                      <input type="text" name="wpb_size_options[regulator_min]" size="5" id="wpb_regulator_min">-->
+<!--                                  </td>-->
+<!--                              </tr>-->
+<!--                              <tr>-->
+<!--                                  <th>-->
+<!--                                      <label for="wpb_regulator_max">--><?//=__('Regulator Max Value','wpb')?><!--</label>-->
+<!--                                  </th>-->
+<!--                                  <td>-->
+<!--                                      <input type="text" name="wpb_size_options[regulator_max]" id="wpb_regulator_max" size="5">-->
+<!--                                  </td>-->
+<!--                              </tr>-->
                               <tr>
                                   <th>
-                                      <label for="wpb_regulator_min"><?=__('Regulator Min Value','wpb')?></label>
+                                      <label for="wpb_regulator_step"><?=__('Regulator Values','wpb')?></label>
                                   </th>
                                   <td>
-                                      <input type="text" name="wpb_size_options[regulator_min]" size="5" id="wpb_regulator_min">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <th>
-                                      <label for="wpb_regulator_max"><?=__('Regulator Max Value','wpb')?></label>
-                                  </th>
-                                  <td>
-                                      <input type="text" name="wpb_size_options[regulator_max]" id="wpb_regulator_max" size="5">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <th>
-                                      <label for="wpb_regulator_step"><?=__('Regulator Step Increment','wpb')?></label>
-                                  </th>
-                                  <td>
-                                      <input type="text" name="wpb_size_options[regulator_step]"   id="wpb_regulator_step" size="5">
+                                      <input type="text" name="wpb_size_options[regulator_values]"   id="wpb_regulator_step" size="30">
+                                      <br/>
+                                      <span class="description"><?=__('Put multiple values separated with comma(,)','wpb')?></span>
+
                                   </td>
                               </tr>
                               <tr>
@@ -231,28 +234,30 @@ if( !class_exists('WPB_Admin_Attributes') ) {
                             <input value="<?=@$attr_size_options["regulator_title"]?>" type="text" class="wide-fat"  name="wpb_size_options[regulator_title]" id="wpb_regulator_title">
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            <label for="wpb_regulator_min"><?=__('Regulator Min Value','wpb')?></label>
-                        </th>
-                        <td>
-                            <input type="text" name="wpb_size_options[regulator_min]" value="<?=@$attr_size_options["regulator_min"]?>" size="5" id="wpb_regulator_min">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label for="wpb_regulator_max"><?=__('Regulator Max Value','wpb')?></label>
-                        </th>
-                        <td>
-                            <input type="text" name="wpb_size_options[regulator_max]"  value="<?=@$attr_size_options["regulator_max"]?>" id="wpb_regulator_max" size="5">
-                        </td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <th>-->
+<!--                            <label for="wpb_regulator_min">--><?//=__('Regulator Min Value','wpb')?><!--</label>-->
+<!--                        </th>-->
+<!--                        <td>-->
+<!--                            <input type="text" name="wpb_size_options[regulator_min]" value="--><?//=@$attr_size_options["regulator_min"]?><!--" size="5" id="wpb_regulator_min">-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>-->
+<!--                            <label for="wpb_regulator_max">--><?//=__('Regulator Max Value','wpb')?><!--</label>-->
+<!--                        </th>-->
+<!--                        <td>-->
+<!--                            <input type="text" name="wpb_size_options[regulator_max]"  value="--><?//=@$attr_size_options["regulator_max"]?><!--" id="wpb_regulator_max" size="5">-->
+<!--                        </td>-->
+<!--                    </tr>-->
                 <tr>
                     <th>
-                        <label for="wpb_regulator_step"><?=__('Regulator Step Increment','wpb')?></label>
+                        <label for="wpb_regulator_step"><?=__('Regulator Values','wpb')?></label>
                     </th>
                     <td>
-                        <input type="text" name="wpb_size_options[regulator_step]"  value="<?=@$attr_size_options["regulator_step"]?>" id="wpb_regulator_step" size="5">
+                        <input type="text" name="wpb_size_options[regulator_values]"  value="<?=@$attr_size_options["regulator_values"]?>" id="wpb_regulator_step" size="30">
+                        <br/>
+                        <span class="description"><?=__('Put multiple values separated with comma(,)','wpb')?></span>
                     </td>
                 </tr>
                     <tr>

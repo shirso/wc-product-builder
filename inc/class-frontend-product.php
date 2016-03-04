@@ -166,7 +166,6 @@ if (!class_exists('WPB_Frontend_Product')) {
             $attribute_types=WPB_Common_Functions::get_variation_attributes_types($attributes);
             ?>
            <div id="wc-product-builder">
-
                <div id="wpb_steps" class="f-step">
                    <ul class="progress-indicator" id="progress-indicator">
                        <?php if(!empty($attributes)){
@@ -188,7 +187,6 @@ if (!class_exists('WPB_Frontend_Product')) {
                    </ul>
                </div>
                 <div id="wpb_step_tab">
-
             <?php if(!empty($attributes)){
                 $c=0;
                 foreach($attributes as $name => $options){
@@ -259,21 +257,32 @@ if (!class_exists('WPB_Frontend_Product')) {
                                 <input type="hidden" class="wpb_cart_items" name="wpb_cart_items[size][<?=$name?>]" id="wpb_hidden_size_<?=$name;?>">
                             <?php foreach($all_terms as $term){?>
                                 <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {?>
-                                   <?php $term_size_option=get_option('_wpb_size_options_'.$term->term_id); ?>
+                                   <?php $term_size_option=get_option('_wpb_size_options_'.$term->term_id);
+                                        $regulator_values=($term_size_option) ? explode(',',$term_size_option["regulator_values"]) : array();
+                                        $regulator_min= ($regulator_values[0])? $regulator_values[0] :"";
+                                        $regulator_max= ($regulator_values[count($regulator_values)-1])? $regulator_values[count($regulator_values)-1] :"";
+                                        ?>
                         <div class="row">
                             <div class="col-sm-7">
                                 <div class="rng-sl-sec">
                                     <div class="rngsec">
                                         <h2><?=@$term_size_option["regulator_title"]?></h2>
-                                <div class="wbp_slider" id="wpb_slider_<?=$term->term_id;?>" data-text="wpb_slider_value_<?=$term->term_id;?>" data-min="<?=@$term_size_option["regulator_min"]?>" data-step="<?=@$term_size_option["regulator_step"]?>" data-max="<?=@$term_size_option["regulator_max"]?>"></div>
-                                        <span><?=@$term_size_option["regulator_min"]?> <?=@$term_size_option["regulator_unit"]?></span>
-                                        <span class="alr"><?=@$term_size_option["regulator_max"]?> <?=@$term_size_option["regulator_unit"]?></span>
+                                        <select class="wpb_hidden wbp_slider" data-text="wpb_slider_value_<?=$term->term_id;?>" data-min="<?=@$regulator_min;?>" data-slider="wpb_slider_<?=$term->term_id;?>"  data-max="<?=count($regulator_values);?>"  id="wpb_slider_select_<?=$term->term_id?>">
+                                            <?php  if(!empty($regulator_values)){
+                                                $c=1;
+                                                foreach($regulator_values as $v){
+                                                ?>
+                                                <option><?=$v?></option>
+                                             <?php $c++;}}?>
+                                        </select>
+                                        <span><?=@$regulator_min?> <?=@$term_size_option["regulator_unit"]?></span>
+                                        <span class="alr"><?=@$regulator_max?> <?=@$term_size_option["regulator_unit"]?></span>
                                      </div>
                                  </div>
                              </div>
                             <div class="col-sm-5">
                                 <div class="r-inp-sec clearfix">
-                                    <input type="text" readonly data-title="<?=@$term_size_option["regulator_title"]?>" class="wpb_calculation" data-unit="<?=@$term_size_option["regulator_unit"]?>" value="<?=@$term_size_option["regulator_min"]?>" id="wpb_slider_value_<?=$term->term_id;?>">
+                                    <input type="text" readonly data-title="<?=@$term_size_option["regulator_title"]?>" class="wpb_calculation" data-unit="<?=@$term_size_option["regulator_unit"]?>" value="<?=@$regulator_min;?>" id="wpb_slider_value_<?=$term->term_id;?>">
                                     <span><?=@$term_size_option["regulator_unit"]?></span>
                                     <div class="rthtx">
                                         <h2><?=@$term_size_option["dropdown_title"]?>:
