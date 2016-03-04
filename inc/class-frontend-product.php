@@ -97,7 +97,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                      <h2><?=__("Current Selection","wpb")?>:</h2>
                      <div class="table-responsive mtbl">
                          <?php if(!empty($attributes)){?>
-                         <table class="table">
+                         <table class="table" cellspacing="10" cellpadding="25">
                              <tbody>
                               <?php foreach($attributes as $name=>$options){
                                   $attribute_type=WPB_Common_Functions::get_variation_attribute_type($name);
@@ -233,12 +233,14 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                 <?php if(!empty($term_image)){?>
                                                     <div id='<?=$name?>_<?=$counting?>'>
                                                         <a class="wpb_terms" data-taxonomy="<?=$name;?>" data-term="<?=$term->slug;?>" data-type="<?=$attribute_type;?>" data-counting="<?=$counting?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
-                                                        <div class="wpb_button_div wpb_hidden">
+                                                        <div class="wpb_button_div wpb_hidden123">
                                                             <?php $term_options=get_option('_wpb_attribute_options_'.$term->term_id)?>
                                                                 <?php if(!empty($term_options)){ ?>
-                                                                    <?php foreach($term_options as $option){ ?>
+                                                                    <?php $co =0; foreach($term_options as $option){ ?>
+                                                                        <div id="wpb_button_divs_<?=$co?>">
                                                                         <button data-taxonomy="<?=$name?>" data-term="<?=$term->slug;?>" value="<?=$option;?>" class="wpb_extra"><?=$option;?></button>
-                                                                        <?php }?>
+                                                                        </div>
+                                                                        <?php $co++; }?>
                                                                  <?php }?>
                                                         </div>
                                                     </div>
@@ -303,13 +305,36 @@ if (!class_exists('WPB_Frontend_Product')) {
                     $c++;
                 }
             }?>
-                    <section class="s-btn-sec wpb_hidden" id="wpb_extra_options">
-                            <h2><?=__('Additional Options','wpb')?></h2>
-                            <div class="gbtn" id="wpb_button_div">
-
-                            </div>
-
-                    </section>
+                 <?php if(!empty($attributes)){?>
+                     <?php $c=0; foreach($attributes as $na=>$op){
+                         $attribute_type=WPB_Common_Functions::get_variation_attribute_type($na);
+                         if($attribute_type=="extra"){
+                             $classes=$c==0? "wpb_onedblk": "wpb_aldnn";
+                         ?>
+                    <section class="s-btn-sec <?=$classes?> wpb_extra_options" id="wpb_extra_options_<?=$na;?>">
+                        <h2><?=__('Additional Options','wpb')?></h2>
+                            <?php  $all_terms=get_terms($name);
+                            if(!empty($all_terms)){
+                                foreach($all_terms as $term){
+                                    if (has_term(absint($term->term_id), $name, $post->ID)) {
+                                        $term_options=get_option('_wpb_attribute_options_'.$term->term_id);
+                                        if(!empty($term_options)){
+                                    ?>
+                                 <div class="wpb_extra_options_navigation wpb_aldnn" id="wpb_extra_container_<?=$term->slug?>">
+                                     <div id="wpb_extra_carousel_<?=$term->term_id?>" data-term="<?=$term->term_id?>" class="wpb_extra_carousel">
+                                     <?php $co =0; foreach($term_options as $option){ ?>
+                                         <div id="wpb_button_divs_<?=$term->term_id?>_<?=$co?>" class="gbtn wpb_extra" data-counting="<?=$co?>" data-text="<?=$option;?>" data-termid="<?=$term->term_id;?>" data-term="<?=$term->slug;?>" data-taxonomy="<?=$name?>">
+                                             <?=$option;?>
+                                         </div>
+                                         <?php $co++; }?>
+                                     </div>
+                                     <a href="#" id="wpb_extra_carousel_<?=$term->term_id?>_left" class="btn-primary1"> < </a>
+                                     <a href="#"  id="wpb_extra_carousel_<?=$term->term_id?>_right"  class="btn-primary2"> > </a>
+                                    </div>
+                            <?php }}}} ?>
+                        </section>
+                    <?php }$c++;}?>
+                <?php }?>
                 </div>
            </div>
         <?php
