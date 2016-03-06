@@ -125,13 +125,15 @@ jQuery(function($){
             var taxonomyName=id.substr(13,id.length),
                 containerDiv=$("#"+taxonomyName+'_'+film_roll.index),
                 term=containerDiv.find('.wpb_terms').data('term'),
+                termid=containerDiv.find('.wpb_terms').data('termid'),
                 type=containerDiv.find('.wpb_terms').data('type');
             if(type=="extra"){
-                $(".wpb_extra_options_navigation").removeClass('wpb_onedblk');
+              //  console.log(termid);
                 $(".wpb_extra_options_navigation").addClass('wpb_aldnn');
-                $("#wpb_extra_container_"+term).removeClass('wpb_aldnn');
-                $("#wpb_extra_container_"+term).addClass('wpb_onedblk');
-                $("#wpb_selections_"+taxonomyName).find(".options").text("");
+                if(taxonomyName==currentTaxonomy){
+                $("#wpb_extra_container_"+taxonomyName+"_"+termid).removeClass("wpb_aldnn");
+                $("#wpb_extra_container_"+taxonomyName+"_"+termid).addClass("wpb_on edblk");
+                }
 
             }else{
                 $(".wpb_extra_options_navigation").removeClass('wpb_onedblk');
@@ -165,14 +167,11 @@ jQuery(function($){
          $li.parent().find('li').removeClass('acctive');
          $li.addClass('acctive');
          if(tabType=="extra"){
-           // $("#wpb_extra_options").removeClass("wpb_hidden");
-             $("#wpb_extra_options_"+currentTaxonomy).removeClass('wpb_aldnn');
-             $("#wpb_extra_options_"+currentTaxonomy).addClass('wpb_onedblk');
-             $('.wpb_extra_options').addClass('wpb_aldnn');
+          $("#wpb_extra_options").removeClass("wpb_aldnn");
+          $("#wpb_extra_options").addClass("wpb_onedblk");
          }else{
-             //$("#wpb_extra_options").addClass("wpb_hidden");
-             $('.wpb_extra_options').removeClass('wpb_onedblk');
-             $('.wpb_extra_options').addClass('wpb_aldnn');
+             $("#wpb_extra_options").removeClass("wpb_onedblk");
+             $("#wpb_extra_options").addClass("wpb_aldnn");
          }
      if($li.hasClass("last_one")){
          $("#wpb_continue_button").addClass("wpb_add_cart");
