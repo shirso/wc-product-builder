@@ -23,11 +23,22 @@ if( !class_exists('WPB_Admin_Product') ) {
             return $types;
         }
         public function add_product_data_tab($tabs){
+            $tabs['wpb_dimension']=array(
+                'label'=>__('Dimensions','wpb'),
+                'target'=>'wpb_dimension_tab',
+                'class' => array('show_if_wpb_panel')
+            );
+            $tabs['wpb_extra']=array(
+                'label'=>__('Extras','wpb'),
+                'target'=>'wpb_extra_tab',
+                'class' => array('show_if_wpb_panel')
+            );
             $tabs['wpb_instructions'] =array(
                 'label'=>__('Info Boxes','wpb'),
                 'target'=>'wpb_instructions_tab',
                 'class' => array('show_if_wpb_panel')
             );
+
             return $tabs;
         }
         public function add_product_data_panel(){
@@ -76,6 +87,12 @@ if( !class_exists('WPB_Admin_Product') ) {
                       </table>
                   </div>
                 </div>
+            </div>
+            <div id="wpb_dimension_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
+
+            </div>
+            <div id="wpb_extra_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
+                Extra
             </div>
           <?php
         }

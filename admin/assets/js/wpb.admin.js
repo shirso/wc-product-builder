@@ -104,6 +104,12 @@ jQuery(function($){
                 if($("#wpb_instructions_tab").is(':visible')){
                     $("#wpb_instructions_tab").hide();
                 }
+                if($("#wpb_dimension_tab").is(':visible')){
+                    $("#wpb_dimension_tab").hide();
+                }
+                if($("#wpb_extra_tab").is(':visible')){
+                    $("#wpb_extra_tab").hide();
+                }
             }
         });
     }

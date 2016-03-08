@@ -309,7 +309,11 @@ if (!class_exists('WPB_Frontend_Product')) {
                         <h2><?=__('Additional Options','wpb')?></h2>
                             <?php if(!empty($attributes)){
                                 foreach($attributes as $na=>$op){
-                                    $all_terms=get_terms($na);
+                                    $attribute_type=WPB_Common_Functions::get_variation_attribute_type($na);
+                                    if($attribute_type=="extra"){
+                                    ?>
+                         <div id="wpb_second_carousel_<?=$na?>" class="wpb_second_carousel wpb_aldnn">
+                                   <?php $all_terms=get_terms($na);
                                     foreach($all_terms as $term){
                                      if (has_term(absint($term->term_id), $na, $post->ID)) {
                                          $term_options=get_option('_wpb_attribute_options_'.$term->term_id);
@@ -323,11 +327,13 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                  </div>
                                                  <?php $co++; }?>
                             </div>
-                            <a href="#" id="wpb_extra_carousel_<?=$term->term_id?>_left" class="btn-primary1"> < </a>
-                            <a href="#"  id="wpb_extra_carousel_<?=$term->term_id?>_right"  class="btn-primary2"> > </a>
+                            <a href="#" id="wpb_extra_carousel_<?=$term->term_id?>_left" class="btn-primary1"> &lt; </a>
+                            <a href="#"  id="wpb_extra_carousel_<?=$term->term_id?>_right"  class="btn-primary2"> &gt; </a>
                          </div>
                               <?php }}}?>
+                         </div>
                             <?php }}?>
+                           <?php }?>
                     </section>
                 </div>
            </div>

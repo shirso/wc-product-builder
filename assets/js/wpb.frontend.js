@@ -2,7 +2,8 @@ jQuery(function($){
    var  $variations_form = $('form.variations_form'),
         variations_json = $variations_form.attr('data-product_variations'),
         variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false,
-        currentTaxonomy=$("#progress-indicator").find("li:first").data("taxonomy");
+        currentTaxonomy=$("#progress-indicator").find("li:first").data("taxonomy"),
+        currentTermId=null;
     var valueChange=function($li){
         var tabType=$li.data("type");
         $("#wpb_selections_"+currentTaxonomy).removeClass("wpb_hidden");
@@ -129,15 +130,15 @@ jQuery(function($){
                 type=containerDiv.find('.wpb_terms').data('type');
             if(type=="extra"){
               //  console.log(termid);
-                $(".wpb_extra_options_navigation").addClass('wpb_aldnn');
-                if(taxonomyName==currentTaxonomy){
-                $("#wpb_extra_container_"+taxonomyName+"_"+termid).removeClass("wpb_aldnn");
-                $("#wpb_extra_container_"+taxonomyName+"_"+termid).addClass("wpb_on edblk");
-                }
-
-            }else{
                 $(".wpb_extra_options_navigation").removeClass('wpb_onedblk');
                 $(".wpb_extra_options_navigation").addClass('wpb_aldnn');
+                $("#wpb_extra_container_"+taxonomyName+"_"+termid).removeClass("wpb_aldnn");
+                $("#wpb_extra_container_"+taxonomyName+"_"+termid).addClass("wpb_onedblk");
+                console.log( $("#wpb_extra_container_"+taxonomyName+"_"+termid));
+
+            }else{
+             //   $(".wpb_extra_options_navigation").removeClass('wpb_onedblk');
+             //    $(".wpb_extra_options_navigation").addClass('wpb_aldnn');
             }
             if( $("#"+taxonomyName).val()!=term) {
                 $("#" + taxonomyName).focusin().val(term).change();
@@ -169,9 +170,17 @@ jQuery(function($){
          if(tabType=="extra"){
           $("#wpb_extra_options").removeClass("wpb_aldnn");
           $("#wpb_extra_options").addClass("wpb_onedblk");
+          $(".wpb_second_carousel").removeClass("wpb_onedblk");
+          $(".wpb_second_carousel").addClass("wpb_aldnn");
+          $("#wpb_second_carousel_"+currentTaxonomy).removeClass("wpb_aldnn");
+          $("#wpb_second_carousel_"+currentTaxonomy).addClass("wpb_onedblk");
          }else{
              $("#wpb_extra_options").removeClass("wpb_onedblk");
              $("#wpb_extra_options").addClass("wpb_aldnn");
+           //  $(".wpb_extra_options_navigation").removeClass('wpb_onedblk');
+          //   $(".wpb_extra_options_navigation").addClass('wpb_aldnn');
+             $(".wpb_second_carousel").removeClass("wpb_onedblk");
+             $(".wpb_second_carousel").addClass("wpb_aldnn");
          }
      if($li.hasClass("last_one")){
          $("#wpb_continue_button").addClass("wpb_add_cart");
