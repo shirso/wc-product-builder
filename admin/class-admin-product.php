@@ -120,8 +120,8 @@ if( !class_exists('WPB_Admin_Product') ) {
                              </div>
                              <div id="wpb_dimension_<?=$attr?>_noforms_template"><?=__("No Attribute","wpb");?></div>
                             <div id="wpb_dimension_<?=$attr?>_controls">
-                                <div id="wpb_dimension_<?=$attr?>_add"><a class="button-primary"><span><?=__('Add Attribute','wpb');?></span></a></div>
-                                <div id="wpb_dimension_<?=$attr?>_remove_last"><a class="button-primary"><span><?=__('Remove','wpb');?></span></a></div>
+                                <div id="wpb_dimension_<?=$attr?>_add" class="alin-btn"><a class="button-primary"><span><?=__('Add Attribute','wpb');?></span></a></div>
+                                <div id="wpb_dimension_<?=$attr?>_remove_last" class="alin-btn"><a class="button-primary"><span><?=__('Remove','wpb');?></span></a></div>
                             </div>
                          </div>
                    <?php }}?>
