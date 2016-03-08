@@ -112,5 +112,27 @@ jQuery(function($){
                 }
             }
         });
+
+        if($('.wpb_dimension').length>0){
+            $('.wpb_dimension').each(function(k,v){
+               var id=$(this).attr("id");
+
+                var sheepItForm = $('#'+id).sheepIt({
+                    separator: '',
+                    allowRemoveLast: true,
+                    allowRemoveCurrent: true,
+                    allowRemoveAll: false,
+                    allowAdd: true,
+                    allowAddN: false,
+                    maxFormsCount: 10,
+                    minFormsCount: 0,
+                    iniFormsCount: 1,
+                    afterAdd: function(source, newForm) {
+              //          $('.wpb_enhanced_select').select2();
+                    }
+                });
+            });
+            //$('.wpb_enhanced_select').select2();
+        }
     }
 });

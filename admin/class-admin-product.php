@@ -89,6 +89,43 @@ if( !class_exists('WPB_Admin_Product') ) {
                 </div>
             </div>
             <div id="wpb_dimension_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
+               <?php if(!empty($attributes)){?>
+                   <?php foreach($attributes as $attr=>$option){
+                       $attribute_type=WPB_Common_Functions::get_variation_attribute_type($attr);
+                        if($attribute_type=="dimension"){
+                       ?>
+                       <h2><?=__('Attributes For','wpb');?> <?=wc_attribute_label($attr)?></h2>
+                         <div id="wpb_dimension_<?=$attr?>" class="wpb_dimension">
+                             <div id="wpb_dimension_<?=$attr?>_template">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="attribute_name">
+                                                <?=__("Choose Multiple Attributes","wpb");?>
+                                            </td>
+                                            <td>
+                                                <select multiple id="wpb_dimension_<?=$attr?>_#index#" name="wpb_dimensions[<?=$attr?>][#index#]" class="wpb_enhanced_select">
+                                                    <option value="">----</option>
+                                                    <?php foreach($attributes as $n=>$m){
+                                                        $opt_type=WPB_Common_Functions::get_variation_attribute_type($n);
+                                                        if($opt_type=="regulator" || $opt_type=="select"){
+                                                        ?>
+                                                      <option value="<?=$n?>"><?=wc_attribute_label($n);?></option>
+                                                        <?php }}?>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                             </div>
+                             <div id="wpb_dimension_<?=$attr?>_noforms_template"><?=__("No Attribute","wpb");?></div>
+                            <div id="wpb_dimension_<?=$attr?>_controls">
+                                <div id="wpb_dimension_<?=$attr?>_add"><a class="button-primary"><span><?=__('Add Attribute','wpb');?></span></a></div>
+                                <div id="wpb_dimension_<?=$attr?>_remove_last"><a class="button-primary"><span><?=__('Remove','wpb');?></span></a></div>
+                            </div>
+                         </div>
+                   <?php }}?>
+                <?php }?>
 
             </div>
             <div id="wpb_extra_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
@@ -105,10 +142,10 @@ if( !class_exists('WPB_Admin_Product') ) {
         }
         public function product_option_terms($tax, $i){
             global $woocommerce, $thepostid;
-            if( in_array( $tax->attribute_type, array( 'carousel', 'size', 'extra' ) ) ) {
+            if( in_array( $tax->attribute_type, array( 'carousel', 'regulator', 'extra', 'dimension' ) ) ) {
                 $attribute_taxonomy_name = wc_attribute_taxonomy_name( $tax->attribute_name );
             ?>
-            <select multiple="multiple" data-placeholder="<?php _e( 'Select terms', 'yit' ); ?>" class="multiselect attribute_values wc-enhanced-select" name="attribute_values[<?php echo $i; ?>][]">
+            <select multiple="multiple" data-placeholder="<?php _e( 'Select terms', 'wpb' ); ?>" class="multiselect attribute_values wc-enhanced-select" name="attribute_values[<?php echo $i; ?>][]">
                 <?php
                 $all_terms = get_terms( $attribute_taxonomy_name, 'orderby=name&hide_empty=0' );
                 if ( $all_terms ) {

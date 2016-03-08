@@ -20,6 +20,7 @@ if( !class_exists('WPB_Admin_Attributes') ) {
         public  function product_attributes_type_selector($types){
             $types_custom= array(
                 'carousel'=>__('Carousel','wpb'),
+                'dimension'=>__('Dimension','wpb'),
                 'regulator'=>__('Regulator','wpb'),
                 'extra'=>__('Extra','wpb'),
             );
