@@ -115,8 +115,9 @@ jQuery(function($){
 
         if($('.wpb_dimension').length>0){
             $('.wpb_dimension').each(function(k,v){
-               var id=$(this).attr("id");
-
+               var id=$(this).attr("id"),
+                   inject_data=$(this).next();
+                console.log($.parseJSON(inject_data.val()));
                 var sheepItForm = $('#'+id).sheepIt({
                     separator: '',
                     allowRemoveLast: true,
@@ -127,12 +128,33 @@ jQuery(function($){
                     maxFormsCount: 10,
                     minFormsCount: 0,
                     iniFormsCount: 1,
-                    afterAdd: function(source, newForm) {
-              //          $('.wpb_enhanced_select').select2();
-                    }
+                    data:$.parseJSON(inject_data.val())
                 });
             });
-            //$('.wpb_enhanced_select').select2();
+        }
+
+        $(document).on('click','.wpb_save_dimensions',function(e){
+            e.preventDefault();
+            postData('save_dimension','#wpb_dimension_tab');
+        });
+
+        var postData=function(type,tabId){
+            $(tabId ).block({
+                message: null,
+                overlayCSS: {
+                    background: '#fff',
+                    opacity: 0.6
+                }
+            });
+            var data = {
+                post_id:  woocommerce_admin_meta_boxes.post_id,
+                data:     $( tabId ).find( 'input, select, textarea' ).serialize(),
+                action:   'wpb_save_from_admin',
+                type:type
+            };
+            $.post( woocommerce_admin_meta_boxes.ajax_url, data, function(resp) {
+                    $(tabId ).unblock();
+            });
         }
     }
 });

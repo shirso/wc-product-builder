@@ -11,6 +11,22 @@ if( !class_exists('WPB_Admin_Product') ) {
             add_filter('woocommerce_product_data_tabs', array(&$this, 'add_product_data_tab'),1);
             add_action('woocommerce_product_data_panels', array(&$this, 'add_product_data_panel'));
             add_action('woocommerce_process_product_meta', array(&$this, 'save_custom_fields'), 10, 2);
+            add_action('wp_ajax_wpb_save_from_admin',array(&$this,'wpb_save_from_admin'));
+        }
+        public function wpb_save_from_admin(){
+            $type=esc_html($_POST["type"]);
+            $post_id=absint($_POST["post_id"]);
+            parse_str($_POST['data'],$data);;
+            switch ($type){
+                case 'save_dimension' :
+                    if(!empty($data["wpb_dimensions"])) {
+                        update_post_meta($post_id, '_wpb_dimensions', $data['wpb_dimensions']);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            exit;
         }
         public function product_type_options($types)
         {
@@ -89,6 +105,7 @@ if( !class_exists('WPB_Admin_Product') ) {
                 </div>
             </div>
             <div id="wpb_dimension_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
+                <?php  $dimension_data=get_post_meta($post->ID,'_wpb_dimensions',true);?>
                <?php if(!empty($attributes)){?>
                    <?php foreach($attributes as $attr=>$option){
                        $attribute_type=WPB_Common_Functions::get_variation_attribute_type($attr);
@@ -97,15 +114,15 @@ if( !class_exists('WPB_Admin_Product') ) {
                        <h2><?=__('Attributes For','wpb');?> <?=wc_attribute_label($attr)?></h2>
                          <div id="wpb_dimension_<?=$attr?>" class="wpb_dimension">
                              <div id="wpb_dimension_<?=$attr?>_template">
-                                <table cellpadding="0" cellspacing="0">
+                                <table cellpadding="10" cellspacing="10">
                                     <tbody>
                                         <tr>
                                             <td class="attribute_name">
                                                 <?=__("Choose Multiple Attributes","wpb");?>
                                             </td>
                                             <td>
-                                                <select multiple id="wpb_dimension_<?=$attr?>_#index#" name="wpb_dimensions[<?=$attr?>][#index#]" class="wpb_enhanced_select">
-                                                    <option value="">----</option>
+                                                <select multiple id="wpb_dimension_<?=$attr?>_#index#" name="wpb_dimensions[<?=$attr?>][#index#][]" class="wpb_enhanced_select">
+
                                                     <?php foreach($attributes as $n=>$m){
                                                         $opt_type=WPB_Common_Functions::get_variation_attribute_type($n);
                                                         if($opt_type=="regulator" || $opt_type=="select"){
@@ -120,16 +137,65 @@ if( !class_exists('WPB_Admin_Product') ) {
                              </div>
                              <div id="wpb_dimension_<?=$attr?>_noforms_template"><?=__("No Attribute","wpb");?></div>
                             <div id="wpb_dimension_<?=$attr?>_controls">
-                                <div id="wpb_dimension_<?=$attr?>_add" class="alin-btn"><a class="button-primary"><span><?=__('Add Attribute','wpb');?></span></a></div>
-                                <div id="wpb_dimension_<?=$attr?>_remove_last" class="alin-btn"><a class="button-primary"><span><?=__('Remove','wpb');?></span></a></div>
+                                <div id="wpb_dimension_<?=$attr?>_add" class="alin-btn"><a class="button"><span><?=__('Add Attribute','wpb');?></span></a></div>
+                                <div id="wpb_dimension_<?=$attr?>_remove_last" class="alin-btn"><a class="button"><span><?=__('Remove','wpb');?></span></a></div>
                             </div>
                          </div>
+                            <?php
+                            $inject_data= array();
+                            if(!empty($dimension_data[$attr])){
+                                foreach($dimension_data[$attr] as $dimension){
+                                    //print_r($dimension_data);
+                                    array_push($inject_data,array('wpb_dimension_'.$attr.'_#index#'=>$dimension));
+                                }
+                            }
+                            ?>
+                          <input type='hidden' value='<?=json_encode($inject_data);?>'>
                    <?php }}?>
-                <?php }?>
+                   <div class="toolbar toolbar-top">
+                       <a href="#" class="button-primary wpb_save_dimensions"><?=__('Save Dimensions','wpb')?></a>
+                   </div>
+               <?php }?>
 
             </div>
             <div id="wpb_extra_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
-                Extra
+                <?php if(!empty($attributes)){?>
+                    <?php foreach($attributes as $k=>$v ){
+                        $attribute_type=WPB_Common_Functions::get_variation_attribute_type($k);
+                          if($attribute_type=="extra"){
+                        ?>
+                              <h2><?=wc_attribute_label($k)?></h2>
+                              <div id="wpb_dimension_<?=$attr?>" class="wpb_dimension">
+                                  <div id="wpb_dimension_<?=$attr?>_template">
+                                      <table cellpadding="10" cellspacing="10">
+                                          <tbody>
+                                          <tr>
+                                              <td class="attribute_name">
+                                                  <?=__("Choose Multiple Attributes","wpb");?>
+                                              </td>
+                                              <td>
+                                                  <select multiple id="wpb_dimension_<?=$attr?>_#index#" name="wpb_dimensions[<?=$attr?>][#index#][]" class="wpb_enhanced_select">
+
+                                                      <?php foreach($attributes as $n=>$m){
+                                                          $opt_type=WPB_Common_Functions::get_variation_attribute_type($n);
+                                                          if($opt_type=="regulator" || $opt_type=="select"){
+                                                              ?>
+                                                              <option value="<?=$n?>"><?=wc_attribute_label($n);?></option>
+                                                          <?php }}?>
+                                                  </select>
+                                              </td>
+                                          </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                                  <div id="wpb_dimension_<?=$attr?>_noforms_template"><?=__("No Attribute","wpb");?></div>
+                                  <div id="wpb_dimension_<?=$attr?>_controls">
+                                      <div id="wpb_dimension_<?=$attr?>_add" class="alin-btn"><a class="button"><span><?=__('Add Attribute','wpb');?></span></a></div>
+                                      <div id="wpb_dimension_<?=$attr?>_remove_last" class="alin-btn"><a class="button"><span><?=__('Remove','wpb');?></span></a></div>
+                                  </div>
+                              </div>
+                    <?php }}?>
+                <?php }?>
             </div>
           <?php
         }
