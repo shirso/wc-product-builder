@@ -137,7 +137,10 @@ jQuery(function($){
             e.preventDefault();
             postData('save_dimension','#wpb_dimension_tab');
         });
-
+        $(document).on('click','.wpb_save_extras',function(e){
+            e.preventDefault();
+            postData('save_extra','#wpb_extra_tab');
+        });
         var postData=function(type,tabId){
             $(tabId ).block({
                 message: null,

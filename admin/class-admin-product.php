@@ -23,6 +23,10 @@ if( !class_exists('WPB_Admin_Product') ) {
                         update_post_meta($post_id, '_wpb_dimensions', $data['wpb_dimensions']);
                     }
                     break;
+                case 'save_extra' :
+                    if(!empty($data["wpb_extras"])){
+                        update_post_meta($post_id,'_wpb_extras',$data["wpb_extras"]);
+                    }
                 default:
                     break;
             }
@@ -159,6 +163,7 @@ if( !class_exists('WPB_Admin_Product') ) {
 
             </div>
             <div id="wpb_extra_tab" class="panel woocommerce_options_panel wc-metaboxes-wrapper">
+                <?php $extra_data=get_post_meta($post->ID,'_wpb_extras',true); ?>
                 <?php if(!empty($attributes)){?>
                     <?php foreach($attributes as $k=>$v ){
                         $attribute_type=WPB_Common_Functions::get_variation_attribute_type($k);
@@ -171,10 +176,10 @@ if( !class_exists('WPB_Admin_Product') ) {
                                           <tbody>
                                           <tr>
                                               <td class="attribute_name">
-                                                  <?=__("Choose Multiple Attributes","wpb");?>
+                                                  <?=__("Choose Attribute","wpb");?>
                                               </td>
                                               <td>
-                                                  <select multiple id="wpb_extra_<?=$attr?>_#index#" name="wpb_extras[<?=$attr?>][#index#][]" class="wpb_enhanced_select">
+                                                  <select  id="wpb_extra_<?=$attr?>_#index#" name="wpb_extras[<?=$attr?>][#index#]" class="">
 
                                                       <?php foreach($attributes as $n=>$m){
                                                           $opt_type=WPB_Common_Functions::get_variation_attribute_type($n);
@@ -194,7 +199,20 @@ if( !class_exists('WPB_Admin_Product') ) {
                                       <div id="wpb_dimension_<?=$attr?>_remove_last" class="alin-btn"><a class="button"><span><?=__('Remove','wpb');?></span></a></div>
                                   </div>
                               </div>
+                              <?php
+                              $inject_data= array();
+                              if(!empty($extra_data[$attr])){
+                                  foreach($extra_data[$attr] as $extra){
+                                      //print_r($dimension_data);
+                                      array_push($inject_data,array('wpb_extra_'.$attr.'_#index#'=>$extra));
+                                  }
+                              }
+                              ?>
+                              <input type='hidden' value='<?=json_encode($inject_data);?>'>
                     <?php }}?>
+                    <div class="toolbar toolbar-top">
+                        <a href="#" class="button-primary wpb_save_extras"><?=__('Save Additional Carousels','wpb')?></a>
+                    </div>
                 <?php }?>
             </div>
           <?php
