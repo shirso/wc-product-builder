@@ -163,7 +163,10 @@ if (!class_exists('WPB_Frontend_Product')) {
         public function add_product_designer(){
             global $post, $wpdb, $product, $woocommerce;
             $attributes = $product->get_variation_attributes();
-            $attribute_types=WPB_Common_Functions::get_variation_attributes_types($attributes);
+            $allExtras=get_post_meta($post->ID,'_wpb_extras',true);
+            $allSize=get_post_meta($post->ID,'_wpb_dimensions',true);
+            $notAvilables=WPB_Common_Functions::notAvailableAttributes($post->ID);
+            print_r($notAvilables);
             ?>
            <div id="wc-product-builder">
                <div id="wpb_steps" class="f-step">

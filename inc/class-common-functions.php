@@ -163,6 +163,44 @@ if (!class_exists('WPB_Common_Functions')) {
             }
             return get_post_meta($product_id, '_wpb_check', true) == 'yes' && get_post_type($product_id) == 'product';
         }
+       public function notAvailableAttributes($productId){
+           $allExtras=get_post_meta($productId,'_wpb_extras',true);
+           $allSizes=get_post_meta($productId,'_wpb_dimensions',true);
+           $extras=($allExtras) ? array_values($allExtras) : array();
+           $sizes=($allSizes) ? array_values($allSizes) : array();
+           $notAvilable=array();
+           if(!empty($extras)){
+               foreach($extras as $e){
+                   if(is_array($e) && !empty($e)){
+                       //if(!in_array())
+                       foreach($e as $v){
+                           if(!in_array($v,$notAvilable)){
+                               array_push($notAvilable,$v);
+                           }
+                       }
+                   }
+               }
+           }
+           if(!empty($sizes)){
+               foreach($sizes as $s){
+                   if(is_array($s) && !empty($s)){
+                      $h= self::flatten($s);
+                       foreach($h as $k){
+                           if(!in_array($k,$notAvilable)){
+                               array_push($notAvilable,$k);
+                           }
+                       }
+                   }
+               }
+           }
+
+           return $notAvilable;
+       }
+        public function flatten(array $array) {
+            $return = array();
+            array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+            return $return;
+        }
 
     }
     new WPB_Common_Functions();
