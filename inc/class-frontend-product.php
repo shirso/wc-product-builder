@@ -128,6 +128,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                      <h6><?=__("Total Price","wpb")?> : <span id="wpb_price_html"> </span></h6>
                      <div id="wpb_german_market"></div>
                      <div class="m-cntinu"><a href="#" id="wpb_continue_button"><?=__("Continue","wpb")?></a></div>
+                     <a class="wpb_reset_button" href="#"><?=__('Reset','wpb');?></a>
                  </div>
              </div>
           <?php
@@ -166,7 +167,6 @@ if (!class_exists('WPB_Frontend_Product')) {
             $allExtras=get_post_meta($post->ID,'_wpb_extras',true);
             $allSize=get_post_meta($post->ID,'_wpb_dimensions',true);
             $notAvilables=WPB_Common_Functions::notAvailableAttributes($post->ID);
-            print_r($notAvilables);
             ?>
            <div id="wc-product-builder">
                <div id="wpb_steps" class="f-step">
@@ -205,6 +205,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                           <?php if($attribute_type=="carousel"){?>
                               <?php if(!empty($all_terms)){?>
                         <figure class="slt-sldr-sec">
+                            <h2>Just Heading</h2>
                             <div id='wpb_carousel_<?=$name;?>' class='wpb_carousel'>
                             <?php $counting=0; foreach($all_terms as $term){?>
                                 <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {
@@ -222,6 +223,25 @@ if (!class_exists('WPB_Frontend_Product')) {
                             <a href='#' class='btn-primary1' id='wpb_carousel_<?=$name;?>_left'>&lsaquo;</a>
                             <a href='#' class='btn-primary2' id='wpb_carousel_<?=$name;?>_right'>&rsaquo;</a>
                          </figure>
+                                  <figure class="slt-sldr-sec">
+                                      <h2>Just Heading</h2>
+                                      <div id='wpb_carousel_<?=$name;?>11' class='wpb_carousel'>
+                                          <?php $counting=0; foreach($all_terms as $term){?>
+                                              <?php  if (has_term(absint($term->term_id), $name, $post->ID)) {
+                                                  $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
+                                                  ?>
+                                                  <?php if(!empty($term_image)){?>
+                                                      <div id='<?=$name?>_<?=$counting?>'>
+                                                          <a class="wpb_terms" data-taxonomy="<?=$name;?>" data-term="<?=$term->slug;?>" data-type="<?=$attribute_type;?>" data-counting="<?=$counting?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
+                                                      </div>
+                                                  <?php }?>
+                                                  <?php if($default_value==$term->slug){$default=$counting;} $counting++;}?>
+                                          <?php }?>
+                                      </div>
+                                      <input type="hidden" id="wpb_carousel_<?=$name;?>_default" value="<?=$default;?>">
+                                      <a href='#' class='btn-primary1' id='wpb_carousel_<?=$name;?>11_left'>&lsaquo;</a>
+                                      <a href='#' class='btn-primary2' id='wpb_carousel_<?=$name;?>11_right'>&rsaquo;</a>
+                                  </figure>
                             <?php }?>
                         <?php }?>
                         <?php if($attribute_type=="extra"){ ?>

@@ -811,10 +811,11 @@ tr.grn{color: #85c25c;}
   margin-bottom: 15px;
 }
 .m-cntinu{
-  display: inline-block;
-  float: right;
+  display: block;
   margin: 13px;
+  text-align: right;
   margin-top: 0px;
+  margin-bottom: 7px;
 }
 .m-cntinu a{
   display: inline-block;
@@ -915,3 +916,13 @@ tr.grn{color: #85c25c;}
 @-webkit-keyframes spin{100%{-webkit-transform:rotate(360deg)}}
 @-moz-keyframes spin{100%{-moz-transform:rotate(360deg)}}
 @keyframes spin{100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}#im-sd-sec .blockUI.blockOverlay::before {    height:1em;width:1em;position:absolute;top:50%;left:50%;margin-left:-.5em;margin-top:-.5em;display:block;content:"";-webkit-animation:spin 1s ease-in-out infinite;-moz-animation:spin 1s ease-in-out infinite;animation:spin 1s ease-in-out infinite;background:url(../img/loader.svg) center center;background-size:cover;line-height:1;text-align:center;font-size:2em;color:rgba(0,0,0,.75)}
+
+.wpb_reset_button{
+  display: inline-block;
+  float: right;
+  font-size: 14px;
+  font-style: italic;
+  margin-right: 15px;}
+table{margin-bottom: 0!important;}
+.slt-sldr-sec h2{text-align: center;}
+.slt-sldr-sec{margin-top: 36px;}
