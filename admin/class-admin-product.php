@@ -174,11 +174,11 @@ if( !class_exists('WPB_Admin_Product') ) {
                                                   <?=__("Choose Multiple Attributes","wpb");?>
                                               </td>
                                               <td>
-                                                  <select multiple id="wpb_dimension_<?=$attr?>_#index#" name="wpb_dimensions[<?=$attr?>][#index#][]" class="wpb_enhanced_select">
+                                                  <select multiple id="wpb_extra_<?=$attr?>_#index#" name="wpb_extras[<?=$attr?>][#index#][]" class="wpb_enhanced_select">
 
                                                       <?php foreach($attributes as $n=>$m){
                                                           $opt_type=WPB_Common_Functions::get_variation_attribute_type($n);
-                                                          if($opt_type=="regulator" || $opt_type=="select"){
+                                                          if($opt_type=="carousel"){
                                                               ?>
                                                               <option value="<?=$n?>"><?=wc_attribute_label($n);?></option>
                                                           <?php }}?>
