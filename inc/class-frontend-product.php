@@ -310,7 +310,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                 <?php $c++;}}?>
                                     </select>
                                     <span><?=@$term_size_option["regulator_unit"]?></span>
-                                    <div class="rthtx">
+                                    <div cl ass="rthtx">
                                         <h2><?=@$term_size_option["dropdown_title"]?>:
                                            <input data-title="<?=@$term_size_option["dropdown_title"]?>" id="wpb_normal_text_<?=$term->term_id?>" data-unit="<?=@$term_size_option["dropdown_unit"]?>" type="text" class="wpb_calculation wpb-rngtxt">
                                             <?=@$term_size_option["dropdown_unit"]?></h2>

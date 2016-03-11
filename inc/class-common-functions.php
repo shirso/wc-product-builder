@@ -196,6 +196,11 @@ if (!class_exists('WPB_Common_Functions')) {
 
            return $notAvilable;
        }
+        public function reorderSize($producId){
+            $allDimensions=get_post_meta($producId,'_wpb_dimensions',true);
+
+        }
+
         public function flatten(array $array) {
             $return = array();
             array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
