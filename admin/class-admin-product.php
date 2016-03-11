@@ -170,8 +170,8 @@ if( !class_exists('WPB_Admin_Product') ) {
                           if($attribute_type=="extra"){
                         ?>
                               <h2><?=wc_attribute_label($k)?></h2>
-                              <div id="wpb_dimension_<?=$attr?>" class="wpb_dimension">
-                                  <div id="wpb_dimension_<?=$attr?>_template">
+                              <div id="wpb_dimension_<?=$k?>" class="wpb_dimension">
+                                  <div id="wpb_dimension_<?=$k?>_template">
                                       <table cellpadding="10" cellspacing="10">
                                           <tbody>
                                           <tr>
@@ -179,7 +179,7 @@ if( !class_exists('WPB_Admin_Product') ) {
                                                   <?=__("Choose Attribute","wpb");?>
                                               </td>
                                               <td>
-                                                  <select  id="wpb_extra_<?=$attr?>_#index#" name="wpb_extras[<?=$attr?>][#index#]" class="">
+                                                  <select  id="wpb_extra_<?=$k?>_#index#" name="wpb_extras[<?=$k?>][#index#]" class="">
 
                                                       <?php foreach($attributes as $n=>$m){
                                                           $opt_type=WPB_Common_Functions::get_variation_attribute_type($n);
@@ -193,18 +193,18 @@ if( !class_exists('WPB_Admin_Product') ) {
                                           </tbody>
                                       </table>
                                   </div>
-                                  <div id="wpb_dimension_<?=$attr?>_noforms_template"><?=__("No Attribute","wpb");?></div>
-                                  <div id="wpb_dimension_<?=$attr?>_controls">
-                                      <div id="wpb_dimension_<?=$attr?>_add" class="alin-btn"><a class="button"><span><?=__('Add Attribute','wpb');?></span></a></div>
-                                      <div id="wpb_dimension_<?=$attr?>_remove_last" class="alin-btn"><a class="button"><span><?=__('Remove','wpb');?></span></a></div>
+                                  <div id="wpb_dimension_<?=$k?>_noforms_template"><?=__("No Attribute","wpb");?></div>
+                                  <div id="wpb_dimension_<?=$k?>_controls">
+                                      <div id="wpb_dimension_<?=$k?>_add" class="alin-btn"><a class="button"><span><?=__('Add Attribute','wpb');?></span></a></div>
+                                      <div id="wpb_dimension_<?=$k?>_remove_last" class="alin-btn"><a class="button"><span><?=__('Remove','wpb');?></span></a></div>
                                   </div>
                               </div>
                               <?php
                               $inject_data= array();
-                              if(!empty($extra_data[$attr])){
-                                  foreach($extra_data[$attr] as $extra){
+                              if(!empty($extra_data[$k])){
+                                  foreach($extra_data[$k] as $extra){
                                       //print_r($dimension_data);
-                                      array_push($inject_data,array('wpb_extra_'.$attr.'_#index#'=>$extra));
+                                      array_push($inject_data,array('wpb_extra_'.$k.'_#index#'=>$extra));
                                   }
                               }
                               ?>

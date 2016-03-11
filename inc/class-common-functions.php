@@ -198,7 +198,25 @@ if (!class_exists('WPB_Common_Functions')) {
        }
         public function reorderSize($producId){
             $allDimensions=get_post_meta($producId,'_wpb_dimensions',true);
-
+            $reorderList=array();
+            if(!empty($allDimensions)){
+                foreach($allDimensions as $attribute=>$carousels){
+                   if(is_array($carousels) && !empty($carousels)){
+                       foreach($carousels as $position=>$carousel_attribute){
+                          if(is_array($carousel_attribute) && !empty($carousel_attribute) && count($carousel_attribute) <=2){
+                             $type1=isset($carousel_attribute[0]) ? self::get_variation_attribute_type($carousel_attribute[0]) : null;
+                             $type2=isset($carousel_attribute[1]) ? self::get_variation_attribute_type($carousel_attribute[1]) : null;
+                              if($type1!="regulator" && $type2!="select"){
+                                  $carousels[$position]=array($carousel_attribute[1],$carousel_attribute[0]);
+                              }
+                          }
+                       }
+                      // print_r($carousels);
+                   }
+                    $allDimensions[$attribute]=$carousels;
+                }
+            }
+            return $allDimensions;
         }
 
         public function flatten(array $array) {
