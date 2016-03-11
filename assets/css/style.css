@@ -503,13 +503,7 @@ body {
   float: right;
 }
 /* line 223, ../sass/_normalize.scss */
-.r-inp-sec .rthtx h2 {
-  font-family: 'Lato', sans-serif;
-  font-size: 20px;
-  display: block;
-  margin: 0;
-  color: #3d3c41;
-}
+
 /* line 230, ../sass/_normalize.scss */
 .r-inp-sec .rthtx p {
   font-family: 'Lato', sans-serif;
@@ -880,6 +874,9 @@ tr.grn{color: #85c25c;}
   .s-btn-sec .gbtn button{margin: 0 3px 8px 3px;}
   .r-inp-sec .rthtx{ width: 100%!important; text-align: left;}
   .r-inp-sec .wbp_slider{width: 80%!important;}
+  .rngsec{margin-bottom:0px;}
+  .r-inp-sec{margin-bottom: 45px!important;}
+  .wpb-rngslct{width: 65%!important;}
 }
 @media screen and (max-width: 767px) {
   .col-sm-8,.col-sm-4,.col-sm-12,.col-sm-7,.col-sm-5{
@@ -894,7 +891,6 @@ tr.grn{color: #85c25c;}
 @media handheld, screen and (min-width:768px) and (max-width: 899px) {
   .r-inp-sec .rthtx {
     width: 146px;
-    margin-top: -21px;
     text-align: right!important;
   }
 }
@@ -926,3 +922,5 @@ tr.grn{color: #85c25c;}
 table{margin-bottom: 0!important;}
 .slt-sldr-sec h2{text-align: center;}
 .slt-sldr-sec{margin-top: 36px;}
+.rthtx { text-align: left;}
+.rthtx h2{display: inline-block;}

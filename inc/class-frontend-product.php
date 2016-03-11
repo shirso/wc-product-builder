@@ -242,7 +242,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                            </div>
                                            <div class="col-sm-5">
                                                 <div class="r-inp-sec clearfix">
-                                                    <select>
+                                                    <select class="wpb-rngslct">
                                                         <?php if($regulatorTerms){foreach($regulatorTerms as $r){?>
                                                             <?php if (has_term(absint($r->term_id), $regulator, $post->ID)) {?>
                                                             <option value="<?=$r->slug;?>"><?=$r->name;?></option>
@@ -251,7 +251,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                      </select>
                                                     <div class="rthtx">
                                                         <h2><?=wc_attribute_label($selectBox);?>: </h2>
-                                                         <select class="wpb-rngtxt">
+                                                         <select class="wpb-rngtxt wpb-rngslct">
                                                              <?php if($selectBoxTerms){foreach($selectBoxTerms as $s){?>
                                                                  <?php if (has_term(absint($s->term_id), $selectBox, $post->ID)) {?>
                                                                      <option value="<?=$s->slug;?>"><?=$s->name;?></option>
