@@ -100,26 +100,13 @@ if (!class_exists('WPB_Frontend_Product')) {
                          <table class="table" cellspacing="10" cellpadding="25">
                              <tbody>
                               <?php foreach($attributes as $name=>$options){
-                                  $attribute_type=WPB_Common_Functions::get_variation_attribute_type($name);
                                   ?>
                                   <tr id="wpb_selections_<?=$name;?>" class="wpb_hidden">
-                                    <td class="name">
-                                       <strong> <?=wc_attribute_label($name);?> </strong>
-                                    </td>
-                                      <?php if($attribute_type =="carousel"){?>
-                                          <td><span class="values"></span></td>
-                                        <?php }?>
-                                      <?php if($attribute_type=="extra"){?>
-                                      <td>
-                                      <span class="values"></span> &nbsp; <span class="options"></span>
-                                      </td>
-                                        <?php }?>
-                                      <?php if($attribute_type=="size"){?>
-                                          <td class="sizeOptions">
-
-                                          </td>
-                                      <?php }?>
-                                  </tr>
+                                     <td>
+                                         <strong> <?=wc_attribute_label($name);?> </strong>
+                                     </td>
+                                     <td><span class="values"></span></td>
+                                 </tr>
                                 <?php }?>
                              </tbody>
                          </table>
@@ -169,6 +156,7 @@ if (!class_exists('WPB_Frontend_Product')) {
             $allSize=get_post_meta($post->ID,'_wpb_dimensions',true);
             $notAvilables=WPB_Common_Functions::notAvailableAttributes($post->ID);
             $reorderSizes=WPB_Common_Functions::reorderSize($post->ID);
+            $variations= $product->get_variation_attributes();
             ?>
            <div id="wc-product-builder">
                <div id="wpb_steps" class="f-step">
@@ -180,7 +168,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                  $attribute_type=WPB_Common_Functions::get_variation_attribute_type($name);
                                  $classes=$c==0 ? "completed acctive" : "";
                               ?>
-                                    <li data-tab="#wpb-steps-<?=$name?>" data-taxonomy="<?=$name;?>" data-type="<?=$attribute_type?>" class="<?=$classes?>">
+                                    <li data-tab="#wpb-steps-<?=$name?>" data-taxonomy="<?=$name;?>" data-counting="<?=$c;?>" data-type="<?=$attribute_type?>" class="<?=$classes?>">
                                         <a href="#">
                                             <p><?=wc_attribute_label($name);?></p>
                                             <span class="bubble"></span>
@@ -194,17 +182,19 @@ if (!class_exists('WPB_Frontend_Product')) {
                     <?php if(!empty($attributes)){
                         $c=0;
                         foreach($attributes as $name => $options){
+                          //  print_r($options);
                             if(!in_array($name,$notAvilables)){
                             $classes=$c==0? 'wpb_onedblk' : 'wpb_aldnn';
                         ?>
                     <div id="wpb-steps-<?=$name?>" class="wpb_tabs <?=$classes?>">
                         <?php
-                        $all_terms=get_terms($name);
+                        $all_terms= wc_get_product_terms( $post->ID, $name, array( 'fields' => 'all' ) );
                         $attribute_type=WPB_Common_Functions::get_variation_attribute_type($name);
                         $default_value=$product->get_variation_default_attribute($name);
+                        $checkOptions=($variations[$name])?$variations[$name]: array();
                         ?>
                             <?php if($attribute_type=="carousel"){?>
-                                <?=self::makeCarousel($all_terms,$name,$post->ID,$attribute_type,$default_value);?>
+                                <?=self::makeCarousel($all_terms,$name,$checkOptions,$post->ID,$attribute_type,$default_value);?>
                              <?php }?>
                             <?php if($attribute_type=="extra"){ ?>
                             <?php if($options["is_variation"]==1){
@@ -214,10 +204,11 @@ if (!class_exists('WPB_Frontend_Product')) {
                             <?php $extraCarousel=($allExtras[$name])? $allExtras[$name] : array(); ?>
                             <?php   if($extraCarousel){
                                 foreach($extraCarousel as $carousel){
-                                    $allTerms=get_terms($carousel);
+                                    $allTerms=wc_get_product_terms( $post->ID, $carousel, array( 'fields' => 'all' ) );
+                                    $carouselOptions=($variations[$carousel])?$variations[$carousel]:array();
                                     $carousel_default_value=$product->get_variation_default_attribute($carousel);
                                 ?>
-                                    <?=self::makeCarousel($allTerms,$carousel,$post->ID,'carousel',$carousel_default_value,true);?>
+                                    <?=self::makeCarousel($allTerms,$carousel,$carouselOptions,$post->ID,'carousel',$carousel_default_value,true);?>
                               <?php }}?>
                             <?php }?>
                             <?php if($attribute_type=="dimension"){ ?>
@@ -226,8 +217,10 @@ if (!class_exists('WPB_Frontend_Product')) {
                                         foreach($attributeDimensions as $dimension){
                                             $regulator=$dimension[0];
                                             $selectBox=$dimension[1];
-                                            $regulatorTerms=get_terms($regulator);
-                                            $selectBoxTerms=get_terms($selectBox);
+                                            $regulatorTerms=wc_get_product_terms( $post->ID, $regulator, array( 'fields' => 'all' ) );
+                                            $regulatorVariations=($variations[$regulator])?$variations[$regulator]:array();
+                                            $selectBoxTerms=wc_get_product_terms( $post->ID, $selectBox, array( 'fields' => 'all' ) );
+                                            $selectBoxVariations=($variations[$selectBox])?$variations[$selectBox]:array();
                                         ?>
                                       <div class="row">
                                            <div class="col-sm-7">
@@ -235,27 +228,31 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                     <div class="rngsec">
                                                         <h2><?=wc_attribute_label($regulator);?></h2>
                                                         <div id="wpb_slider_<?=$regulator;?>"></div>
-                                                        <span>123cm</span>
-                                                        <span class="alr">150cm</span>
+                                                        <span id="wpb_regulator_min_<?=$regulator;?>"></span>
+                                                        <span id="wpb_regulator_max_<?=$regulator;?>" class="alr"></span>
                                                     </div>
                                                </div>
                                            </div>
                                            <div class="col-sm-5">
                                                 <div class="r-inp-sec clearfix">
-                                                    <select class="wpb-rngslct">
+                                                    <select class="wpb-rngslct" id="wpb_rangeselect_<?=$regulator?>" data-taxonomy="<?=$regulator;?>">
                                                         <?php if($regulatorTerms){foreach($regulatorTerms as $r){?>
-                                                            <?php if (has_term(absint($r->term_id), $regulator, $post->ID)) {?>
+                                                            <?php if (has_term(absint($r->term_id), $regulator, $post->ID)) {
+                                                                if(in_array($r->slug,$regulatorVariations)){
+                                                                ?>
                                                             <option value="<?=$r->slug;?>"><?=$r->name;?></option>
-                                                              <?php }?>
+                                                              <?php }}?>
                                                         <?php }}?>
                                                      </select>
                                                     <div class="rthtx">
                                                         <h2><?=wc_attribute_label($selectBox);?>: </h2>
                                                          <select class="wpb-rngtxt wpb-rngslct">
                                                              <?php if($selectBoxTerms){foreach($selectBoxTerms as $s){?>
-                                                                 <?php if (has_term(absint($s->term_id), $selectBox, $post->ID)) {?>
+                                                                 <?php if (has_term(absint($s->term_id), $selectBox, $post->ID)) {
+                                                                        if(in_array($s->slug,$selectBoxVariations)){
+                                                                     ?>
                                                                      <option value="<?=$s->slug;?>"><?=$s->name;?></option>
-                                                                 <?php }?>
+                                                                 <?php }}?>
                                                              <?php }}?>
                                                          </select>
                                                         <p><?=__('Set','wpb')?></p>
@@ -269,42 +266,14 @@ if (!class_exists('WPB_Frontend_Product')) {
 
                       </div>
                      <?php $c++;}}}?>
-                    <section class="s-btn-sec wpb_aldnn" id="wpb_extra_options">
-                        <h2><?=__('Additional Options','wpb')?></h2>
-                            <?php if(!empty($attributes)){
-                                foreach($attributes as $na=>$op){
-                                    $attribute_type=WPB_Common_Functions::get_variation_attribute_type($na);
-                                    if($attribute_type=="extra"){
-                                    ?>
-                         <div id="wpb_second_carousel_<?=$na?>" class="wpb_second_carousel wpb_aldnn">
-                                   <?php $all_terms=get_terms($na);
-                                    foreach($all_terms as $term){
-                                     if (has_term(absint($term->term_id), $na, $post->ID)) {
-                                         $term_options=get_option('_wpb_attribute_options_'.$term->term_id);
-                                         if(!empty($term_options)){
-                                ?>
-                        <div class="wpb_extra_options_navigation wpb_aldnn" id="wpb_extra_container_<?=$na?>_<?=$term->term_id?>">
-                            <div id="wpb_extra_carousel_<?=$term->term_id?>" data-term="<?=$term->term_id?>" class="wpb_extra_carousel">
-                                             <?php $co =0; foreach($term_options as $option){ ?>
-                                                 <div id="wpb_button_divs_<?=$term->term_id?>_<?=$co?>" class="gbtn wpb_extra" data-counting="<?=$co?>" data-text="<?=$option;?>" data-termid="<?=$term->term_id;?>" data-term="<?=$term->slug;?>" data-taxonomy="<?=$name?>">
-                                                     <?=$option;?>
-                                                 </div>
-                                                 <?php $co++; }?>
-                            </div>
-                            <a href="#" id="wpb_extra_carousel_<?=$term->term_id?>_left" class="btn-primary1"> &lt; </a>
-                            <a href="#"  id="wpb_extra_carousel_<?=$term->term_id?>_right"  class="btn-primary2"> &gt; </a>
-                         </div>
-                              <?php }}}?>
-                         </div>
-                            <?php }}?>
-                           <?php }?>
-                    </section>
                 </div>
            </div>
         <?php
         }
-        public function makeCarousel($all_terms,$taxonomy,$productId,$attributeType,$default_value,$isExtra=false){
+        public function makeCarousel($all_terms,$taxonomy,$options=array(), $productId,$attributeType,$default_value,$isExtra=false){
             $default=0;
+            $terms = wc_get_product_terms( $productId, $taxonomy, array( 'fields' => 'all' ) );
+          //  print_r($terms);
             if(!empty($all_terms)){
                 ?>
                 <figure class="slt-sldr-sec">
@@ -314,6 +283,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                     <div id='wpb_carousel_<?=$taxonomy;?>' class='wpb_carousel'>
                         <?php $counting=0; foreach($all_terms as $term){
                         if (has_term(absint($term->term_id), $taxonomy, $productId)) {
+                            if(in_array($term->slug,$options)){
                             $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
                             ?>
                             <?php if(!empty($term_image)){?>
@@ -322,7 +292,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                 </div>
                             <?php }?>
                             <?php if($default_value==$term->slug){$default=$counting;} $counting++;?>
-                            <?php }}?>
+                            <?php }}}?>
                      </div>
                     <input type="hidden" id="wpb_carousel_<?=$taxonomy;?>_default" value="<?=$default;?>">
                     <a href='#' class='btn-primary1' id='wpb_carousel_<?=$taxonomy;?>_left'>&lsaquo;</a>
