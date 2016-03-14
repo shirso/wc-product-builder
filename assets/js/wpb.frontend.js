@@ -4,11 +4,36 @@ jQuery(function($){
         variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false,
         currentTaxonomy=$("#progress-indicator").find("li:first").data("taxonomy"),
         currentTermId=null,
+        unavailable_template=wp.template( 'unavailable-variation-template' ),
         visited_tabs=[],
         fr=[];
+    console.log(unavailable_template);
     visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
     var tabCount=$("#progress-indicator").find("li").length;
+    $("#main").removeClass("clearfix");
+    if($('.wpb-body-product').find('.woocommerce-de_price_taxrate').length>0){
+        $("#wpb_german_market").append($(".woocommerce-de_price_taxrate"));
+    }
+    if($('.wpb-body-product').find('.shipping_de_string').length>0){
+        $("#wpb_german_market").append($(".shipping_de_string"));
+    }
+
     /****************************Common Functions***********************/
+    var selectHasValue=function(select,value){
+        obj = document.getElementById(select);
+
+        if (obj !== null) {
+            return (obj.innerHTML.indexOf('value="' + value + '"') > -1);
+        } else {
+            return false;
+        }
+    };
+    var variationSelectChange=function(taxonomyName,term){
+        if( $("#"+taxonomyName).val()!=term && selectHasValue(taxonomyName,term)) {
+            $("#" + taxonomyName).focusin().val(term).change();
+
+        }
+    };
     var loadInfoData=function(productId,taxonomy){
         var data = {
             'action': 'wpb_info_box_load',
@@ -32,8 +57,63 @@ jQuery(function($){
             visited_tabs.push(taxonomyName);
         }
     };
-
+    var selectedIndexChange=function(taxonomyName){
+        $("#wpb_selections_"+taxonomyName).find(".values").html($("#"+taxonomyName+" option:selected").text());
+    };
+    var showSelection=function(taxonomyName,type){
+     switch (type){
+         case "dimension":
+             $("#wpb-steps-"+taxonomyName).find("select").each(function(){
+                 var taxonomy=$(this).data("taxonomy");
+                 $("#wpb_selections_"+taxonomy).removeClass("wpb_hidden");
+                 selectedIndexChange(taxonomy);
+             });
+             break;
+         case "carousel":
+             $("#wpb_selections_"+taxonomyName).removeClass("wpb_hidden");
+             break;
+         case "extra":
+             $("#wpb-steps-"+taxonomyName).find(".wpb_carousel").each(function(){
+                 var taxonomy=$(this).data("taxonomy");
+                 $("#wpb_selections_"+taxonomy).removeClass("wpb_hidden");
+             });
+             break;
+     }
+    };
+    var rangeSlider=function() {
+        $(".wbp_slider").each(function () {
+            var taxonomy = $(this).data("taxonomy"),
+                sliderId = $("#wpb_slider_" + taxonomy),
+                options=$(this).children('option'),
+                firstOption=options[0],
+                lastOption=options[options.length-1],
+                selectBox=$("#"+$(this).attr("id"));
+            $("#wpb_regulator_min_"+taxonomy).text($(firstOption).val());
+            $("#wpb_regulator_max_"+taxonomy).text($(lastOption).val());
+            var slider=$(sliderId).slider({
+                min: 1,
+                max:options.length,
+                range: "min",
+                value: selectBox[0].selectedIndex + 1,
+                slide: function (event, ui) {
+                    selectBox[0].selectedIndex = ui.value - 1;
+                    $(selectBox).trigger("change");
+                    selectedIndexChange(taxonomy);
+                }
+            });
+            $(this).change(function(){
+                slider.slider( "value", this.selectedIndex + 1 );
+                variationSelectChange(taxonomy,$(this).val());
+                selectedIndexChange(taxonomy);
+            });
+        });
+    }
     /**************************Tab Functions **************************/
+    $(document).on('change','.wpb-rngtxt',function(){
+        var taxonomy = $(this).data("taxonomy");
+            variationSelectChange(taxonomy,$(this).val());
+            selectedIndexChange(taxonomy);
+    });
     $(document).on('click','#progress-indicator li a',function(e){
         e.preventDefault();
         var $li=$(this).parent(),
@@ -59,8 +139,8 @@ jQuery(function($){
         $li.addClass('completed');
         $li.parent().find('li').removeClass('acctive');
         $li.addClass('acctive');
-
         loadInfoData(wpb_local_params.productId,currentTaxonomy);
+        showSelection(taxonomy,tabType);
     });
     /**************************Continue Button Functions **************************/
     $(document).on("click","#wpb_continue_button",function(e){
@@ -99,22 +179,41 @@ jQuery(function($){
                 term=containerDiv.find('.wpb_terms').data('term'),
                 termid=containerDiv.find('.wpb_terms').data('termid'),
                 type=containerDiv.find('.wpb_terms').data('type');
-           // console.log($("#"+taxonomyName));
-            $variations_form.trigger( 'woocommerce_update_variation_values' );
-            if( $("#"+taxonomyName).val()!=term) {
-               // $("#" + taxonomyName).focusin().val(term).change();
-            }
+            variationSelectChange(taxonomyName,term);
+            selectedIndexChange(taxonomyName);
         });
     });
+
+    /**************************Range Slider **************************/
+    rangeSlider();
     /**************************WC Variation values Update **************************/
-    $variations_form.on("woocommerce_update_variation_values",function(){
-
-
-    });
     $variations_form.on( 'show_variation', function( event, variation ) {
-
+        var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
+        main_image=variation_data.image_link;
+        additional_images=variation_data.additional_images;
+        if(typeof additional_images !="undefined" && additional_images.length>0){
+            $("#wpb_additional_images").html("");
+            $.each(additional_images,function(k,i){
+                var html="";
+                html+='<div class="blk-im">';
+                html+='<img src="'+i+'" class="img-responsive wpb_additional_image">'
+                html+='</div>';
+                $("#wpb_additional_images").append($(html));
+            });
+        }else{
+            $("#wpb_additional_images").html("");
+        }
+        $("#wpb_main_images").attr("src",main_image);
+        $("#wpb_price_html").html(variation_data.price_html);
+        $("#wpb_price_html").find(".price").removeAttr("style");
     });
-    $variations_form.on( 'check_variations', function( event, exclude, focus  ) {
-
+    /**************************Aditional Images*************************/
+    $(document).on('click','.wpb_additional_image',function(e){
+        e.preventDefault();
+        var old_url=$(this).attr("src"),
+            new_url=$("#wpb_main_images").attr("src");
+        $(this).attr("src",new_url);
+        $("#wpb_main_images").attr("src",old_url);
     });
+
 });

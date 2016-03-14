@@ -70,6 +70,7 @@ if (!class_exists('WPB_Frontend_Product')) {
         public function summary_wrapper_start(){
             ?>
             <section class="result-cl-sec">
+            <p class="wc-no-matching-variations woocommerce-info" style="">Sorry, no products matched your selection. Please choose a different combination.</p>
             <div class="row">
        <?php }
         public function summary_wrapper_end(){
@@ -97,19 +98,18 @@ if (!class_exists('WPB_Frontend_Product')) {
                      <h2><?=__("Current Selection","wpb")?>:</h2>
                      <div class="table-responsive mtbl">
                          <?php if(!empty($attributes)){?>
-                         <table class="table" cellspacing="10" cellpadding="25">
-                             <tbody>
-                              <?php foreach($attributes as $name=>$options){
+
+                              <?php $l=0; foreach($attributes as $name=>$options){
+                                  $classes= $l > 0 ? "wpb_hidden" :"";
                                   ?>
-                                  <tr id="wpb_selections_<?=$name;?>" class="wpb_hidden">
-                                     <td>
-                                         <strong> <?=wc_attribute_label($name);?> </strong>
-                                     </td>
-                                     <td><span class="values"></span></td>
-                                 </tr>
-                                <?php }?>
-                             </tbody>
-                         </table>
+                                  <div id="wpb_selections_<?=$name;?>" class="wpb_selections clearfix <?=$classes?>">
+                                     <div class="left">
+                                          <?=wc_attribute_label($name);?>
+                                     </div>
+                                     <div class="right"><span class="values"></span></div>
+                                 </div>
+                                <?php $l++; }?>
+
                         <?php }?>
                      </div>
                      <h6><?=__("Total Price","wpb")?> : <span id="wpb_price_html"> </span></h6>
@@ -235,7 +235,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                            </div>
                                            <div class="col-sm-5">
                                                 <div class="r-inp-sec clearfix">
-                                                    <select class="wpb-rngslct" id="wpb_rangeselect_<?=$regulator?>" data-taxonomy="<?=$regulator;?>">
+                                                    <select class="wpb-rngslct wbp_slider"  id="wpb_rangeselect_<?=$regulator?>" data-taxonomy="<?=$regulator;?>">
                                                         <?php if($regulatorTerms){foreach($regulatorTerms as $r){?>
                                                             <?php if (has_term(absint($r->term_id), $regulator, $post->ID)) {
                                                                 if(in_array($r->slug,$regulatorVariations)){
@@ -246,7 +246,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                      </select>
                                                     <div class="rthtx">
                                                         <h2><?=wc_attribute_label($selectBox);?>: </h2>
-                                                         <select class="wpb-rngtxt wpb-rngslct">
+                                                         <select class="wpb-rngtxt wpb-rngslct" data-taxonomy="<?=$selectBox;;?>"  id="wpb_select_<?=$selectBox;?>">
                                                              <?php if($selectBoxTerms){foreach($selectBoxTerms as $s){?>
                                                                  <?php if (has_term(absint($s->term_id), $selectBox, $post->ID)) {
                                                                         if(in_array($s->slug,$selectBoxVariations)){
@@ -280,7 +280,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                     <?php if($isExtra){?>
                         <h2><?=wc_attribute_label($taxonomy);?></h2>
                     <?php }?>
-                    <div id='wpb_carousel_<?=$taxonomy;?>' class='wpb_carousel'>
+                    <div id='wpb_carousel_<?=$taxonomy;?>' data-taxonomy="<?=$taxonomy;?>" class='wpb_carousel'>
                         <?php $counting=0; foreach($all_terms as $term){
                         if (has_term(absint($term->term_id), $taxonomy, $productId)) {
                             if(in_array($term->slug,$options)){
