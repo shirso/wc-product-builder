@@ -7,7 +7,6 @@ jQuery(function($){
         unavailable_template=wp.template( 'unavailable-variation-template' ),
         visited_tabs=[],
         fr=[];
-    console.log(unavailable_template);
     visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
     var tabCount=$("#progress-indicator").find("li").length;
     $("#main").removeClass("clearfix");
@@ -27,6 +26,19 @@ jQuery(function($){
         } else {
             return false;
         }
+    };
+    var refreshZoom=function(){
+        $(".pp_pic_holder").remove();
+        $(".pp_overlay").remove();
+        $(".ppt").remove();
+        $("a#wpb_main_image_link").prettyPhoto({
+            //hook: 'data-rel',
+            social_tools: false,
+            theme: 'pp_woocommerce',
+            horizontal_padding: 20,
+            opacity: 0.8,
+            deeplinking: false
+        });
     };
     var variationSelectChange=function(taxonomyName,term){
         if( $("#"+taxonomyName).val()!=term && selectHasValue(taxonomyName,term)) {
@@ -132,6 +144,7 @@ jQuery(function($){
         if(tabCount==visited_tabs.length){
             $("#wpb_continue_button").addClass("wpb_add_cart");
         }
+
         $('.wpb_tabs').removeClass('wpb_onedblk');
         $('.wpb_tabs').addClass('wpb_aldnn');
         $(tabId).removeClass('wpb_aldnn');
@@ -204,8 +217,19 @@ jQuery(function($){
             $("#wpb_additional_images").html("");
         }
         $("#wpb_main_images").attr("src",main_image);
+        $("#wpb_main_image_link").attr("href",main_image);
         $("#wpb_price_html").html(variation_data.price_html);
         $("#wpb_price_html").find(".price").removeAttr("style");
+      refreshZoom();
+    });
+    $( document ).ajaxStop(function() {
+        var noP='<p class="wc-no-matching-variations woocommerce-info">' + wc_add_to_cart_variation_params.i18n_no_matching_variations_text + '</p>';
+        if($(".variation_id").val()==""){
+            $("#wpb_no_found").html(noP);
+            $("#wpb_price_html").html("");
+        }else{
+            $("#wpb_no_found").html("");
+        }
     });
     /**************************Aditional Images*************************/
     $(document).on('click','.wpb_additional_image',function(e){
@@ -214,6 +238,10 @@ jQuery(function($){
             new_url=$("#wpb_main_images").attr("src");
         $(this).attr("src",new_url);
         $("#wpb_main_images").attr("src",old_url);
+        $("#wpb_main_image_link").attr("href",old_url);
+        refreshZoom();
     });
+/****************************Zoom*************************************/
+refreshZoom();
 
 });

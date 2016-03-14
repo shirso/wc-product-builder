@@ -70,7 +70,7 @@ if (!class_exists('WPB_Frontend_Product')) {
         public function summary_wrapper_start(){
             ?>
             <section class="result-cl-sec">
-            <p class="wc-no-matching-variations woocommerce-info" style="">Sorry, no products matched your selection. Please choose a different combination.</p>
+          <div id="wpb_no_found"></div>
             <div class="row">
        <?php }
         public function summary_wrapper_end(){
@@ -133,7 +133,7 @@ if (!class_exists('WPB_Frontend_Product')) {
           ?>
              <div class="im-sd-sec" id="im-sd-sec">
                  <?php $default_url=wp_get_attachment_url($default_image);?>
-                 <img src="<?=$default_url?>" class="img-responsive" id="wpb_main_images">
+               <a href="<?=$default_url?>" id="wpb_main_image_link">  <img src="<?=$default_url?>" class="img-responsive" id="wpb_main_images"></a>
                  <?php if(!empty($other_images)){?>
                      <div class="sm-img-cl" id="wpb_additional_images">
                      <?php foreach($other_images as $img){
@@ -219,8 +219,16 @@ if (!class_exists('WPB_Frontend_Product')) {
                                             $selectBox=$dimension[1];
                                             $regulatorTerms=wc_get_product_terms( $post->ID, $regulator, array( 'fields' => 'all' ) );
                                             $regulatorVariations=($variations[$regulator])?$variations[$regulator]:array();
+                                            $regulatorDefault=$product->get_variation_default_attribute($regulator);
                                             $selectBoxTerms=wc_get_product_terms( $post->ID, $selectBox, array( 'fields' => 'all' ) );
                                             $selectBoxVariations=($variations[$selectBox])?$variations[$selectBox]:array();
+                                            $selectBoxDefault=$product->get_variation_default_attribute($selectBox);
+                                            if(isset($_REQUEST[ 'attribute_' . sanitize_title( $regulator ) ] )){
+                                                $regulatorDefault=wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $regulator ) ] );
+                                            }
+                                            if(isset($_REQUEST[ 'attribute_' . sanitize_title( $selectBox ) ] )){
+                                                $selectBoxDefault=wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $selectBox ) ] );
+                                            }
                                         ?>
                                       <div class="row">
                                            <div class="col-sm-7">
@@ -239,8 +247,9 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                         <?php if($regulatorTerms){foreach($regulatorTerms as $r){?>
                                                             <?php if (has_term(absint($r->term_id), $regulator, $post->ID)) {
                                                                 if(in_array($r->slug,$regulatorVariations)){
+                                                                    $selected=$regulatorDefault==$r->slug?"selected":"";
                                                                 ?>
-                                                            <option value="<?=$r->slug;?>"><?=$r->name;?></option>
+                                                            <option <?=$selected;?> value="<?=$r->slug;?>"><?=$r->name;?></option>
                                                               <?php }}?>
                                                         <?php }}?>
                                                      </select>
@@ -250,8 +259,9 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                              <?php if($selectBoxTerms){foreach($selectBoxTerms as $s){?>
                                                                  <?php if (has_term(absint($s->term_id), $selectBox, $post->ID)) {
                                                                         if(in_array($s->slug,$selectBoxVariations)){
+                                                                            $selected=$selectBoxDefault==$s->slug?"selected":"";
                                                                      ?>
-                                                                     <option value="<?=$s->slug;?>"><?=$s->name;?></option>
+                                                                     <option <?=$selected;?> value="<?=$s->slug;?>"><?=$s->name;?></option>
                                                                  <?php }}?>
                                                              <?php }}?>
                                                          </select>
@@ -274,6 +284,9 @@ if (!class_exists('WPB_Frontend_Product')) {
             $default=0;
             $terms = wc_get_product_terms( $productId, $taxonomy, array( 'fields' => 'all' ) );
           //  print_r($terms);
+            if(isset($_REQUEST[ 'attribute_' . sanitize_title( $taxonomy ) ] )){
+                $default_value=wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $taxonomy ) ] );
+            }
             if(!empty($all_terms)){
                 ?>
                 <figure class="slt-sldr-sec">
