@@ -99,16 +99,22 @@ jQuery(function($){
                 term=containerDiv.find('.wpb_terms').data('term'),
                 termid=containerDiv.find('.wpb_terms').data('termid'),
                 type=containerDiv.find('.wpb_terms').data('type');
-       //  console.log($("#"+taxonomyName).val());
+           // console.log($("#"+taxonomyName));
+            $variations_form.trigger( 'woocommerce_update_variation_values' );
             if( $("#"+taxonomyName).val()!=term) {
-               // console.log($("#"+taxonomyName).val());
-              //  $("#" + taxonomyName).focusin().val(term).change();
+               // $("#" + taxonomyName).focusin().val(term).change();
             }
         });
     });
     /**************************WC Variation values Update **************************/
-    $variations_form.on("update_variation_values",function(event, variations){
-        console.log(variations);
-    });
+    $variations_form.on("woocommerce_update_variation_values",function(){
 
+
+    });
+    $variations_form.on( 'show_variation', function( event, variation ) {
+
+    });
+    $variations_form.on( 'check_variations', function( event, exclude, focus  ) {
+
+    });
 });
