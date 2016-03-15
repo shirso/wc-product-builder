@@ -141,6 +141,10 @@ jQuery(function($){
             e.preventDefault();
             postData('save_extra','#wpb_extra_tab');
         });
+        $(document).on('click','.wpb_save_infobox',function(e){
+            e.preventDefault();
+            postData('save_infobox','#wpb_instructions_tab');
+        });
         var postData=function(type,tabId){
             $(tabId ).block({
                 message: null,

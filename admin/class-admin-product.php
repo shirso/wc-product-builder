@@ -27,6 +27,11 @@ if( !class_exists('WPB_Admin_Product') ) {
                     if(!empty($data["wpb_extras"])){
                         update_post_meta($post_id,'_wpb_extras',$data["wpb_extras"]);
                     }
+                    break;
+                case 'save_infobox' :
+                    if(!empty($data["wpb_info_boxes"])){
+                        update_post_meta($post_id,'_wpb_info_boxes',$data["wpb_info_boxes"]);
+                    }
                 default:
                     break;
             }
@@ -103,7 +108,15 @@ if( !class_exists('WPB_Admin_Product') ) {
                                       </select>
                                   </td>
                               </tr>
-                            <?php }}?>
+                            <?php } ?>
+                              <tr>
+                                  <td colspan="2">
+                                      <div class="toolbar toolbar-top">
+                                          <a href="#" class="button-primary wpb_save_infobox"><?=__('Save Info Box','wpb')?></a>
+                                      </div>
+                                  </td>
+                              </tr>
+                         <?php }?>
                       </table>
                   </div>
                 </div>
@@ -220,9 +233,9 @@ if( !class_exists('WPB_Admin_Product') ) {
 
         public function save_custom_fields($post_id, $post){
             update_post_meta($post_id, '_wpb_check', isset($_POST['_wpb_check']) ? 'yes' : 'no');
-            if (isset($_POST['wpb_info_boxes'])) {
-                update_post_meta($post_id, '_wpb_info_boxes', $_POST['wpb_info_boxes']);
-            }
+//            if (isset($_POST['wpb_info_boxes'])) {
+//                update_post_meta($post_id, '_wpb_info_boxes', $_POST['wpb_info_boxes']);
+//            }
         }
         public function product_option_terms($tax, $i){
             global $woocommerce, $thepostid;

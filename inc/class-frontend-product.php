@@ -2,6 +2,7 @@
 if (!defined('ABSPATH')) exit;
 if (!class_exists('WPB_Frontend_Product')) {
     class WPB_Frontend_Product{
+        private static $defaultSelections=array();
         public function __construct(){
             add_filter('body_class', array(&$this, 'add_class'));
             add_action('template_redirect', array(&$this, 'remove_main_image'));
@@ -52,8 +53,8 @@ if (!class_exists('WPB_Frontend_Product')) {
             $attributes = $product->get_variation_attributes();
             $first_key = key($attributes);
             $first_content_id=($info_boxes[$first_key])?$info_boxes[$first_key]:null;
-            $content_post = get_post($first_content_id);
-            $content = $content_post->post_content;
+            $content_post =$first_content_id!=null? get_post($first_content_id):null;
+            $content = $content_post!=null?$content_post->post_content:null;
             $content = apply_filters('the_content', $content);
             $content = str_replace(']]>', ']]&gt;', $content);
             ?>
@@ -115,7 +116,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                      <h6><?=__("Total Price","wpb")?> : <span id="wpb_price_html"> </span></h6>
                      <div id="wpb_german_market"></div>
                      <div class="m-cntinu"><a href="#" id="wpb_continue_button"><?=__("Continue","wpb")?></a></div>
-                     <a class="wpb_reset_button" href="#"><?=__('Reset','wpb');?></a>
+                     <a class="wpb_reset_button" href="#"><?=__('Reset Selection','wpb');?></a>
                  </div>
              </div>
           <?php
@@ -229,6 +230,8 @@ if (!class_exists('WPB_Frontend_Product')) {
                                             if(isset($_REQUEST[ 'attribute_' . sanitize_title( $selectBox ) ] )){
                                                 $selectBoxDefault=wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $selectBox ) ] );
                                             }
+                                            self::$defaultSelections[$regulator]=$regulatorDefault;
+                                            self::$defaultSelections[$selectBox]=$selectBoxDefault;
                                         ?>
                                       <div class="row">
                                            <div class="col-sm-7">
@@ -278,6 +281,9 @@ if (!class_exists('WPB_Frontend_Product')) {
                      <?php $c++;}}}?>
                 </div>
            </div>
+            <script type="text/javascript">
+                var wpb_default_selections=<?=json_encode(self::$defaultSelections);?>
+            </script>
         <?php
         }
         public function makeCarousel($all_terms,$taxonomy,$options=array(), $productId,$attributeType,$default_value,$isExtra=false){
@@ -287,6 +293,7 @@ if (!class_exists('WPB_Frontend_Product')) {
             if(isset($_REQUEST[ 'attribute_' . sanitize_title( $taxonomy ) ] )){
                 $default_value=wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $taxonomy ) ] );
             }
+            self::$defaultSelections[$taxonomy]=$default_value;
             if(!empty($all_terms)){
                 ?>
                 <figure class="slt-sldr-sec">

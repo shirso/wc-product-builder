@@ -26,7 +26,8 @@ if (!class_exists('WPB_Scripts_Styles')) {
                    "continue_text"=>__("Continue","wpb"),
                     "add_to_cart_text"=>__("Add to Cart","wpb"),
                     "productId"=>$post->ID,
-                    "ajaxUrl"=>admin_url('admin-ajax.php')
+                    "ajaxUrl"=>admin_url('admin-ajax.php'),
+                    "resetText"=>__("Are you sure to reset?","wpb")
                 ));
                 wp_enqueue_script('wpb_script_frontend');
             }

@@ -231,6 +231,7 @@ jQuery(function($){
             $("#wpb_no_found").html("");
         }
     });
+
     /**************************Aditional Images*************************/
     $(document).on('click','.wpb_additional_image',function(e){
         e.preventDefault();
@@ -240,6 +241,25 @@ jQuery(function($){
         $("#wpb_main_images").attr("src",old_url);
         $("#wpb_main_image_link").attr("href",old_url);
         refreshZoom();
+    });
+    /**************************Carousel Click*************************/
+    $(document).on("click",'.wpb_terms',function(e){
+        e.preventDefault();
+        var carousel_id="wpb_carousel_"+$(this).data("taxonomy"),
+            filterd_fr= _.findWhere(fr,{id:carousel_id}),
+            move_index=$(this).data("counting");
+            filterd_fr.roll.moveToIndex(move_index);
+    });
+    /*****************************Rest********************************/
+    $(document).on("click",".wpb_reset_button",function(e){
+        e.preventDefault();
+        var confirmation=confirm(wpb_local_params.resetText);
+        if(confirmation){
+                    //$.each(wpb_default_selections,function(k,v){
+                    //    variationSelectChange(k,v);
+                    //});
+            location.reload();
+        }
     });
 /****************************Zoom*************************************/
 refreshZoom();
