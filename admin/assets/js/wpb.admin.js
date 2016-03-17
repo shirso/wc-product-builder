@@ -145,6 +145,10 @@ jQuery(function($){
             e.preventDefault();
             postData('save_infobox','#wpb_instructions_tab');
         });
+        $(document).on('click','.wpb_save_defaults',function(e){
+            e.preventDefault();
+            postData('save_defaults','#wpb_defaults_tab');
+        });
         var postData=function(type,tabId){
             $(tabId ).block({
                 message: null,

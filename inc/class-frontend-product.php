@@ -199,7 +199,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                              <?php }?>
                             <?php if($attribute_type=="extra"){ ?>
                             <?php if($options["is_variation"]==1){
-                                echo self::makeCarousel($all_terms,$name,$post->ID,$attribute_type);
+                                echo self::makeCarousel($all_terms,$name,$checkOptions,$post->ID,$attribute_type,$default_value);
                                 ?>
                                <?php }?>
                             <?php $extraCarousel=($allExtras[$name])? $allExtras[$name] : array(); ?>

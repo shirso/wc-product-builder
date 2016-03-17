@@ -27,7 +27,8 @@ if (!class_exists('WPB_Scripts_Styles')) {
                     "add_to_cart_text"=>__("Add to Cart","wpb"),
                     "productId"=>$post->ID,
                     "ajaxUrl"=>admin_url('admin-ajax.php'),
-                    "resetText"=>__("Are you sure to reset?","wpb")
+                    "resetText"=>__("Are you sure to reset?","wpb"),
+                    'defaultSelection'=>get_post_meta($post->ID,'_wpb_defaults',true)
                 ));
                 wp_enqueue_script('wpb_script_frontend');
             }

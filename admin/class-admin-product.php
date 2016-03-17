@@ -32,6 +32,11 @@ if( !class_exists('WPB_Admin_Product') ) {
                     if(!empty($data["wpb_info_boxes"])){
                         update_post_meta($post_id,'_wpb_info_boxes',$data["wpb_info_boxes"]);
                     }
+                case 'save_defaults':
+                    if(!empty($data["wpb_defaults"])){
+                        update_post_meta($post_id,'_wpb_defaults',$data["wpb_defaults"]);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -58,6 +63,11 @@ if( !class_exists('WPB_Admin_Product') ) {
                 'target'=>'wpb_extra_tab',
                 'class' => array('show_if_wpb_panel')
             );
+            $tabs['wpb_default_selection']=array(
+                'label'=>__('Default Selection','wpb'),
+                'target'=>'wpb_defaults_tab',
+                'class' => array('show_if_wpb_panel')
+            );
             $tabs['wpb_instructions'] =array(
                 'label'=>__('Info Boxes','wpb'),
                 'target'=>'wpb_instructions_tab',
@@ -67,7 +77,7 @@ if( !class_exists('WPB_Admin_Product') ) {
             return $tabs;
         }
         public function add_product_data_panel(){
-            global $wpdb, $post;
+            global $wpdb, $post,$product;
             $attributes = maybe_unserialize(get_post_meta($post->ID, '_product_attributes', true));
             $args = array(
                 'posts_per_page'   => -1,
@@ -183,8 +193,8 @@ if( !class_exists('WPB_Admin_Product') ) {
                           if($attribute_type=="extra"){
                         ?>
                               <h2><?=wc_attribute_label($k)?></h2>
-                              <div id="wpb_dimension_<?=$k?>" class="wpb_dimension">
-                                  <div id="wpb_dimension_<?=$k?>_template">
+                              <div id="wpb_extra_<?=$k?>" class="wpb_dimension">
+                                  <div id="wpb_extra_<?=$k?>_template">
                                       <table cellpadding="10" cellspacing="10">
                                           <tbody>
                                           <tr>
@@ -206,10 +216,10 @@ if( !class_exists('WPB_Admin_Product') ) {
                                           </tbody>
                                       </table>
                                   </div>
-                                  <div id="wpb_dimension_<?=$k?>_noforms_template"><?=__("No Attribute","wpb");?></div>
-                                  <div id="wpb_dimension_<?=$k?>_controls">
-                                      <div id="wpb_dimension_<?=$k?>_add" class="alin-btn"><a class="button"><span><?=__('Add Attribute','wpb');?></span></a></div>
-                                      <div id="wpb_dimension_<?=$k?>_remove_last" class="alin-btn"><a class="button"><span><?=__('Remove','wpb');?></span></a></div>
+                                  <div id="wpb_extra_<?=$k?>_noforms_template"><?=__("No Attribute","wpb");?></div>
+                                  <div id="wpb_extra_<?=$k?>_controls">
+                                      <div id="wpb_extra_<?=$k?>_add" class="alin-btn"><a class="button"><span><?=__('Add Attribute','wpb');?></span></a></div>
+                                      <div id="wpb_extra_<?=$k?>_remove_last" class="alin-btn"><a class="button"><span><?=__('Remove','wpb');?></span></a></div>
                                   </div>
                               </div>
                               <?php
@@ -227,6 +237,42 @@ if( !class_exists('WPB_Admin_Product') ) {
                         <a href="#" class="button-primary wpb_save_extras"><?=__('Save Additional Carousels','wpb')?></a>
                     </div>
                 <?php }?>
+            </div>
+            <div id="wpb_defaults_tab"  class="panel woocommerce_options_panel wc-metaboxes-wrapper">
+                <h2><?=__("Default Selections","wbp");?></h2>
+                    <table>
+                        <?php $defaults=get_post_meta($post->ID,'_wpb_defaults',true); if(!empty($attributes)){ ?>
+                            <?php foreach($attributes as $attr=>$options){
+                                if($options["is_variation"]==1){ $selected_option=isset($defaults[$attr])?$defaults[$attr]:""; ?>
+                                <tr>
+                                    <td>
+                                        <?=wc_attribute_label($attr);?>
+                                    </td>
+                                    <td>
+                                        <?php  $terms = wc_get_product_terms( $post->ID, $attr, array( 'fields' => 'all' ) ); ?>
+                                        <select name="wpb_defaults[<?=$attr?>]">
+                                         <?php   if(!empty($terms)){
+                                            foreach($terms as $term){
+                                            if (has_term(absint($term->term_id), $attr,  $post->ID)) { ?>
+                                            <option <?=$selected_option==$term->slug?"selected":"";?> value="<?=$term->slug?>"><?=$term->name;?></option>
+                                            <?php }
+                                            }
+                                            }?>
+                                        </select>
+                                    </td>
+                                </tr>
+                               <?php }
+                                ?>
+
+                            <?php } ?>
+                        <?php }?>
+                        <tr><td colspan="2">
+                                <div class="toolbar toolbar-top">
+                                    <a href="#" class="button-primary wpb_save_defaults"><?=__('Save Default Selections','wpb')?></a>
+                                </div>
+                            </td></tr>
+                    </table>
+
             </div>
           <?php
         }

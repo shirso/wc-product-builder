@@ -138,10 +138,11 @@ jQuery(function($){
         }
         currentTaxonomy=taxonomy;
         visitedTabCheck(currentTaxonomy);
-        if(counting==tabCount){
-            $("#wpb_continue_button").text(wpb_local_params.add_to_cart_text);
-        }
+        //if(counting==tabCount){
+        //
+        //}
         if(tabCount==visited_tabs.length){
+            $("#wpb_continue_button").text(wpb_local_params.add_to_cart_text);
             $("#wpb_continue_button").addClass("wpb_add_cart");
         }
 
@@ -201,6 +202,7 @@ jQuery(function($){
     rangeSlider();
     /**************************WC Variation values Update **************************/
     $variations_form.on( 'show_variation', function( event, variation ) {
+
         var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
         main_image=variation_data.image_link;
         additional_images=variation_data.additional_images;
@@ -218,7 +220,12 @@ jQuery(function($){
         }
         $("#wpb_main_images").attr("src",main_image);
         $("#wpb_main_image_link").attr("href",main_image);
-        $("#wpb_price_html").html(variation_data.price_html);
+      //  console.log(variation_data);
+      //  $("#wpb_price_html").html($('.amount').text());
+        $("#wpb_price_html").html(variation_data.price_html!=""?variation_data.price_html:$('.amount').text());
+        //if(variation_data.price_html==""){
+        //
+        //}
         $("#wpb_price_html").find(".price").removeAttr("style");
       refreshZoom();
     });
