@@ -19,7 +19,7 @@ jQuery(function($){
     }
     /****************************Common Functions***********************/
     var checkVariationAttributesCarousel=function(taxonomy){
-        $select=$('select#'+taxonomy+'').focusin();
+        $select=$('select#'+taxonomy+'');
 
         $container= $("#wpb_carousel_"+taxonomy);
         $container.find(".film_roll_child").addClass("wpb_disabled");
@@ -30,11 +30,39 @@ jQuery(function($){
     };
     var checkVariationAttributesDimension=function(taxonomy){
       $selects=$("#wpb-steps-"+taxonomy).find("select");
-      $selects.each(function(select){
-         var taxonomy=$(select).data("taxonomy");
-          $select=$('select#'+taxonomy+'').focusin();
+
+      $selects.each(function(i,select){
+         var taxonomyCurrent=$(select).data("taxonomy");
+          $select=$('select#'+taxonomyCurrent+'');
+          var tempHtml=$select.html();
+          tempHtml=$(tempHtml+" option:gt(0)").remove();
+            $(select).html();
 
       });
+      rangeSlider();
+    };
+    var checkVariationAttributesExtra=function(taxonomy){
+        $carousels=$("#wpb-steps-"+taxonomy).find(".wpb_carousel");
+        $carousels.each(function(i,c){
+            var taxonomyCurrent= $(c).data("taxonomy");
+            checkVariationAttributesCarousel(taxonomyCurrent);
+        });
+    };
+    var checkVariationAttribute=function(taxonomy,type){
+        switch (currentTaxonomytype){
+            case "carousel":
+                checkVariationAttributesCarousel(taxonomy);
+                break;
+            case  "dimension":
+                checkVariationAttributesDimension(taxonomy);
+                break;
+            case "extra":
+                checkVariationAttributesExtra(taxonomy);
+                break;
+            default :
+                checkVariationAttributesCarousel(taxonomy);
+                break;
+        }
     };
     var selectHasValue=function(select,value){
         obj = document.getElementById(select);
@@ -156,6 +184,7 @@ jQuery(function($){
         }
         currentTaxonomy=taxonomy;
         currentTaxonomytype=tabType;
+        checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         visitedTabCheck(currentTaxonomy);
         //if(counting==tabCount){
         //
@@ -212,6 +241,9 @@ jQuery(function($){
                 term=containerDiv.find('.wpb_terms').data('term'),
                 termid=containerDiv.find('.wpb_terms').data('termid'),
                 type=containerDiv.find('.wpb_terms').data('type');
+            if(containerDiv.hasClass('wpb_disabled')){
+                return false;
+            }
             variationSelectChange(taxonomyName,term);
             selectedIndexChange(taxonomyName);
         });
@@ -271,9 +303,14 @@ jQuery(function($){
     /**************************Carousel Click*************************/
     $(document).on("click",'.wpb_terms',function(e){
         e.preventDefault();
+
         var carousel_id="wpb_carousel_"+$(this).data("taxonomy"),
             filterd_fr= _.findWhere(fr,{id:carousel_id}),
-            move_index=$(this).data("counting");
+            move_index=$(this).data("counting"),
+            parentDiv=$(this).parent();
+            if($(parentDiv).hasClass('wpb_disabled')){
+                return false;
+            }
             filterd_fr.roll.moveToIndex(move_index);
     });
     /*****************************Rest********************************/
@@ -292,11 +329,9 @@ refreshZoom();
 
 /******************************Update variation values***************/
 $(window).load(function(){
-  //checkVariationAttributes(currentTaxonomy);
-
-
+  checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
 });
     $variations_form.on("woocommerce_update_variation_values",function(){
-      // alert("test");
+     checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
     });
 });
