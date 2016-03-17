@@ -3,6 +3,7 @@ jQuery(function($){
         variations_json = $variations_form.attr('data-product_variations'),
         variations = ( typeof variations_json !== "undefined" ) ? $.parseJSON( variations_json ) : false,
         currentTaxonomy=$("#progress-indicator").find("li:first").data("taxonomy"),
+        currentTaxonomytype=$("#progress-indicator").find("li:first").data("type"),
         currentTermId=null,
         unavailable_template=wp.template( 'unavailable-variation-template' ),
         visited_tabs=[],
@@ -16,8 +17,25 @@ jQuery(function($){
     if($('.wpb-body-product').find('.shipping_de_string').length>0){
         $("#wpb_german_market").append($(".shipping_de_string"));
     }
-
     /****************************Common Functions***********************/
+    var checkVariationAttributesCarousel=function(taxonomy){
+        $select=$('select#'+taxonomy+'').focusin();
+
+        $container= $("#wpb_carousel_"+taxonomy);
+        $container.find(".film_roll_child").addClass("wpb_disabled");
+        $select.children('option.active,option.enabled').each(function(i, option) {
+            $anchor=$container.find(".film_roll_child a[data-term="+option.value+"]");
+            $anchor.parent().removeClass("wpb_disabled");
+        });
+    };
+    var checkVariationAttributesDimension=function(taxonomy){
+      $selects=$("#wpb-steps-"+taxonomy).find("select");
+      $selects.each(function(select){
+         var taxonomy=$(select).data("taxonomy");
+          $select=$('select#'+taxonomy+'').focusin();
+
+      });
+    };
     var selectHasValue=function(select,value){
         obj = document.getElementById(select);
 
@@ -137,6 +155,7 @@ jQuery(function($){
             return false;
         }
         currentTaxonomy=taxonomy;
+        currentTaxonomytype=tabType;
         visitedTabCheck(currentTaxonomy);
         //if(counting==tabCount){
         //
@@ -271,4 +290,13 @@ jQuery(function($){
 /****************************Zoom*************************************/
 refreshZoom();
 
+/******************************Update variation values***************/
+$(window).load(function(){
+  //checkVariationAttributes(currentTaxonomy);
+
+
+});
+    $variations_form.on("woocommerce_update_variation_values",function(){
+      // alert("test");
+    });
 });

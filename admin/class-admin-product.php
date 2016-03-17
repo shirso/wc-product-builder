@@ -63,11 +63,11 @@ if( !class_exists('WPB_Admin_Product') ) {
                 'target'=>'wpb_extra_tab',
                 'class' => array('show_if_wpb_panel')
             );
-            $tabs['wpb_default_selection']=array(
-                'label'=>__('Default Selection','wpb'),
-                'target'=>'wpb_defaults_tab',
-                'class' => array('show_if_wpb_panel')
-            );
+//            $tabs['wpb_default_selection']=array(
+//                'label'=>__('Default Selection','wpb'),
+//                'target'=>'wpb_defaults_tab',
+//                'class' => array('show_if_wpb_panel')
+//            );
             $tabs['wpb_instructions'] =array(
                 'label'=>__('Info Boxes','wpb'),
                 'target'=>'wpb_instructions_tab',

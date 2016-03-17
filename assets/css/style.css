@@ -143,13 +143,16 @@
 }
 .progress-indicator > li a{display: inline-block;}
 .progress-indicator > li a:hover p{
-  color: #65b32e!important;}
+  color: #cccccc!important;}
 /* line 9, ../sass/_progress-wizard.scss */
 .progress-indicator > li a:hover .bubble:before, .progress-indicator > li a:hover .bubble:after {
-  background-color: #65b32e;
+  background-color: #cececf;
   box-sizing: border-box;
 }
-
+.progress-indicator > li.completed.acctive a:hover .bubble:before{background-color: #65b32e;}
+.progress-indicator > li.completed a:hover .bubble:before{background-color: #65b32e;}
+.progress-indicator > li.completed a:hover .bubble:after{background-color: #65b32e!important;}
+.progress-indicator > li.completed a:hover p{color: #65b32e!important;}
 /* line 121, ../sass/_progress-wizard.scss */
 
 /* line 124, ../sass/_progress-wizard.scss */
@@ -326,7 +329,7 @@ body {
 }
 /* line 86, ../sass/_normalize.scss */
 .progress-indicator > li a:hover .bubble:after{
-	background-color:#65b32e!important;
+	background-color:#cececf!important;
 }
 
 .s-btn-sec h2 {
@@ -614,7 +617,7 @@ body {
 }
 
 .wpb_terms{ max-width:116px!important;width:116px!important;}
-.wpb_terms span{width: 116px!important;word-break: break-all;
+.wpb_terms span{width: 105px!important;word-break: break-all;
   word-wrap: break-word;}
 
 @media handheld, screen and (min-width: 467px) and (max-width: 768px) {
@@ -818,7 +821,7 @@ tr.grn{color: #85c25c;}
 .mtx-sec h2{
   font-size: 20px;
   font-family: 'Lato', sans-serif!important;
-  font-weight: 400!important;
+  font-weight: 600!important;
   margin: 0;
   color: #3d3c41 !important;
 }
