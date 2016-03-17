@@ -111,9 +111,15 @@
 .progress-indicator .completed.acctive .bubble:after {
    background: #3d3c41;
  }
- .progress-indicator > li >a>p{font-size:25px;}
+ .progress-indicator > li >a>p{font-size:25px;line-height: 28px;}
 .progress-indicator .completed.acctive p {
   color: #3d3c41;
+}
+.progress-indicator .completed.acctive a:hover p{
+  color: #3d3c41!important;
+}
+.progress-indicator .completed.acctive a:hover .bubble:after{
+  background: #3d3c41!important;
 }
 /* line 97, ../sass/_progress-wizard.scss */
 .progress-indicator > li.completed {
@@ -814,7 +820,7 @@ tr.grn{color: #85c25c;}
   font-family: 'Lato', sans-serif!important;
   font-weight: 400!important;
   margin: 0;
-  color: #444448;
+  color: #3d3c41 !important;
 }
 .mtx-sec h2{font-weight: 600; margin-bottom: 15px;}
 .mtx-sec h6>span{margin-left: 15px;}
@@ -951,7 +957,7 @@ table{margin-bottom: 0!important;}
 .rthtx { text-align: left;}
 .rthtx h2{display: inline-block;text-align: right;white-space: nowrap;}
 .r-inp-sec .wbp_slider{ width: 115px; border-color: #444;height: 36px;font-size: 16px;}
-.rthtx>h2{margin-bottom:0px!important; font-family: 'Lato', sans-serif!important;font-weight: 300!important;}
+.rthtx>h2{margin-bottom:0px!important; font-family: 'Lato', sans-serif!important;font-weight: 300!important;line-height: 24px;}
 .shipping_de.shipping_de_string{margin-bottom:0px!important;}
 .m-cntinu{margin-top:30px;}
 .shipping_de.shipping_de_string span,#wpb_german_market,#wpb_german_market .woocommerce_de_versandkosten,.woocommerce-de_price_taxrate{font-size:16px; /*line-height: 16px;*/}
@@ -965,7 +971,7 @@ table{margin-bottom: 0!important;}
 /*.progress-indicator > li:last-child{text-align: right!important;}*/
 /*.progress-indicator > li:first-child .bubble:after{left: 0!important;}*/
 /*.progress-indicator > li:last-child .bubble:after{right: 0!important;}*/
-#wpb_price_html span{ color: #747474; font-size: 20px!important;}
+#wpb_price_html span{ color: #3d3c41; font-size: 20px!important;}
 #wpb_step_tab{margin-top:62px;}
-/*.woocommerce_de_versandkosten{display: inline-block;}*/
+.woocommerce_de_versandkosten{display: inline-block;}
 .shipping_de.shipping_de_string{display: initial;}
