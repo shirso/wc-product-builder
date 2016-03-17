@@ -790,7 +790,7 @@ body {
   text-decoration: none;
   color: #000 !important;
 }
-.wpb-body-product .entry-summary{display: none;}
+/*.wpb-body-product .entry-summary{display: none;}*/
 
 
 .table-responsive{min-height: .01%;
@@ -977,3 +977,5 @@ table{margin-bottom: 0!important;}
 .woocommerce_de_versandkosten{display: inline-block;}
 .shipping_de.shipping_de_string{display: initial;}
 .wpb_disabled{opacity: 0.3;}
+#wc-product-builder a{outline: 0;}
+#wc-product-builder a:active, a:focus {outline: 0;}

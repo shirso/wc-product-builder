@@ -20,11 +20,12 @@ jQuery(function($){
     /****************************Common Functions***********************/
     var checkVariationAttributesCarousel=function(taxonomy){
         $select=$('select#'+taxonomy+'');
-
+        if($select.children('option.active,option.enabled').length<=0){return false;}
         $container= $("#wpb_carousel_"+taxonomy);
         $container.find(".film_roll_child").addClass("wpb_disabled");
         $select.children('option.active,option.enabled').each(function(i, option) {
             $anchor=$container.find(".film_roll_child a[data-term="+option.value+"]");
+            console.log($anchor);
             $anchor.parent().removeClass("wpb_disabled");
         });
     };
@@ -49,7 +50,7 @@ jQuery(function($){
         });
     };
     var checkVariationAttribute=function(taxonomy,type){
-        switch (currentTaxonomytype){
+        switch (type){
             case "carousel":
                 checkVariationAttributesCarousel(taxonomy);
                 break;
@@ -329,6 +330,7 @@ refreshZoom();
 
 /******************************Update variation values***************/
 $(window).load(function(){
+
   checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
 });
     $variations_form.on("woocommerce_update_variation_values",function(){
