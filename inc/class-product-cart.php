@@ -3,14 +3,14 @@ if (!class_exists('WPB_Product_Cart')) {
     class WPB_Product_Cart{
         private $wpb_cart_item=null;
         public function __construct(){
-            add_filter('woocommerce_add_cart_item_data', array(&$this, 'add_cart_item_data'), 10, 2);
-            add_filter('woocommerce_get_cart_item_from_session', array(&$this, 'get_cart_item_from_session'), 10, 2);
-            add_filter('woocommerce_get_item_data', array(&$this, 'get_item_data'), 10, 2);
+           /// add_filter('woocommerce_add_cart_item_data', array(&$this, 'add_cart_item_data'), 10, 2);
+         //   add_filter('woocommerce_get_cart_item_from_session', array(&$this, 'get_cart_item_from_session'), 10, 2);
+        //    add_filter('woocommerce_get_item_data', array(&$this, 'get_item_data'), 10, 2);
             add_filter('add_to_cart_redirect', array(&$this, 'redirect_to_checkout'));
-           add_action('woocommerce_add_order_item_meta', array(&$this, 'order_item_meta'), 1, 3);
-            add_filter('woocommerce_order_items_meta_get_formatted',array(&$this,'woocommerce_order_items_meta_get_formatted'),10,2);
-            add_action("woocommerce_order_item_meta_start",array(&$this,"woocommerce_order_item_meta_start"),100,3);
-            add_action('woocommerce_before_order_itemmeta',array(&$this,'woocommerce_before_order_itemmeta'),10,3);
+         //  add_action('woocommerce_add_order_item_meta', array(&$this, 'order_item_meta'), 1, 3);
+         //   add_filter('woocommerce_order_items_meta_get_formatted',array(&$this,'woocommerce_order_items_meta_get_formatted'),10,2);
+         //   add_action("woocommerce_order_item_meta_start",array(&$this,"woocommerce_order_item_meta_start"),100,3);
+          //  add_action('woocommerce_before_order_itemmeta',array(&$this,'woocommerce_before_order_itemmeta'),10,3);
         }
         function add_cart_item_data($cart_item_meta, $product_id){
             if (isset($cart_item_meta['wpb_cart_items'])) {

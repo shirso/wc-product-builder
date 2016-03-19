@@ -23,8 +23,9 @@ if (!class_exists('WC_Product_Builder')) {
         public function init(){
             require_once(WPB_PLUGIN_DIR.'/inc/class-frontend-product.php');
             require_once(WPB_PLUGIN_DIR . '/inc/class-product-cart.php');
-            $this->custom_post_type();
+
             load_plugin_textdomain('wpb', FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+            $this->custom_post_type();
         }
         public function custom_post_type(){
             $labels = array(

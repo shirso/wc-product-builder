@@ -1,0 +1,288 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Woocommerce Product Builder v1.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-03-18 12:08:37+0000\n"
+"Last-Translator: admin <shirso@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: admin/class-admin-attributes.php:22
+#@ wpb
+msgid "Carousel"
+msgstr "Karussell"
+
+#: admin/class-admin-attributes.php:25
+#@ wpb
+msgid "Extra"
+msgstr ""
+
+#: admin/class-admin-attributes.php:36
+#: admin/class-admin-attributes.php:52
+#@ wpb
+msgid "Image"
+msgstr "Bild / Image"
+
+#: admin/class-admin-attributes.php:38
+#: admin/class-admin-attributes.php:56
+#@ wpb
+msgid "Upload"
+msgstr "Hochladen"
+
+#: admin/class-admin-product.php:168
+#: admin/class-admin-product.php:222
+#@ wpb
+msgid "Remove"
+msgstr "Löschen"
+
+#: admin/class-admin-attributes.php:71
+#@ wpb
+msgid "Thumbnail"
+msgstr "Thumbnail, Miniaturbild"
+
+#: admin/class-admin-product.php:50
+#@ wpb
+msgid "Enable Product Builder"
+msgstr "Produkt-Konfigurator aktivieren / anschalten"
+
+#: admin/class-admin-product.php:51
+#@ wpb
+msgid "Enable Product Builder for this Product."
+msgstr "Aktiviere Produkt-Konfigurator für dieses Produkt"
+
+#: admin/class-admin-product.php:291
+#@ wpb
+msgid "Select terms"
+msgstr ""
+
+#: admin/class-admin-product.php:302
+#@ wpb
+msgid "Select all"
+msgstr "All wählen"
+
+#: admin/class-admin-product.php:302
+#@ wpb
+msgid "Select none"
+msgstr "Nicht wählen"
+
+#: admin/class-admin-product.php:303
+#@ wpb
+msgid "Add new"
+msgstr "Neues einfügen"
+
+#: admin/class-admin-product.php:319
+#: admin/class-admin.php:23
+#@ wpb
+msgid "Delete Image"
+msgstr "Bild löschen"
+
+#: admin/class-admin-product.php:335
+#@ wpb
+msgid "Add Additional Images"
+msgstr "Zusätzliche Bilder einfügen"
+
+#: admin/class-admin.php:21
+#@ wpb
+msgid "Manage Additional Images"
+msgstr "Zusätzliche Bilder verwalten"
+
+#: admin/class-admin.php:22
+#@ wpb
+msgid "Add to variation"
+msgstr "Zu Variation hinzufügen"
+
+#: inc/class-frontend-product.php:99
+#@ wpb
+msgid "Current Selection"
+msgstr "Aktuelle Auswahl"
+
+#: inc/class-frontend-product.php:116
+#@ wpb
+msgid "Total Price"
+msgstr "Aktueller Preis"
+
+#: inc/class-frontend-product.php:118
+#: inc/class-scripts-styles.php:26
+#@ wpb
+msgid "Continue"
+msgstr "Weiter"
+
+#: inc/class-frontend-product.php:271
+#@ wpb
+msgid "Set"
+msgstr ""
+
+#: inc/class-scripts-styles.php:27
+#@ wpb
+msgid "Add to Cart"
+msgstr "In den Warenkorb"
+
+#: admin/class-admin-attributes.php:23
+#@ wpb
+msgid "Dimension"
+msgstr "Abmessungen"
+
+#: admin/class-admin-attributes.php:24
+#@ wpb
+msgid "Regulator"
+msgstr "Schieberegler"
+
+#: admin/class-admin-product.php:57
+#@ wpb
+msgid "Dimensions"
+msgstr "Abmessungen"
+
+#: admin/class-admin-product.php:62
+#@ wpb
+msgid "Extras"
+msgstr "Extras (zusätzliche Karussells)"
+
+#: admin/class-admin-product.php:72
+#: wc-product-builder.php:33
+#@ wpb
+msgid "Info Boxes"
+msgstr "Info Boxen"
+
+#: admin/class-admin-product.php:125
+#@ wpb
+msgid "Save Info Box"
+msgstr "Info Box speicher"
+
+#: admin/class-admin-product.php:141
+#@ wpb
+msgid "Attributes For"
+msgstr "Attribute für"
+
+#: admin/class-admin-product.php:148
+#@ wpb
+msgid "Choose Multiple Attributes"
+msgstr "Mehrere Attributes wählen"
+
+#: admin/class-admin-product.php:165
+#: admin/class-admin-product.php:219
+#@ wpb
+msgid "No Attribute"
+msgstr "Keine Attribute"
+
+#: admin/class-admin-product.php:167
+#: admin/class-admin-product.php:221
+#@ wpb
+msgid "Add Attribute"
+msgstr "Attribute hinzufügen"
+
+#: admin/class-admin-product.php:183
+#@ wpb
+msgid "Save Dimensions"
+msgstr "Abmessungen speichern"
+
+#: admin/class-admin-product.php:202
+#@ wpb
+msgid "Choose Attribute"
+msgstr "Attribute wählen"
+
+#: admin/class-admin-product.php:237
+#@ wpb
+msgid "Save Additional Carousels"
+msgstr "Zusätzliche Karussells speichern"
+
+#: inc/class-frontend-product.php:119
+#@ wpb
+msgid "Reset Selection"
+msgstr "Auswahl zurücksetzen"
+
+#: inc/class-scripts-styles.php:30
+#@ wpb
+msgid "Are you sure to reset?"
+msgstr "Möchten Sie wirklich Ihre Einstellungen zurücksetzen? "
+
+#: wc-product-builder.php:31
+#@ wpb
+msgctxt "Post Type General Name"
+msgid "Info Box"
+msgstr ""
+
+#: wc-product-builder.php:32
+#@ wpb
+msgctxt "Post Type Singular Name"
+msgid "Info Box"
+msgstr ""
+
+#: wc-product-builder.php:34
+#: wc-product-builder.php:47
+#@ wpb
+msgid "Info Box"
+msgstr "Info Box"
+
+#: wc-product-builder.php:35
+#@ wpb
+msgid "All Info Boxes"
+msgstr "Alle Info Boxen"
+
+#: wc-product-builder.php:36
+#@ wpb
+msgid "Add New Content"
+msgstr "Neue Inhalte einfügen"
+
+#: wc-product-builder.php:37
+#@ wpb
+msgid "Add New"
+msgstr "Neu hinzufügen"
+
+#: wc-product-builder.php:38
+#@ wpb
+msgid "New Content"
+msgstr "Neues Inhalt"
+
+#: wc-product-builder.php:39
+#@ wpb
+msgid "Edit Content"
+msgstr "Inhalt bearbeiten"
+
+#: wc-product-builder.php:40
+#@ wpb
+msgid "Update Content"
+msgstr "Inhalt aktualisieren"
+
+#: wc-product-builder.php:41
+#@ wpb
+msgid "View Content"
+msgstr "Inhalt ansehen"
+
+#: wc-product-builder.php:42
+#@ wpb
+msgid "Search Content"
+msgstr "Inhalt suchen"
+
+#: wc-product-builder.php:43
+#@ wpb
+msgid "Not found"
+msgstr "Nichts gefunden"
+
+#: wc-product-builder.php:44
+#@ wpb
+msgid "Not found in Trash"
+msgstr "Nichts gefunden im Papierkorb"
+
+#: admin/class-admin-product.php:242
+#@ wpb
+msgid "Default Selections"
+msgstr "Standard-Einstellungen /Default Selections)"
+
+#: admin/class-admin-product.php:271
+#@ wpb
+msgid "Save Default Selections"
+msgstr "Die Standard Einstellungen speichern (Dedault Selections)"
+

@@ -137,9 +137,14 @@
   box-sizing: border-box;
 }
 .progress-indicator > li.completed .bubble:before{
-  background-color: #cececf;
+  background-color: #65b32e;
 }
-
+.progress-indicator > li.completed:hover .bubble:before{
+  background-color: #65b32e;
+}
+.progress-indicator > li.acctive .bubble:before{
+  background-color: #65b32e;
+}
 /* line 115, ../sass/_progress-wizard.scss */
 .progress-indicator > li a:hover .bubble {
 
@@ -150,6 +155,11 @@
   background-color: #cececf;
   box-sizing: border-box;
 }
+.progress-indicator > li.acctive a:hover .bubble:before{
+ background-color: #65b32e;
+}
+
+  
 .progress-indicator > li.completed a:hover .bubble:after{background-color: #65b32e!important;}
 /* line 121, ../sass/_progress-wizard.scss */
 
@@ -382,7 +392,7 @@ body {
 /* line 124, ../sass/_normalize.scss */
 .sm-img-cl .blk-im {
   width: 80px;
-  border: 2px solid #8a8a8a;
+  border: 2px solid #adadac;
   display: inline-block;
   bottom: 0;
   cursor: pointer;
@@ -761,7 +771,7 @@ body {
   padding: 3px 5px;
   font-size: 15px;
   font-weight: 300;
-  margin: 0 5px 0 5px;
+  margin: 0 8px 0 8px;
   font-family: 'Lato', sans-serif;
 }
 /* line 46, ../sass/_normalize.scss */
@@ -769,7 +779,7 @@ body {
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 0 5px;
+  margin: 0 8px;
   height: 70px;
 }
 /* line 54, ../sass/_normalize.scss */
@@ -823,7 +833,7 @@ tr.grn{color: #85c25c;}
   margin: 0;
   color: #3d3c41 !important;
 }
-.mtx-sec h2{font-weight: 600; margin-bottom: 15px;}
+.mtx-sec h2{font-weight: 600; margin-bottom: 30px;}
 .mtx-sec h6>span{margin-left: 15px;}
 .mtx-sec p{
   font-size: 16px;

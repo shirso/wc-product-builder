@@ -18,14 +18,22 @@ jQuery(function($){
         $("#wpb_german_market").append($(".shipping_de_string"));
     }
     /****************************Common Functions***********************/
+    var triggerFocusin=function(){
+       $select= $variations_form.find(".variations select:first");
+            var tempValue=$select.val();
+            //    id=$(this).attr("id");
+            //$(this).selectedIndex=0;
+           $select.focusin().val(tempValue).change();
+            console.log($(this));
+
+    }
     var checkVariationAttributesCarousel=function(taxonomy){
         $select=$('select#'+taxonomy+'');
-        if($select.children('option.active,option.enabled').length<=0){return false;}
+
         $container= $("#wpb_carousel_"+taxonomy);
         $container.find(".film_roll_child").addClass("wpb_disabled");
         $select.children('option.active,option.enabled').each(function(i, option) {
             $anchor=$container.find(".film_roll_child a[data-term="+option.value+"]");
-            console.log($anchor);
             $anchor.parent().removeClass("wpb_disabled");
         });
     };
@@ -50,7 +58,7 @@ jQuery(function($){
         });
     };
     var checkVariationAttribute=function(taxonomy,type){
-        switch (type){
+        switch (currentTaxonomytype){
             case "carousel":
                 checkVariationAttributesCarousel(taxonomy);
                 break;
@@ -242,6 +250,7 @@ jQuery(function($){
                 term=containerDiv.find('.wpb_terms').data('term'),
                 termid=containerDiv.find('.wpb_terms').data('termid'),
                 type=containerDiv.find('.wpb_terms').data('type');
+
             if(containerDiv.hasClass('wpb_disabled')){
                 return false;
             }
@@ -332,8 +341,10 @@ refreshZoom();
 $(window).load(function(){
 
   checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
+    triggerFocusin();
 });
     $variations_form.on("woocommerce_update_variation_values",function(){
+        console.log("asdasdas")
      checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
     });
 });

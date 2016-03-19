@@ -33,9 +33,9 @@ if( !class_exists('WPB_Admin_Attributes') ) {
             ?>
             <?php if($attribute_type== "carousel" || $attribute_type== "extra"){?>
             <div class="form-field">
-                <label for="hd_wpb_attribute_image"><?php _e('Image', 'wpc') ?></label>
+                <label for="hd_wpb_attribute_image"><?php _e('Image', 'wpb') ?></label>
                 <input type="text" class="wide-fat" id="hd_wpb_attribute_image" value="" name="hd_wpb_attribute_image"/>
-                <button class="button button-secondary wpb_upload_button"  id="btn_wpb_attribute_image_upload"><?php _e('Upload', 'wpc') ?></button>
+                <button class="button button-secondary wpb_upload_button"  id="btn_wpb_attribute_image_upload"><?php _e('Upload', 'wpb') ?></button>
             </div>
                 <?php }?>
             <?php
@@ -49,11 +49,11 @@ if( !class_exists('WPB_Admin_Attributes') ) {
             <?php if($attribute_type== "carousel" || $attribute_type== "extra"){?>
         <tr class="form-field">
             <th>
-                <label for="hd_wpc_attribute_image"><?php _e('Image', 'wpc') ?></label>
+                <label for="hd_wpc_attribute_image"><?php _e('Image', 'wpb') ?></label>
             </th>
             <td class="wpc-upload-field">
                 <input type="text" class="wide-fat" id="hd_wpb_attribute_image" value="<?php echo $attr_image; ?>" name="hd_wpb_attribute_image"/>
-                <button class="button button-secondary wpb_upload_button" id="btn_wpc_attribute_image_upload"><?php _e('Upload', 'wpc') ?></button>
+                <button class="button button-secondary wpb_upload_button" id="btn_wpc_attribute_image_upload"><?php _e('Upload', 'wpb') ?></button>
             </td>
         </tr>
              <?php } ?>

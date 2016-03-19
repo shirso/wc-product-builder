@@ -239,7 +239,7 @@ if( !class_exists('WPB_Admin_Product') ) {
                 <?php }?>
             </div>
             <div id="wpb_defaults_tab"  class="panel woocommerce_options_panel wc-metaboxes-wrapper">
-                <h2><?=__("Default Selections","wbp");?></h2>
+                <h2><?=__("Default Selections","wpb");?></h2>
                     <table>
                         <?php $defaults=get_post_meta($post->ID,'_wpb_defaults',true); if(!empty($attributes)){ ?>
                             <?php foreach($attributes as $attr=>$options){
@@ -299,7 +299,7 @@ if( !class_exists('WPB_Admin_Product') ) {
                 }
                 ?>
             </select>
-                <button class="button plus select_all_attributes"><?php _e( 'Select all', 'yit' ); ?></button> <button class="button minus select_no_attributes"><?php _e( 'Select none', 'wpb' ); ?></button>
+                <button class="button plus select_all_attributes"><?php _e( 'Select all', 'wpb' ); ?></button> <button class="button minus select_no_attributes"><?php _e( 'Select none', 'wpb' ); ?></button>
                 <button class="button fr plus add_new_attribute" data-attribute="<?php echo $attribute_taxonomy_name; ?>"><?php _e( 'Add new', 'wpb' ); ?></button>
             <?php
             }

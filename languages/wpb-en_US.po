@@ -1,156 +1,288 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Woocommerce Product Builder\n"
-"POT-Creation-Date: 2016-02-23 15:55+0530\n"
-"PO-Revision-Date: 2016-02-23 15:57+0530\n"
+"Project-Id-Version: Woocommerce Product Builder v1.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-18 16:59+0530\n"
+"PO-Revision-Date: 2016-03-18 11:50:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.6.7\n"
-"X-Poedit-Basepath: ..\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Bookmarks: \n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
 
 #: admin/class-admin-attributes.php:22
+#@ wpb
 msgid "Carousel"
 msgstr "Carousel"
 
 #: admin/class-admin-attributes.php:23
-msgid "Size"
-msgstr "Size"
+#@ wpb
+msgid "Dimension"
+msgstr "Dimension"
 
 #: admin/class-admin-attributes.php:24
+#@ wpb
+msgid "Regulator"
+msgstr "Regulator"
+
+#: admin/class-admin-attributes.php:25
+#@ wpb
 msgid "Extra"
 msgstr "Extra"
 
-#: admin/class-admin-attributes.php:35 admin/class-admin-attributes.php:161
+#: admin/class-admin-attributes.php:36
+#: admin/class-admin-attributes.php:52
+#@ wpb
 msgid "Image"
 msgstr "Image"
 
-#: admin/class-admin-attributes.php:37 admin/class-admin-attributes.php:165
+#: admin/class-admin-attributes.php:38
+#: admin/class-admin-attributes.php:56
+#@ wpb
 msgid "Upload"
 msgstr "Upload"
 
-#: admin/class-admin-attributes.php:47 admin/class-admin-attributes.php:183
-msgid "Add Multiple Options"
-msgstr "Add Multiple Options"
-
-#: admin/class-admin-attributes.php:52 admin/class-admin-attributes.php:131
-#: admin/class-admin-attributes.php:190 admin/class-admin-attributes.php:275
-msgid "No Option"
-msgstr "No Option"
-
-#: admin/class-admin-attributes.php:54 admin/class-admin-attributes.php:133
-#: admin/class-admin-attributes.php:192 admin/class-admin-attributes.php:277
-msgid "Add Option"
-msgstr "Add Option"
-
-#: admin/class-admin-attributes.php:55 admin/class-admin-attributes.php:134
-#: admin/class-admin-attributes.php:193 admin/class-admin-attributes.php:278
-msgid "Remove"
-msgstr "Remove"
-
-#: admin/class-admin-attributes.php:56 admin/class-admin-attributes.php:135
-#: admin/class-admin-attributes.php:279
-msgid "Remove All"
-msgstr "Remove All"
-
-#: admin/class-admin-attributes.php:60 admin/class-admin-attributes.php:139
-#: admin/class-admin-attributes.php:198 admin/class-admin-attributes.php:283
-msgid "Add"
-msgstr "Add"
-
-#: admin/class-admin-attributes.php:72
-msgid "Add Dimension Details"
-msgstr "Add Dimension Details"
-
-#: admin/class-admin-attributes.php:76 admin/class-admin-attributes.php:220
-msgid "Regulator Title"
-msgstr "Regulator Title"
-
-#: admin/class-admin-attributes.php:84 admin/class-admin-attributes.php:228
-msgid "Regulator Min Value"
-msgstr "Regulator Min Value"
-
-#: admin/class-admin-attributes.php:92 admin/class-admin-attributes.php:236
-msgid "Regulator Max Value"
-msgstr "Regulator Max Value"
-
-#: admin/class-admin-attributes.php:100 admin/class-admin-attributes.php:244
-msgid "Regulator Unit"
-msgstr "Regulator Unit"
-
-#: admin/class-admin-attributes.php:108 admin/class-admin-attributes.php:252
-msgid "Drop Down Title"
-msgstr "Drop Down Title"
-
-#: admin/class-admin-attributes.php:116 admin/class-admin-attributes.php:260
-msgid "Drop Down Unit"
-msgstr "Drop Down Unit"
-
-#: admin/class-admin-attributes.php:124 admin/class-admin-attributes.php:268
-msgid "Dropdown Options"
-msgstr "Dropdown Options"
-
-#: admin/class-admin-attributes.php:194
-msgid "Remove all"
-msgstr "Remove all"
-
-#: admin/class-admin-attributes.php:310
+#: admin/class-admin-attributes.php:71
+#@ wpb
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: admin/class-admin-product.php:17
+#: admin/class-admin-product.php:50
+#@ wpb
 msgid "Enable Product Builder"
 msgstr "Enable Product Builder"
 
-#: admin/class-admin-product.php:18
+#: admin/class-admin-product.php:51
+#@ wpb
 msgid "Enable Product Builder for this Product."
 msgstr "Enable Product Builder for this Product."
 
-#: admin/class-admin-product.php:30
+#: admin/class-admin-product.php:57
+#@ wpb
+msgid "Dimensions"
+msgstr "Dimensions"
+
+#: admin/class-admin-product.php:62
+#@ wpb
+msgid "Extras"
+msgstr "Extras"
+
+#: admin/class-admin-product.php:72
+#: wc-product-builder.php:33
+#@ wpb
+msgid "Info Boxes"
+msgstr "Info Boxes"
+
+#: admin/class-admin-product.php:125
+#@ wpb
+msgid "Save Info Box"
+msgstr "Save Info Box"
+
+#: admin/class-admin-product.php:141
+#@ wpb
+msgid "Attributes For"
+msgstr "Attributes For"
+
+#: admin/class-admin-product.php:148
+#@ wpb
+msgid "Choose Multiple Attributes"
+msgstr "Choose Multiple Attributes"
+
+#: admin/class-admin-product.php:165
+#: admin/class-admin-product.php:219
+#@ wpb
+msgid "No Attribute"
+msgstr "No Attribute"
+
+#: admin/class-admin-product.php:167
+#: admin/class-admin-product.php:221
+#@ wpb
+msgid "Add Attribute"
+msgstr "Add Attribute"
+
+#: admin/class-admin-product.php:168
+#: admin/class-admin-product.php:222
+#@ wpb
+msgid "Remove"
+msgstr "Remove"
+
+#: admin/class-admin-product.php:183
+#@ wpb
+msgid "Save Dimensions"
+msgstr "Save Dimensions"
+
+#: admin/class-admin-product.php:202
+#@ wpb
+msgid "Choose Attribute"
+msgstr "Choose Attribute"
+
+#: admin/class-admin-product.php:237
+#@ wpb
+msgid "Save Additional Carousels"
+msgstr "Save Additional Carousels"
+
+#: admin/class-admin-product.php:242
+#@ wpb
+msgid "Default Selections"
+msgstr "Default Selections"
+
+#: admin/class-admin-product.php:271
+#@ wpb
+msgid "Save Default Selections"
+msgstr "Save Default Selections"
+
+#: admin/class-admin-product.php:291
+#@ wpb
 msgid "Select terms"
 msgstr "Select terms"
 
-#: admin/class-admin-product.php:41
+#: admin/class-admin-product.php:302
+#@ wpb
 msgid "Select all"
 msgstr "Select all"
 
-#: admin/class-admin-product.php:41
+#: admin/class-admin-product.php:302
+#@ wpb
 msgid "Select none"
 msgstr "Select none"
 
-#: admin/class-admin-product.php:42
+#: admin/class-admin-product.php:303
+#@ wpb
 msgid "Add new"
 msgstr "Add new"
 
-#: admin/class-admin-product.php:58 admin/class-admin.php:23
+#: admin/class-admin-product.php:319
+#: admin/class-admin.php:23
+#@ wpb
 msgid "Delete Image"
 msgstr "Delete Image"
 
-#: admin/class-admin-product.php:74
+#: admin/class-admin-product.php:335
+#@ wpb
 msgid "Add Additional Images"
 msgstr "Add Additional Images"
 
 #: admin/class-admin.php:21
+#@ wpb
 msgid "Manage Additional Images"
 msgstr "Manage Additional Images"
 
 #: admin/class-admin.php:22
+#@ wpb
 msgid "Add to variation"
 msgstr "Add to variation"
 
-#: inc/class-frontend-product.php:128
+#: inc/class-frontend-product.php:99
+#@ wpb
+msgid "Current Selection"
+msgstr "Current Selection"
+
+#: inc/class-frontend-product.php:116
+#@ wpb
+msgid "Total Price"
+msgstr "Total Price"
+
+#: inc/class-frontend-product.php:118
+#: inc/class-scripts-styles.php:26
+#@ wpb
+msgid "Continue"
+msgstr "Continue"
+
+#: inc/class-frontend-product.php:119
+#@ wpb
+msgid "Reset Selection"
+msgstr "Reset Selection"
+
+#: inc/class-frontend-product.php:271
+#@ wpb
 msgid "Set"
 msgstr "Set"
 
-#: inc/class-frontend-product.php:144
-msgid "Additional Options"
-msgstr "Additional Options"
+#: inc/class-scripts-styles.php:27
+#@ wpb
+msgid "Add to Cart"
+msgstr "Add to Cart"
+
+#: inc/class-scripts-styles.php:30
+#@ wpb
+msgid "Are you sure to reset?"
+msgstr "Are you sure to reset?"
+
+#: wc-product-builder.php:31
+#@ wpb
+msgctxt "Post Type General Name"
+msgid "Info Box"
+msgstr "Info Box"
+
+#: wc-product-builder.php:32
+#@ wpb
+msgctxt "Post Type Singular Name"
+msgid "Info Box"
+msgstr "Info Box"
+
+#: wc-product-builder.php:34
+#: wc-product-builder.php:47
+#@ wpb
+msgid "Info Box"
+msgstr "Info Box"
+
+#: wc-product-builder.php:35
+#@ wpb
+msgid "All Info Boxes"
+msgstr "All Info Boxes"
+
+#: wc-product-builder.php:36
+#@ wpb
+msgid "Add New Content"
+msgstr "Add New Content"
+
+#: wc-product-builder.php:37
+#@ wpb
+msgid "Add New"
+msgstr "Add New"
+
+#: wc-product-builder.php:38
+#@ wpb
+msgid "New Content"
+msgstr "New Content"
+
+#: wc-product-builder.php:39
+#@ wpb
+msgid "Edit Content"
+msgstr "Edit Content"
+
+#: wc-product-builder.php:40
+#@ wpb
+msgid "Update Content"
+msgstr "Update Content"
+
+#: wc-product-builder.php:41
+#@ wpb
+msgid "View Content"
+msgstr "View Content"
+
+#: wc-product-builder.php:42
+#@ wpb
+msgid "Search Content"
+msgstr "Search Content"
+
+#: wc-product-builder.php:43
+#@ wpb
+msgid "Not found"
+msgstr "Not found"
+
+#: wc-product-builder.php:44
+#@ wpb
+msgid "Not found in Trash"
+msgstr "Not found in Trash"
+
