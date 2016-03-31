@@ -306,11 +306,11 @@ if (!class_exists('WPB_Frontend_Product')) {
                             if(in_array($term->slug,$options)){
                             $term_image=get_option('_wpb_variation_attr_image_'.$term->term_id);
                             ?>
-                            <?php if(!empty($term_image)){?>
+                            <?php if(!empty($term_image) && !$isExtra){?>
                                 <div id='<?=$taxonomy?>_<?=$counting?>'>
                                     <a class="wpb_terms" data-taxonomy="<?=$taxonomy;?>" data-term="<?=$term->slug;?>" data-type="<?=$attributeType;?>" data-counting="<?=$counting?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
                                 </div>
-                            <?php }else{?>
+                            <?php }if($isExtra){?>
                                     <div id='<?=$taxonomy?>_<?=$counting?>'>
                                         <a class="wpb_terms" data-taxonomy="<?=$taxonomy;?>" data-term="<?=$term->slug;?>" data-type="<?=$attributeType;?>" data-counting="<?=$counting?>" href="#"><span><?=$term->name;?></span></a>
                                     </div>
