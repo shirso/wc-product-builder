@@ -116,7 +116,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                      <h6><?=__("Total Price","wpb")?> : <span id="wpb_price_html"> </span></h6>
                      <div id="wpb_german_market"></div>
                      <div class="m-cntinu"><a href="#" id="wpb_continue_button"><?=__("Continue","wpb")?></a></div>
-                     <a class="wpb_reset_button" href="#"><?=__('Reset Selection','wpb');?></a>
+                     <a class="wpb_reset_button" href="#"><i class="fa fa-refresh"></i><?=__('Reset Selection','wpb');?></a>
                  </div>
              </div>
           <?php
@@ -268,7 +268,6 @@ if (!class_exists('WPB_Frontend_Product')) {
                                                                  <?php }}?>
                                                              <?php }}?>
                                                          </select>
-                                                        <p><?=__('Set','wpb')?></p>
                                                     </div>
                                                 </div>
                                            </div>
@@ -295,8 +294,9 @@ if (!class_exists('WPB_Frontend_Product')) {
             }
             self::$defaultSelections[$taxonomy]=$default_value;
             if(!empty($all_terms)){
+                $exclasses=$isExtra?"extraCarousel":"";
                 ?>
-                <figure class="slt-sldr-sec">
+                <figure  class="slt-sldr-sec <?=$exclasses?>">
                     <?php if($isExtra){?>
                         <h2><?=wc_attribute_label($taxonomy);?></h2>
                     <?php }?>
@@ -310,7 +310,11 @@ if (!class_exists('WPB_Frontend_Product')) {
                                 <div id='<?=$taxonomy?>_<?=$counting?>'>
                                     <a class="wpb_terms" data-taxonomy="<?=$taxonomy;?>" data-term="<?=$term->slug;?>" data-type="<?=$attributeType;?>" data-counting="<?=$counting?>" href="#"><img src="<?=$term_image?>"><span><?=$term->name;?></span></a>
                                 </div>
-                            <?php }?>
+                            <?php }else{?>
+                                    <div id='<?=$taxonomy?>_<?=$counting?>'>
+                                        <a class="wpb_terms" data-taxonomy="<?=$taxonomy;?>" data-term="<?=$term->slug;?>" data-type="<?=$attributeType;?>" data-counting="<?=$counting?>" href="#"><span><?=$term->name;?></span></a>
+                                    </div>
+                               <?php }?>
                             <?php if($default_value==$term->slug){$default=$counting;} $counting++;?>
                             <?php }}}?>
                      </div>

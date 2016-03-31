@@ -5,10 +5,11 @@ jQuery(function($){
         currentTaxonomy=$("#progress-indicator").find("li:first").data("taxonomy"),
         currentTaxonomytype=$("#progress-indicator").find("li:first").data("type"),
         currentTermId=null,
-        unavailable_template=wp.template( 'unavailable-variation-template' ),
+       // unavailable_template=wp.template( 'unavailable-variation-template' ),
         visited_tabs=[],
+       changed_carousel=[],
         fr=[];
-    visited_tabs.push($("#progress-indicator").find("li:first").data("tab"));
+    visited_tabs.push($("#progress-indicator").find("li:first").data("taxonomy"));
     var tabCount=$("#progress-indicator").find("li").length;
     $("#main").removeClass("clearfix");
     if($('.wpb-body-product').find('.woocommerce-de_price_taxrate').length>0){
@@ -24,25 +25,34 @@ jQuery(function($){
             //    id=$(this).attr("id");
             //$(this).selectedIndex=0;
            $select.focusin().val(tempValue).change();
-            console.log($(this));
+          //  console.log($(this));
 
     }
     var checkVariationAttributesCarousel=function(taxonomy){
         $select=$('select#'+taxonomy+'');
+        var tempValue=$select.val();
+        // console.log(changed_carousel);
+        if(_.contains(changed_carousel,taxonomy)){
+            console.log(tempValue);
+            $select.focusin().val(tempValue).change();
+        }
+        //$select.focusin().change($select.val());
 
         $container= $("#wpb_carousel_"+taxonomy);
         $container.find(".film_roll_child").addClass("wpb_disabled");
         $select.children('option.active,option.enabled').each(function(i, option) {
+           // console.log(taxonomy+"|"+option.value);
             $anchor=$container.find(".film_roll_child a[data-term="+option.value+"]");
             $anchor.parent().removeClass("wpb_disabled");
         });
     };
     var checkVariationAttributesDimension=function(taxonomy){
       $selects=$("#wpb-steps-"+taxonomy).find("select");
-
       $selects.each(function(i,select){
          var taxonomyCurrent=$(select).data("taxonomy");
           $select=$('select#'+taxonomyCurrent+'');
+          var tempValue=$select.val();
+          $select.focusin().val(tempValue).change();
           var tempHtml=$select.html();
           tempHtml=$(tempHtml+" option:gt(0)").remove();
             $(select).html();
@@ -120,8 +130,10 @@ jQuery(function($){
         });
     };
     var visitedTabCheck=function (taxonomyName){
-        if(!_.contains(visited_tabs,taxonomyName) && typeof taxonomyName!="undefined"){
+        if(typeof taxonomyName!="undefined" && !_.contains(visited_tabs,taxonomyName)){
+
             visited_tabs.push(taxonomyName);
+           // console.log(visited_tabs);
         }
     };
     var selectedIndexChange=function(taxonomyName){
@@ -198,6 +210,8 @@ jQuery(function($){
         //if(counting==tabCount){
         //
         //}
+        //console.log(tabCount);
+       // console.log(visited_tabs.length);
         if(tabCount==visited_tabs.length){
             $("#wpb_continue_button").text(wpb_local_params.add_to_cart_text);
             $("#wpb_continue_button").addClass("wpb_add_cart");
@@ -256,6 +270,10 @@ jQuery(function($){
             }
             variationSelectChange(taxonomyName,term);
             selectedIndexChange(taxonomyName);
+            if(!_.contains(changed_carousel,taxonomyName)){
+                changed_carousel.push(taxonomyName);
+            }
+
         });
     });
 
@@ -341,10 +359,10 @@ refreshZoom();
 $(window).load(function(){
 
   checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
-    triggerFocusin();
+  //  triggerFocusin();
 });
     $variations_form.on("woocommerce_update_variation_values",function(){
-        console.log("asdasdas")
-     checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
+        //console.log("asdasdas")
+     //checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
     });
 });
