@@ -270,10 +270,11 @@ jQuery(function($){
             }
             variationSelectChange(taxonomyName,term);
             selectedIndexChange(taxonomyName);
+            checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
             if(!_.contains(changed_carousel,taxonomyName)){
                 changed_carousel.push(taxonomyName);
             }
-
+         //   checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         });
     });
 
