@@ -5,10 +5,11 @@ jQuery(function($){
         currentTaxonomy=$("#progress-indicator").find("li:first").data("taxonomy"),
         currentTaxonomytype=$("#progress-indicator").find("li:first").data("type"),
         currentTermId=null,
-       // unavailable_template=wp.template( 'unavailable-variation-template' ),
         visited_tabs=[],
        changed_carousel=[],
+       changed_droopdown=[],
         fr=[];
+    var justTemp=0;
     visited_tabs.push($("#progress-indicator").find("li:first").data("taxonomy"));
     var tabCount=$("#progress-indicator").find("li").length;
     $("#main").removeClass("clearfix");
@@ -22,40 +23,50 @@ jQuery(function($){
     var triggerFocusin=function(){
        $select= $variations_form.find(".variations select:first");
             var tempValue=$select.val();
-            //    id=$(this).attr("id");
-            //$(this).selectedIndex=0;
            $select.focusin().val(tempValue).change();
-          //  console.log($(this));
 
     }
     var checkVariationAttributesCarousel=function(taxonomy){
-        $select=$('select#'+taxonomy+'');
-        var tempValue=$select.val();
-        // console.log(changed_carousel);
-        if(_.contains(changed_carousel,taxonomy)){
-            console.log(tempValue);
-            $select.focusin().val(tempValue).change();
-        }
-        //$select.focusin().change($select.val());
-
         $container= $("#wpb_carousel_"+taxonomy);
         $container.find(".film_roll_child").addClass("wpb_disabled");
-        $select.children('option.active,option.enabled').each(function(i, option) {
-           // console.log(taxonomy+"|"+option.value);
-            $anchor=$container.find(".film_roll_child a[data-term="+option.value+"]");
-            $anchor.parent().removeClass("wpb_disabled");
-        });
+        $select=$('select#'+taxonomy+'');
+        var tempValue=$select.val();
+        if(_.contains(changed_carousel,taxonomy)){
+          //  $select.focusin().val(tempValue).change();
+        }
+        if($select.children('option.active,option.enabled').length>0) {
+            $select.children('option.active,option.enabled').each(function (i, option) {
+                $anchor = $container.find(".film_roll_child a[data-term=" + option.value + "]");
+                $anchor.parent().removeClass("wpb_disabled");
+            });
+        }else{
+            $select.children('option').each(function (i, option) {
+                if(option.value!=""){
+                $anchor = $container.find(".film_roll_child a[data-term=" + option.value + "]");
+                $anchor.parent().removeClass("wpb_disabled");
+                }
+            });
+        }
     };
     var checkVariationAttributesDimension=function(taxonomy){
       $selects=$("#wpb-steps-"+taxonomy).find("select");
       $selects.each(function(i,select){
-         var taxonomyCurrent=$(select).data("taxonomy");
+          $(select).html("");
+          var taxonomyCurrent=$(select).data("taxonomy"),
+              selectId=$(select).attr("id");
+
           $select=$('select#'+taxonomyCurrent+'');
           var tempValue=$select.val();
-          $select.focusin().val(tempValue).change();
-          var tempHtml=$select.html();
-          tempHtml=$(tempHtml+" option:gt(0)").remove();
-            $(select).html();
+         // console.log($select);
+          if(!_.contains(changed_droopdown,taxonomyCurrent)){
+              $select.focusin().val(tempValue).change();
+              changed_droopdown.push(taxonomyCurrent);
+          }
+          var tempHtml='';
+          tempHtml=$select.html();
+          $(select).html(tempHtml);
+          $("#"+selectId+" option:eq(0)").remove();
+        //  $("#"+selectId).find("option:selected").removeAttr("selected");
 
       });
       rangeSlider();
@@ -97,7 +108,6 @@ jQuery(function($){
         $(".pp_overlay").remove();
         $(".ppt").remove();
         $("a#wpb_main_image_link").prettyPhoto({
-            //hook: 'data-rel',
             social_tools: false,
             theme: 'pp_woocommerce',
             horizontal_padding: 20,
@@ -131,9 +141,7 @@ jQuery(function($){
     };
     var visitedTabCheck=function (taxonomyName){
         if(typeof taxonomyName!="undefined" && !_.contains(visited_tabs,taxonomyName)){
-
             visited_tabs.push(taxonomyName);
-           // console.log(visited_tabs);
         }
     };
     var selectedIndexChange=function(taxonomyName){
@@ -176,12 +184,12 @@ jQuery(function($){
                 value: selectBox[0].selectedIndex + 1,
                 slide: function (event, ui) {
                     selectBox[0].selectedIndex = ui.value - 1;
-                    $(selectBox).trigger("change");
+                  //  $(selectBox).trigger("change");
                     selectedIndexChange(taxonomy);
                 }
             });
             $(this).change(function(){
-                slider.slider( "value", this.selectedIndex + 1 );
+               // slider.slider( "value", this.selectedIndex + 1 );
                 variationSelectChange(taxonomy,$(this).val());
                 selectedIndexChange(taxonomy);
             });
@@ -207,11 +215,6 @@ jQuery(function($){
         currentTaxonomytype=tabType;
         checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         visitedTabCheck(currentTaxonomy);
-        //if(counting==tabCount){
-        //
-        //}
-        //console.log(tabCount);
-       // console.log(visited_tabs.length);
         if(tabCount==visited_tabs.length){
             $("#wpb_continue_button").text(wpb_local_params.add_to_cart_text);
             $("#wpb_continue_button").addClass("wpb_add_cart");
@@ -241,42 +244,45 @@ jQuery(function($){
         $nextLiP.trigger('click');
     });
     /**************************Carousel Functions **************************/
-    $(".wpb_carousel").each(function(){
-        var id=$(this).attr("id"),
-            right=id+"_right",
-            left=id+"_left",
-            default_value=typeof $("#"+id+"_default")!="undefined"? parseInt($("#"+id+"_default").val()):0;
-        var film_roll = new FilmRoll({
-            container: '#'+id,
-            prev: '#'+left,
-            next: '#'+right,
-            pager:false,
-            scroll:false,
-            force_buttons:true,
-            animation:500,
-            start_index:default_value,
-            configure_load: true
-        });
-        fr.push({id:id,roll:film_roll});
-        $('#'+id).on('film_roll:moved', function(event) {
-            var taxonomyName=id.substr(13,id.length),
-                containerDiv=$("#"+taxonomyName+'_'+film_roll.index),
-                term=containerDiv.find('.wpb_terms').data('term'),
-                termid=containerDiv.find('.wpb_terms').data('termid'),
-                type=containerDiv.find('.wpb_terms').data('type');
+        var carouselFunction=function(){
+        $(".wpb_carousel").each(function(){
+            var id=$(this).attr("id"),
+                right=id+"_right",
+                left=id+"_left",
+                default_value=typeof $("#"+id+"_default")!="undefined"? parseInt($("#"+id+"_default").val()):0;
+            var film_roll = new FilmRoll({
+                container: '#'+id,
+                prev: '#'+left,
+                next: '#'+right,
+                pager:false,
+                scroll:false,
+                force_buttons:true,
+                animation:500,
+                start_index:default_value,
+                configure_load: true
+            });
+            fr.push({id:id,roll:film_roll});
+            $('#'+id).on('film_roll:moved', function(event) {
+                var taxonomyName=id.substr(13,id.length),
+                    containerDiv=$("#"+taxonomyName+'_'+film_roll.index),
+                    term=containerDiv.find('.wpb_terms').data('term'),
+                    termid=containerDiv.find('.wpb_terms').data('termid'),
+                    type=containerDiv.find('.wpb_terms').data('type');
 
-            if(containerDiv.hasClass('wpb_disabled')){
-                return false;
-            }
-            variationSelectChange(taxonomyName,term);
-            selectedIndexChange(taxonomyName);
-            checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
-            if(!_.contains(changed_carousel,taxonomyName)){
-                changed_carousel.push(taxonomyName);
-            }
-         //   checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
+                if(containerDiv.hasClass('wpb_disabled')){
+                    return false;
+                }
+                variationSelectChange(taxonomyName,term);
+                selectedIndexChange(taxonomyName);
+                checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
+                if(!_.contains(changed_carousel,taxonomyName)){
+                    changed_carousel.push(taxonomyName);
+                }
+                justTemp+=1;
+
+            });
         });
-    });
+    };
 
     /**************************Range Slider **************************/
     rangeSlider();
@@ -300,12 +306,7 @@ jQuery(function($){
         }
         $("#wpb_main_images").attr("src",main_image);
         $("#wpb_main_image_link").attr("href",main_image);
-      //  console.log(variation_data);
-      //  $("#wpb_price_html").html($('.amount').text());
         $("#wpb_price_html").html(variation_data.price_html!=""?variation_data.price_html:$('.amount').text());
-        //if(variation_data.price_html==""){
-        //
-        //}
         $("#wpb_price_html").find(".price").removeAttr("style");
       refreshZoom();
     });
@@ -347,23 +348,15 @@ jQuery(function($){
         e.preventDefault();
         var confirmation=confirm(wpb_local_params.resetText);
         if(confirmation){
-                    //$.each(wpb_default_selections,function(k,v){
-                    //    variationSelectChange(k,v);
-                    //});
             location.reload();
         }
     });
 /****************************Zoom*************************************/
 refreshZoom();
-
 /******************************Update variation values***************/
 $(window).load(function(){
-
+  carouselFunction();
   checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
-  //  triggerFocusin();
+  showSelection(currentTaxonomy,currentTaxonomytype);
 });
-    $variations_form.on("woocommerce_update_variation_values",function(){
-        //console.log("asdasdas")
-     //checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
-    });
 });

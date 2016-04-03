@@ -101,7 +101,8 @@ if (!class_exists('WPB_Frontend_Product')) {
                          <?php if(!empty($attributes)){?>
 
                               <?php $l=0; foreach($attributes as $name=>$options){
-                                  $classes= $l > 0 ? "wpb_hidden" :"";
+                                //  $classes= $l > 0 ? "wpb_hidden" :"";
+                                 $classes="wpb_hidden";
                                   ?>
                                   <div id="wpb_selections_<?=$name;?>" class="wpb_selections clearfix <?=$classes?>">
                                      <div class="left">
@@ -312,7 +313,11 @@ if (!class_exists('WPB_Frontend_Product')) {
                                 </div>
                             <?php }if($isExtra){?>
                                     <div id='<?=$taxonomy?>_<?=$counting?>'>
-                                        <a class="wpb_terms" data-taxonomy="<?=$taxonomy;?>" data-term="<?=$term->slug;?>" data-type="<?=$attributeType;?>" data-counting="<?=$counting?>" href="#"><span><?=$term->name;?></span></a>
+                                        <a class="wpb_terms" data-taxonomy="<?=$taxonomy;?>" data-term="<?=$term->slug;?>" data-type="<?=$attributeType;?>" data-counting="<?=$counting?>" href="#">
+                                    <?php if(!empty($term_image)){?>
+                                        <img src="<?=$term_image?>">
+                                      <?php }?>
+                                            <span><?=$term->name;?></span></a>
                                     </div>
                                <?php }?>
                             <?php if($default_value==$term->slug){$default=$counting;} $counting++;?>
