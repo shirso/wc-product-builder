@@ -62,9 +62,7 @@ jQuery(function($){
         $selects=$("#wpb-steps-"+taxonomy).find("select");
 
         $selects.each(function(i,select){
-            var taxonomyCurrent=$(select).data("taxonomy"),
-                selectId=$(select).attr("id"),
-                changeValue=$(select).val();
+            var taxonomyCurrent=$(select).data("taxonomy");
             $select=$('select#'+taxonomyCurrent+'');
 
             var allOptions=$select.children("option"),
@@ -206,7 +204,9 @@ jQuery(function($){
         }
     };
     var rangeSlider=function() {
+        //checkVariationAttributesDimension(currentTaxonomy);
         $(".wbp_slider").each(function () {
+
             var taxonomy = $(this).data("taxonomy"),
                 sliderId = $("#wpb_slider_" + taxonomy),
                 options=$(this).children('option'),
@@ -216,6 +216,11 @@ jQuery(function($){
                 taxonomySelect=$("select#"+taxonomy);
             $("#wpb_regulator_min_"+taxonomy).text($(firstOption).val());
             $("#wpb_regulator_max_"+taxonomy).text($(lastOption).val());
+            if(_.contains(changed_droopdown,taxonomy)){
+                $variations_form.trigger("wpb_select_change",currentTaxonomy);
+                changed_droopdown= _.without(changed_droopdown,taxonomy);
+                //changed_droopdown.push(taxonomy);
+            }
             var slider=$(sliderId).slider({
                 min: 1,
                 max:options.length,
@@ -228,18 +233,27 @@ jQuery(function($){
                 }
             });
             $(this).change(function(){
+                //console.log($(this));
                  slider.slider( "value", this.selectedIndex + 1 );
-                if(_.contains(changed_droopdown,taxonomy)){
-                    changed_droopdown= _.without(changed_droopdown,taxonomy);
+                if(!_.contains(changed_droopdown,taxonomy)){
+                    //$variations_form.trigger("wpb_select_change",currentTaxonomy);
+                    //changed_droopdown= _.without(changed_droopdown,taxonomy);
+                   // checkVariationAttributesDimension(currentTaxonomy);
+                    changed_droopdown.push(taxonomy);
                 }
                 if($(this).val()!=taxonomySelect.val()){
                     variationSelectChange(taxonomy,$(this).val());
                 }
-                checkVariationAttributesDimension(currentTaxonomy);
+
                 selectedIndexChange(taxonomy);
             });
         });
+        //checkVariationAttributesDimension(currentTaxonomy);
     }
+    $variations_form.on("wpb_select_change",function(taxonomy){
+    //   console.log(currentTaxonomy);
+
+    });
     /**************************Tab Functions **************************/
     $(document).on('change','.wpb-rngtxt',function(){
         var taxonomy = $(this).data("taxonomy");

@@ -173,7 +173,7 @@ if (!class_exists('WPB_Frontend_Product')) {
                                     <li data-tab="#wpb-steps-<?=$name?>" data-taxonomy="<?=$name;?>" data-counting="<?=$c;?>" data-type="<?=$attribute_type?>" class="<?=$classes?>">
                                         <a href="#">
                                             <p><?=wc_attribute_label($name);?></p>
-                                            <span class="bubble"></span>
+                                            <span class="bubble"><span class="bbll"></span></span>
                                         </a>
                                     </li>
 
