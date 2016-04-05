@@ -95,7 +95,7 @@
   content: "";
   width: 50px;
   height: 20px;
-  background: #cececf;
+  /*background: #cececf;*/
   left: 50%;
   bottom: -8px;
   border-radius: 100%;
@@ -105,10 +105,10 @@
   border-right: 15px solid #fff;
   border-left: 15px solid #fff;
 }
-.progress-indicator .completed .bubble:after {
+.progress-indicator .completed .bubble .bbll {
   background: #65b32e;
 }
-.progress-indicator .completed.acctive .bubble:after {
+.progress-indicator .completed.acctive .bubble .bbll {
    background: #3d3c41;
  }
  .progress-indicator > li >a>p{font-size:25px;line-height: 28px;}
@@ -118,7 +118,7 @@
 .progress-indicator .completed.acctive a:hover p{
   color: #3d3c41!important;
 }
-.progress-indicator .completed.acctive a:hover .bubble:after{
+.progress-indicator .completed.acctive a:hover .bubble .bbll{
   background: #3d3c41!important;
 }
 /* line 97, ../sass/_progress-wizard.scss */
@@ -131,7 +131,7 @@
   color: #65b32e;
 }
 /* line 9, ../sass/_progress-wizard.scss */
-.progress-indicator > li.completed .bubble:before, .progress-indicator > li.completed .bubble:after {
+.progress-indicator > li.completed .bubble:before, .progress-indicator > li.completed .bubble .bbll{
   background-color: #65b32e;
   border-color: #fff;
   box-sizing: border-box;
@@ -151,17 +151,18 @@
 }
 .progress-indicator > li a{display: inline-block;}
 /* line 9, ../sass/_progress-wizard.scss */
-.progress-indicator > li a:hover .bubble:before, .progress-indicator > li a:hover .bubble:after {
+.progress-indicator > li a:hover .bubble:before, .progress-indicator > li a:hover .bubble .bbll {
   background-color: #cececf;
   box-sizing: border-box;
 }
-.progress-indicator > li.acctive a:hover .bubble:before{
+.progress-indicator > li.acctive a:hover .bubble .bbll{
  background-color: #65b32e;
 }
 
   
-.progress-indicator > li.completed a:hover .bubble:after{background-color: #65b32e!important;}
+.progress-indicator > li.completed a:hover .bubble .bbll{background-color: #65b32e!important;}
 /* line 121, ../sass/_progress-wizard.scss */
+
 
 /* line 124, ../sass/_progress-wizard.scss */
 .progress-indicator > li.warning .bubble {
@@ -169,7 +170,7 @@
   color: #edb10a;
 }
 /* line 9, ../sass/_progress-wizard.scss */
-.progress-indicator > li.warning .bubble:before, .progress-indicator > li.warning .bubble:after {
+.progress-indicator > li.warning .bubble:before, .progress-indicator > li.warning .bubble .bbll{
   background-color: #edb10a;
   border-color: #5a4304;
 }
@@ -179,7 +180,7 @@
   color: #65b32e;
 }
 /* line 9, ../sass/_progress-wizard.scss */
-.progress-indicator > li.info .bubble:before, .progress-indicator > li.info .bubble:after {
+.progress-indicator > li.info .bubble:before, .progress-indicator > li.info .bubble .bbll {
   background-color: #65b32e;
   border-color: #65b32e;
 }
@@ -190,13 +191,24 @@
   display: block;
 }
 /* line 140, ../sass/_progress-wizard.scss */
-.progress-indicator.stacked > li .bubble:before,
-.progress-indicator.stacked > li .bubble:after {
+.progress-indicator.stacked > li .bubble:before {
   left: 50%;
   margin-left: -1.5px;
   width: 3px;
   height: 100%;
 }
+.progress-indicator > li .bubble .bbll{
+	width: 20px;
+    height: 20px;
+    background-color: #cececf;
+    left: 50%;
+    position: absolute;
+    margin-left: -10px;
+    border-radius: 20px;
+    bottom: 0px;
+    margin-bottom: -8px;
+    z-index: 9999;
+	}
 /* line 147, ../sass/_progress-wizard.scss */
 .progress-indicator.stacked .stacked-text {
   position: relative;
@@ -219,7 +231,7 @@
 }
 /* line 166, ../sass/_progress-wizard.scss */
 .progress-indicator.stacked.nocenter > li .bubble:before,
-.progress-indicator.stacked.nocenter > li .bubble:after {
+.progress-indicator.stacked.nocenter > li .bubble .bbll {
   left: 10px;
 }
 /* line 170, ../sass/_progress-wizard.scss */
@@ -336,7 +348,7 @@ body {
 	margin-top:50px;
 }
 /* line 86, ../sass/_normalize.scss */
-.progress-indicator > li a:hover .bubble:after{
+.progress-indicator > li a:hover .bubble .bbll{
 	background-color:#cececf!important;
 }
 
