@@ -401,7 +401,6 @@ jQuery(function($){
     /**************************Carousel Click*************************/
     $(document).on("click",'.wpb_terms',function(e){
         e.preventDefault();
-
         var carousel_id="wpb_carousel_"+$(this).data("taxonomy"),
             filterd_fr= _.findWhere(fr,{id:carousel_id}),
             move_index=$(this).data("counting"),
@@ -424,7 +423,7 @@ jQuery(function($){
     /******************************Update variation values***************/
     $(window).load(function(){
         carouselFunction();
-        triggerFocusin(currentTaxonomy,currentTaxonomytype);
+        //triggerFocusin(currentTaxonomy,currentTaxonomytype);
         checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         showSelection(currentTaxonomy,currentTaxonomytype);
     });
