@@ -276,7 +276,7 @@ jQuery(function($){
         currentTaxonomy=taxonomy;
         currentTaxonomytype=tabType;
         deleteChekcked(currentTaxonomy,currentTaxonomytype);
-        triggerFocusin(currentTaxonomy,currentTaxonomytype);
+        //triggerFocusin(currentTaxonomy,currentTaxonomytype);
         checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         visitedTabCheck(currentTaxonomy);
         if(tabCount==visited_tabs.length){
@@ -423,7 +423,7 @@ jQuery(function($){
     /******************************Update variation values***************/
     $(window).load(function(){
         carouselFunction();
-        //triggerFocusin(currentTaxonomy,currentTaxonomytype);
+      //  triggerFocusin(currentTaxonomy,currentTaxonomytype);
         checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         showSelection(currentTaxonomy,currentTaxonomytype);
     });
