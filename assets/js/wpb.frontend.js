@@ -45,6 +45,7 @@ jQuery(function($){
         $container= $("#wpb_carousel_"+taxonomy);
         $container.find(".film_roll_child").addClass("wpb_disabled");
         $select=$('select#'+taxonomy+'');
+        $select.focusin();
         if($select.children('option.active,option.enabled').length>0) {
             $select.children('option.active,option.enabled').each(function (i, option) {
                 $anchor = $container.find(".film_roll_child a[data-term=" + option.value + "]");
@@ -152,8 +153,8 @@ jQuery(function($){
         });
     };
     var variationSelectChange=function(taxonomyName,term){
+        $("#" + taxonomyName).focusin();
         if( selectHasValue(taxonomyName,term)) {
-           // console.log(taxonomyName+"|"+term);
             $("#" + taxonomyName).focusin().val(term).change();
 
         }
@@ -218,8 +219,8 @@ jQuery(function($){
             $("#wpb_regulator_min_"+taxonomy).text($(firstOption).val());
             $("#wpb_regulator_max_"+taxonomy).text($(lastOption).val());
             if(_.contains(changed_droopdown,taxonomy)){
-                $variations_form.trigger("wpb_select_change",currentTaxonomy);
-                changed_droopdown= _.without(changed_droopdown,taxonomy);
+               // $variations_form.trigger("wpb_select_change",currentTaxonomy);
+              //  changed_droopdown= _.without(changed_droopdown,taxonomy);
                 //changed_droopdown.push(taxonomy);
             }
             var slider=$(sliderId).slider({
@@ -276,7 +277,7 @@ jQuery(function($){
         currentTaxonomy=taxonomy;
         currentTaxonomytype=tabType;
         deleteChekcked(currentTaxonomy,currentTaxonomytype);
-        //triggerFocusin(currentTaxonomy,currentTaxonomytype);
+        triggerFocusin(currentTaxonomy,currentTaxonomytype);
         checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         visitedTabCheck(currentTaxonomy);
         if(tabCount==visited_tabs.length){
@@ -327,24 +328,6 @@ jQuery(function($){
                 configure_load: true
             });
             fr.push({id:id,roll:film_roll});
-            $('#'+id).on('film_roll:moved', function(event) {
-                var taxonomyName=id.substr(13,id.length),
-                    containerDiv=$("#"+taxonomyName+'_'+film_roll.index),
-                    term=containerDiv.find('.wpb_terms').data('term'),
-                    termid=containerDiv.find('.wpb_terms').data('termid'),
-                    type=containerDiv.find('.wpb_terms').data('type'),
-                    select=$("select#"+taxonomyName);
-
-                if(containerDiv.hasClass('wpb_disabled')){
-                    return false;
-                }
-                if(select.val()!=term) {
-                    variationSelectChange(taxonomyName, term);
-                }
-                checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
-                selectedIndexChange(taxonomyName);
-
-            });
         });
     };
 
@@ -421,9 +404,33 @@ jQuery(function($){
     /****************************Zoom*************************************/
     refreshZoom();
     /******************************Update variation values***************/
+    var progress=true;
     $(window).load(function(){
         carouselFunction();
-      //  triggerFocusin(currentTaxonomy,currentTaxonomytype);
+        $.each(fr,function(i,carousels){
+            var id=carousels.id,
+                film_roll=carousels.roll;
+            $('#'+id).on('film_roll:moved', function(event) {
+                var taxonomyName=id.substr(13,id.length),
+                    containerDiv=$("#"+taxonomyName+'_'+film_roll.index),
+                    term=containerDiv.find('.wpb_terms').data('term'),
+                    termid=containerDiv.find('.wpb_terms').data('termid'),
+                    type=containerDiv.find('.wpb_terms').data('type'),
+                    select=$("select#"+taxonomyName);
+
+                if(containerDiv.hasClass('wpb_disabled')){
+                    return false;
+                }
+                if(select.val()!=term) {
+                    variationSelectChange(taxonomyName, term);
+                }
+                checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
+                selectedIndexChange(taxonomyName);
+
+            });
+        });
+
+        triggerFocusin(currentTaxonomy,currentTaxonomytype);
         checkVariationAttribute(currentTaxonomy,currentTaxonomytype);
         showSelection(currentTaxonomy,currentTaxonomytype);
     });

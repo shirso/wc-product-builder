@@ -11,7 +11,13 @@ if (!class_exists('WPB_Product_Cart')) {
          //   add_filter('woocommerce_order_items_meta_get_formatted',array(&$this,'woocommerce_order_items_meta_get_formatted'),10,2);
          //   add_action("woocommerce_order_item_meta_start",array(&$this,"woocommerce_order_item_meta_start"),100,3);
           //  add_action('woocommerce_before_order_itemmeta',array(&$this,'woocommerce_before_order_itemmeta'),10,3);
+
+           // add_filter( 'woocommerce_ajax_variation_threshold',array(&$this, 'custom_wc_ajax_variation_threshold'), 10, 2 );
         }
+        function custom_wc_ajax_variation_threshold( $qty, $product ) {
+            return 1;
+        }
+
         function add_cart_item_data($cart_item_meta, $product_id){
             if (isset($cart_item_meta['wpb_cart_items'])) {
                 return $cart_item_meta;

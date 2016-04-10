@@ -52,7 +52,7 @@ if (!class_exists('WPB_Frontend_Product')) {
             $info_boxes=get_post_meta($postId,"_wpb_info_boxes",true);
             $attributes = $product->get_variation_attributes();
             $first_key = key($attributes);
-            $first_content_id=($info_boxes[$first_key])?$info_boxes[$first_key]:null;
+            $first_content_id=isset($info_boxes[$first_key])?$info_boxes[$first_key]:null;
             $content_post =$first_content_id!=null? get_post($first_content_id):null;
             $content = $content_post!=null?$content_post->post_content:null;
             $content = apply_filters('the_content', $content);
@@ -63,8 +63,9 @@ if (!class_exists('WPB_Frontend_Product')) {
                 <div class="dtext-m-sec">
                     <i class="fa fa-info-circle wpb_info_box_icon"></i>
                     <?=$content;?>
+                </div>
                 <?php }?>
-                    </div>
+
             </section>
             <?php
         }
