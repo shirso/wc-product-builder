@@ -30,7 +30,7 @@ if (!class_exists('WPB_Frontend_Product')) {
             $postId=absint($_POST["productId"]);
             $taxonomy=esc_attr($_POST["taxonomy"]);
             $info_boxes=get_post_meta($postId,"_wpb_info_boxes",true);
-            $first_content_id=($info_boxes[$taxonomy])?$info_boxes[$taxonomy]:null;
+            $first_content_id=isset($info_boxes[$taxonomy])?$info_boxes[$taxonomy]:null;
             $content_post = get_post($first_content_id);
             $content = $content_post->post_content;
             $content = apply_filters('the_content', $content);
