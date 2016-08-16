@@ -335,7 +335,7 @@ jQuery(function($){
     rangeSlider();
     /**************************WC Variation values Update **************************/
     $variations_form.on( 'show_variation', function( event, variation ) {
-
+       // console.log("Hey You");
         var variation_data=(!variations)? variation:_.findWhere(variations,{variation_id:variation.variation_id})
         main_image=variation_data.image_link;
         additional_images=variation_data.additional_images;

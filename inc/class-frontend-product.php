@@ -124,30 +124,22 @@ if (!class_exists('WPB_Frontend_Product')) {
           <?php
         }
         public function show_product_images(){
-            global $post, $woocommerce, $product;
-            $default_variation_id=WPB_Common_Functions::get_default_variation_id();
-            $initial_product_id = ($default_variation_id) ? $default_variation_id : $product->id;
-            $initial_product_id = WPB_Common_Functions::get_selected_varaiton( $initial_product_id );
-            $image_ids = WPB_Common_Functions::get_all_image_ids( $initial_product_id );
-            $default_image=$image_ids[0];
-            $other_images=$image_ids;
-            unset($other_images[0]);
+//            global $post, $woocommerce, $product;
+//            $default_variation_id=WPB_Common_Functions::get_default_variation_id();
+//            $initial_product_id = ($default_variation_id) ? $default_variation_id : $product->id;
+//            $initial_product_id = WPB_Common_Functions::get_selected_varaiton( $initial_product_id );
+//            $image_ids = WPB_Common_Functions::get_all_image_ids( $initial_product_id );
+//            $default_image=$image_ids[0];
+//            $other_images=$image_ids;
+//            unset($other_images[0]);
 
           ?>
              <div class="im-sd-sec" id="im-sd-sec">
-                 <?php $default_url=wp_get_attachment_url($default_image);?>
-               <a href="<?=$default_url?>" id="wpb_main_image_link">  <img src="<?=$default_url?>" class="img-responsive" id="wpb_main_images"></a>
-                 <?php if(!empty($other_images)){?>
-                     <div class="sm-img-cl" id="wpb_additional_images">
-                     <?php foreach($other_images as $img){
-                         $other_url=wp_get_attachment_url($img);
-                     ?>
-                         <div class="blk-im">
-                             <img src="<?=$other_url;?>" class="wpb_additional_image img-responsive">
-                         </div>
-                <?php }?>
-                </div>
-                <?php }?>
+
+               <a href="" id="wpb_main_image_link">  <img src="" class="img-responsive" id="wpb_main_images"></a>
+
+                     <div class="sm-img-cl" id="wpb_additional_images"></div>
+
              </div>
         <?php
         }
